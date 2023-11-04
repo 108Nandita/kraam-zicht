@@ -1,2 +1,4 @@
-package com.project.kraamzicht.services;public class AdminService {
+package com.project.kraamzicht.services;
+
+public class AdminService {
 }

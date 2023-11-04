@@ -1,2 +1,4 @@
-package com.project.kraamzicht.models;public class Midwife {
+package com.project.kraamzicht.models;
+
+public class Midwife {
 }

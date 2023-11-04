@@ -1,2 +1,4 @@
-package com.project.kraamzicht.repositories;public class MaternityNureRepository {
+package com.project.kraamzicht.repositories;
+
+public class MaternityNureRepository {
 }

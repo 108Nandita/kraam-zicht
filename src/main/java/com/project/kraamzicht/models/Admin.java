@@ -1,2 +1,4 @@
-package com.project.kraamzicht.models;public class Asmin {
+package com.project.kraamzicht.models;
+
+public class Admin {
 }

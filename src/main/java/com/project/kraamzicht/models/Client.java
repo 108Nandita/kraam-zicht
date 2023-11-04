@@ -1,2 +1,4 @@
-package com.project.kraamzicht.models;public class Client {
+package com.project.kraamzicht.models;
+
+public class Client {
 }

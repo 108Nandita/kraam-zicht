@@ -1,2 +1,4 @@
-package com.project.kraamzicht.controllers;public class AuthenticationaController {
+package com.project.kraamzicht.controllers;
+
+public class AuthenticationaController {
 }

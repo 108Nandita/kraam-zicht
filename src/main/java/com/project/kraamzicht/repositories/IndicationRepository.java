@@ -1,2 +1,4 @@
-package com.project.kraamzicht.repositories;public class IndicationRepository {
+package com.project.kraamzicht.repositories;
+
+public class IndicationRepository {
 }

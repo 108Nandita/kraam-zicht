@@ -1,2 +1,4 @@
-package com.project.kraamzicht.repositories;public class AdminRepository {
+package com.project.kraamzicht.repositories;
+
+public class AdminRepository {
 }

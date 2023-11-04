@@ -1,2 +1,4 @@
-package com.project.kraamzicht.controllers;public class IndicationController {
+package com.project.kraamzicht.controllers;
+
+public class IndicationController {
 }

@@ -1,2 +1,4 @@
-package com.project.kraamzicht.controllers;public class AdminController {
+package com.project.kraamzicht.controllers;
+
+public class AdminController {
 }
