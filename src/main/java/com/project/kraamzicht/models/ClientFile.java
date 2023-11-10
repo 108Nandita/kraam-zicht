@@ -1,17 +1,45 @@
 package com.project.kraamzicht.models;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 public class ClientFile {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String fileNumber;
+
     private LocalDate dueDate;
     private LocalDate deliveryDate;
     private String deliveryPlace;
-    private String report; // Een plek voor de rapportage geschreven door de kraamverzorgende
+    private String report;
+
+    @ManyToOne
+    @JoinColumn(name = "client_id")
     private Client client;
+
+    @ManyToOne
+    @JoinColumn(name = "midwife_agb")
+    private Midwife midwife;
+
+    @ManyToOne
+    @JoinColumn(name = "maternity_nurse_kzkz")
+    private MaternityNurse maternityNurse;
+
+    @OneToMany(mappedBy = "clientFile")
+    private List<Indication> indications;
+
+    public ClientFile() {}
+
+    public ClientFile(Client client, Midwife midwife, MaternityNurse maternityNurse, List<Indication> indications) {
+        this.client = client;
+        this.midwife = midwife;
+        this.maternityNurse = maternityNurse;
+        this.indications = indications;
+    }
 
     public String getFileNumber() {
         return fileNumber;
@@ -59,5 +87,29 @@ public class ClientFile {
 
     public void setClient(Client client) {
         this.client = client;
+    }
+
+    public Midwife getMidwife() {
+        return midwife;
+    }
+
+    public void setMidwife(Midwife midwife) {
+        this.midwife = midwife;
+    }
+
+    public MaternityNurse getMaternityNurse() {
+        return maternityNurse;
+    }
+
+    public void setMaternityNurse(MaternityNurse maternityNurse) {
+        this.maternityNurse = maternityNurse;
+    }
+
+    public List<Indication> getIndications() {
+        return indications;
+    }
+
+    public void setIndications(List<Indication> indications) {
+        this.indications = indications;
     }
 }

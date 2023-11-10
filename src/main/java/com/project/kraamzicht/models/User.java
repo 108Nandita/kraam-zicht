@@ -2,13 +2,16 @@ package com.project.kraamzicht.models;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "users")
-public class User {
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "user_type", discriminatorType = DiscriminatorType.STRING)
+public class User implements Serializable {
 
     @Id
     @Column(nullable = false, unique = true)
@@ -92,6 +95,7 @@ public class User {
     public void setDob(LocalDate dob) {
         this.dob = dob;
     }
+
     public String getAddress() {
         return address;
     }
@@ -147,7 +151,6 @@ public class User {
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
-
 
     public Set<Authority> getAuthorities() {
         return authorities;
