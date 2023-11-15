@@ -7,14 +7,27 @@ import java.util.List;
 @DiscriminatorValue("Midwife")
 public class Midwife extends User {
 
+
+    @Column(name = "midwife_agb")
     private long agbCode;
+    @Column
     private String certification;
 
-    @OneToMany(mappedBy = "midwife")
-    private List<ClientFile> clientFiles;
 
-    @OneToMany(mappedBy = "midwife")
+    @ManyToOne
+    @JoinColumn(name = "admin_username", referencedColumnName = "username")
+    private Admin createdByAdmin;
+
+    @OneToMany
     private List<Indication> approvedIndications;
+
+    public Admin getCreatedByAdmin() {
+        return createdByAdmin;
+    }
+
+    public void setCreatedByAdmin(Admin createdByAdmin) {
+        this.createdByAdmin = createdByAdmin;
+    }
 
     public long getAgbCode() {
         return agbCode;
@@ -32,14 +45,6 @@ public class Midwife extends User {
         this.certification = certification;
     }
 
-    public List<ClientFile> getClientFiles() {
-        return clientFiles;
-    }
-
-    public void setClientFiles(List<ClientFile> clientFiles) {
-        this.clientFiles = clientFiles;
-    }
-
     public List<Indication> getApprovedIndications() {
         return approvedIndications;
     }
@@ -48,3 +53,4 @@ public class Midwife extends User {
         this.approvedIndications = approvedIndications;
     }
 }
+

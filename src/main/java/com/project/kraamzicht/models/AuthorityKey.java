@@ -7,9 +7,8 @@ import java.io.Serializable;
 @Entity
 public class AuthorityKey implements Serializable {
 
-    @Id
-    private String username;
-
-    @Id
-    private String authority;
+  @Id
+  private String username;
+  private String authority;
 }
+

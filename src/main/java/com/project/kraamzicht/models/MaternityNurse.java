@@ -1,9 +1,6 @@
 package com.project.kraamzicht.models;
 
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 
 import java.util.List;
 
@@ -11,18 +8,52 @@ import java.util.List;
 @DiscriminatorValue("MaternityNurse")
 public class MaternityNurse extends User {
 
-    @Id
-    private String kzkzNumber;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column( name = "kckz_number", nullable = false, unique = true)
+    private String kckzNumber;
 
-    @OneToMany(mappedBy = "maternityNurse")
+
+    @ManyToOne
+    @JoinColumn(name = "admin_username", referencedColumnName = "username")
+    private Admin createdByAdmin;
+
+    @OneToMany
     private List<ClientFile> clientFiles;
 
-    public String getKzkzNumber() {
-        return kzkzNumber;
+
+    @OneToMany
+    private List<Indication> indications;
+
+    public MaternityNurse() {
     }
 
-    public void setKzkzNumber(String kzkzNumber) {
-        this.kzkzNumber = kzkzNumber;
+    public Admin getCreatedByAdmin() {
+        return createdByAdmin;
+    }
+
+    public void setCreatedByAdmin(Admin createdByAdmin) {
+        this.createdByAdmin = createdByAdmin;
+    }
+
+    public MaternityNurse(List<Indication> indications) {
+        this.indications = indications;
+    }
+
+    public String getKckzNumber() {
+        return kckzNumber;
+    }
+
+    public void setKckzNumber(String kckzNumber) {
+        this.kckzNumber = kckzNumber;
+    }
+
+
+    public List<Indication> getIndications() {
+        return indications;
+    }
+
+    public void setIndications(List<Indication> indications) {
+        this.indications = indications;
     }
 
     public List<ClientFile> getClientFiles() {
@@ -33,3 +64,4 @@ public class MaternityNurse extends User {
         this.clientFiles = clientFiles;
     }
 }
+

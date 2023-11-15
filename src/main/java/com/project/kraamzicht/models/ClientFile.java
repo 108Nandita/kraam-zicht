@@ -10,23 +10,51 @@ public class ClientFile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String fileNumber;
+    @Column(name = "client_file_id", nullable = false, unique = true)
 
+    private long clientFileId;
+
+    @Column
     private LocalDate dueDate;
+    @Column
     private LocalDate deliveryDate;
+    @Column
     private String deliveryPlace;
+    @Column
     private String report;
 
+
     @ManyToOne
-    @JoinColumn(name = "client_id")
+    @JoinColumns({
+            @JoinColumn(name = "admin_username", referencedColumnName = "username"),
+            @JoinColumn(name = "admin_personnelNumber", referencedColumnName = "personnelNumber")
+    })
+    private Admin admin;
+
+    @ManyToOne
+    @JoinColumns({
+
+            @JoinColumn(name = "client_id", referencedColumnName = "clientId")
+    })
     private Client client;
 
-    @ManyToOne
-    @JoinColumn(name = "midwife_agb")
-    private Midwife midwife;
+    @ManyToMany
+    @JoinTable(
+            name = "clientfile_midwife",
+            joinColumns = {
+                    @JoinColumn(name = "client_file_id", referencedColumnName = "client_file_Id"),
+                    @JoinColumn(name = "client_id", referencedColumnName = "client_id")
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "midwife_agb", referencedColumnName = "midwife_agb")}
+    )
+    private List<Midwife> midwives;
 
     @ManyToOne
-    @JoinColumn(name = "maternity_nurse_kzkz")
+    @JoinColumns({
+            @JoinColumn(name = "maternity_nurse_kckz", referencedColumnName = "kckz_number"),
+            @JoinColumn(name = "maternity_nurse_username", referencedColumnName = "username")
+    })
     private MaternityNurse maternityNurse;
 
     @OneToMany(mappedBy = "clientFile")
@@ -34,19 +62,23 @@ public class ClientFile {
 
     public ClientFile() {}
 
-    public ClientFile(Client client, Midwife midwife, MaternityNurse maternityNurse, List<Indication> indications) {
-        this.client = client;
-        this.midwife = midwife;
-        this.maternityNurse = maternityNurse;
-        this.indications = indications;
+//    public ClientFile(Client client, Midwife midwife, MaternityNurse maternityNurse, List<Indication> indications) {
+//        this.client = client;
+//        this.midwife = midwife;
+//        this.maternityNurse = maternityNurse;
+//        this.indications = indications;
+//    }
+
+    public Admin getAdmin() {
+        return admin;
     }
 
-    public String getFileNumber() {
-        return fileNumber;
+    public long getClientFileId() {
+        return clientFileId;
     }
 
-    public void setFileNumber(String fileNumber) {
-        this.fileNumber = fileNumber;
+    public void setClientFileId(long clientFileId) {
+        this.clientFileId = clientFileId;
     }
 
     public LocalDate getDueDate() {
@@ -89,12 +121,12 @@ public class ClientFile {
         this.client = client;
     }
 
-    public Midwife getMidwife() {
-        return midwife;
+    public List<Midwife> getMidwives() {
+        return midwives;
     }
 
-    public void setMidwife(Midwife midwife) {
-        this.midwife = midwife;
+    public void setMidwives(List<Midwife> midwives) {
+        this.midwives = midwives;
     }
 
     public MaternityNurse getMaternityNurse() {
@@ -113,3 +145,4 @@ public class ClientFile {
         this.indications = indications;
     }
 }
+

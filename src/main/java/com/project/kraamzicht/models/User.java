@@ -4,14 +4,11 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
 
-@Entity
-@Table(name = "users")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@MappedSuperclass
 @DiscriminatorColumn(name = "user_type", discriminatorType = DiscriminatorType.STRING)
-public class User implements Serializable {
+@IdClass(AuthorityKey.class)
+public abstract class User implements Serializable {
 
     @Id
     @Column(nullable = false, unique = true)
@@ -19,6 +16,9 @@ public class User implements Serializable {
 
     @Column(nullable = false, length = 255)
     private String password;
+
+    @Column
+    private String authority;
 
     @Column(nullable = false)
     private String name;
@@ -44,14 +44,6 @@ public class User implements Serializable {
     @Column(nullable = false)
     private String role;
 
-    @OneToMany(
-            targetEntity = Authority.class,
-            mappedBy = "username",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true,
-            fetch = FetchType.EAGER)
-    private Set<Authority> authorities = new HashSet<>();
-
     private boolean enabled = true;
 
     private String apikey;
@@ -70,6 +62,14 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getAuthority() {
+        return authority;
+    }
+
+    public void setAuthority(String authority) {
+        this.authority = authority;
     }
 
     public String getName() {
@@ -152,15 +152,11 @@ public class User implements Serializable {
         this.enabled = enabled;
     }
 
-    public Set<Authority> getAuthorities() {
-        return authorities;
+    public String getApikey() {
+        return apikey;
     }
 
-    public void addAuthority(Authority authority) {
-        this.authorities.add(authority);
-    }
-
-    public void removeAuthority(Authority authority) {
-        this.authorities.remove(authority);
+    public void setApikey(String apikey) {
+        this.apikey = apikey;
     }
 }

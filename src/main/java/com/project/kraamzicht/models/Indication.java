@@ -8,8 +8,9 @@ import java.time.LocalDate;
 public class Indication {
 
     @Id
+    @Column(name = "indication_id",nullable = false, unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long indicationId;
 
     private String indicationDescription;
     private int hoursNeeded;
@@ -23,11 +24,21 @@ public class Indication {
     private ClientFile clientFile;
 
     @ManyToOne
-    @JoinColumn(name = "midwife_agb")
+    @JoinColumns({
+            @JoinColumn(name = "maternity_nurse_kckz", referencedColumnName = "kckz_number"),
+            @JoinColumn(name = "maternity_nurse_username", referencedColumnName = "username")
+    })
+    private MaternityNurse maternityNurse;
+
+    @ManyToOne
+    @JoinColumns({
+            @JoinColumn(name = "midwife_username", referencedColumnName = "username"),
+            @JoinColumn(name = "midwife_agb", referencedColumnName = "midwife_agb")
+    })
     private Midwife midwife;
 
-    public Long getId() {
-        return id;
+    public Long getIndicationId() {
+        return indicationId;
     }
 
     public String getIndicationDescription() {
@@ -59,15 +70,26 @@ public class Indication {
     }
 
     public void setIndicationDate(LocalDate indicationDate) {
+
         this.indicationDate = indicationDate;
     }
 
     public LocalDate getApprovalDate() {
+
         return approvalDate;
     }
 
     public void setApprovalDate(LocalDate approvalDate) {
+
         this.approvalDate = approvalDate;
+    }
+
+    public MaternityNurse getMaternityNurse() {
+        return maternityNurse;
+    }
+
+    public void setMaternityNurse(MaternityNurse maternityNurse) {
+        this.maternityNurse = maternityNurse;
     }
 
     public ClientFile getClientFile() {
@@ -86,3 +108,4 @@ public class Indication {
         this.midwife = midwife;
     }
 }
+

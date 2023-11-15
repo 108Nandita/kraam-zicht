@@ -1,4 +1,8 @@
 package com.project.kraamzicht.repositories;
 
-public class AdminRepository {
+import com.project.kraamzicht.models.Admin;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface AdminRepository extends JpaRepository<Admin, Long> {
 }
+
