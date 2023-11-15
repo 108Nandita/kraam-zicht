@@ -1,4 +1,8 @@
 package com.project.kraamzicht.repositories;
 
-public class UserRepository {
+import com.project.kraamzicht.models.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface UserRepository extends JpaRepository<User, String> {
 }
+

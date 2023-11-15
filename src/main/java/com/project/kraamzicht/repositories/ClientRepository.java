@@ -1,4 +1,7 @@
 package com.project.kraamzicht.repositories;
 
-public class ClientRepository {
+import com.project.kraamzicht.models.Client;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ClientRepository extends JpaRepository<Client, Long> {
 }
