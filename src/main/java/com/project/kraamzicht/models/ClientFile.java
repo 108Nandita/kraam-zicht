@@ -42,7 +42,7 @@ public class ClientFile {
     @JoinTable(
             name = "clientfile_midwife",
             joinColumns = {
-                    @JoinColumn(name = "client_file_id", referencedColumnName = "client_file_Id"),
+                    @JoinColumn(name = "client_file_id", referencedColumnName = "client_file_id"),
                     @JoinColumn(name = "client_id", referencedColumnName = "client_id")
             },
             inverseJoinColumns = {
@@ -57,7 +57,7 @@ public class ClientFile {
     })
     private MaternityNurse maternityNurse;
 
-    @OneToMany(mappedBy = "clientFile")
+    @OneToMany
     private List<Indication> indications;
 
     public ClientFile() {}

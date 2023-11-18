@@ -1,62 +1,27 @@
-package com.project.kraamzicht.models;
+package com.project.kraamzicht.dtos;
 
-import jakarta.persistence.*;
+import com.project.kraamzicht.models.Authority;
 
-import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.Set;
 
-@MappedSuperclass
-@DiscriminatorColumn(name = "user_type", discriminatorType = DiscriminatorType.STRING)
-//@IdClass(AuthorityKey.class)
-public class User implements Serializable {
-
-    @Id
-    @Column(nullable = false, unique = true)
+public class UserDto {
     private String username;
-
-    @Column(nullable = false, length = 255)
     private String password;
-
-    @Column
+    public Boolean enabled;
     private String authority;
-
-    @Column(nullable = false)
     private String name;
-
-    @Column(nullable = false)
     private String surname;
-
-    @Column
-    @Temporal(TemporalType.DATE)
     private LocalDate dob;
-
     private String address;
-
     private String postalcode;
-
     private String place;
-
     private String phoneNr;
-
-    @Column(nullable = false)
     private String email;
-
-    @Column(nullable = false)
     private String role;
-
-    private boolean enabled = true;
-
     private String apikey;
 
-    @OneToMany(
-            targetEntity = Authority.class,
-            mappedBy = "username",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true,
-            fetch = FetchType.EAGER)
-    private Set<Authority> authorities = new HashSet<>();
+    public Set<Authority> authorities;
 
     public String getUsername() {
         return username;
@@ -72,6 +37,13 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
+    public Boolean getEnabled() {
+        return enabled;
     }
 
     public String getAuthority() {
@@ -146,6 +118,10 @@ public class User implements Serializable {
         this.email = email;
     }
 
+    public Set<Authority> getAuthorities() {
+        return authorities;
+    }
+
     public String getRole() {
         return role;
     }
@@ -169,11 +145,7 @@ public class User implements Serializable {
     public void setApikey(String apikey) {
         this.apikey = apikey;
     }
-    public Set<Authority> getAuthorities() { return authorities; }
-    public void addAuthority(Authority authority) {
-        this.authorities.add(authority);
-    }
-    public void removeAuthority(Authority authority) {
-        this.authorities.remove(authority);
+    public void setAuthorities(Set<Authority> authorities) {
+        this.authorities = authorities;
     }
 }
