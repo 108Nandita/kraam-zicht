@@ -2,11 +2,9 @@
 
 
 
-    import com.project.kraamzicht.models.Client;
-    import jakarta.persistence.OneToMany;
     import jakarta.persistence.*;
     import java.util.List;
-
+    import java.util.Set;
 
     @Entity
     @Table(name = "admins")
@@ -18,17 +16,30 @@
         @Column(nullable = false, unique = true)
         private long personnelNumber;
 
-        @OneToMany
+        @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
         private List<MaternityNurse> createdMaternityNurses;
 
-        @OneToMany
+        @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
         private List<Client> createdClients;
 
-        @OneToMany
+        @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
         private List<ClientFile> createdClientFiles;
 
-        @OneToMany
+        @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
         private List<Midwife> createdMidwives;
+
+        @ManyToMany(cascade = CascadeType.ALL)
+        @JoinTable(
+                name = "admin_authority",
+                joinColumns = @JoinColumn(name = "admin_username"),
+                inverseJoinColumns = {
+                        @JoinColumn(name = "authority_username", referencedColumnName = "username"),
+                        @JoinColumn(name = "authority_name", referencedColumnName = "authority")
+                }
+        )
+        private Set<Authority> authorities;
+
+
         public long getPersonnelNumber() {
             return personnelNumber;
         }
@@ -69,4 +80,11 @@
             this.createdClientFiles = createdClientFiles;
         }
 
+        public Set<Authority> getAuthorities() {
+            return authorities;
+        }
+
+        public void setAuthorities(Set<Authority> authorities) {
+            this.authorities = authorities;
+        }
     }

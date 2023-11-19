@@ -9,19 +9,17 @@ import java.util.List;
 public class MaternityNurse extends User {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column( name = "kckz_number", nullable = false, unique = true)
+    @Column(name = "kckz_number", nullable = false, unique = true)
     private String kckzNumber;
-
 
     @ManyToOne
     @JoinColumn(name = "admin_username", referencedColumnName = "username")
     private Admin createdByAdmin;
 
-    @OneToMany
+    @OneToMany(mappedBy = "maternityNurse", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ClientFile> clientFiles;
 
-
-    @OneToMany
+    @OneToMany(mappedBy = "maternityNurse", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Indication> indications;
 
     public MaternityNurse() {
@@ -47,7 +45,6 @@ public class MaternityNurse extends User {
         this.kckzNumber = kckzNumber;
     }
 
-
     public List<Indication> getIndications() {
         return indications;
     }
@@ -64,4 +61,3 @@ public class MaternityNurse extends User {
         this.clientFiles = clientFiles;
     }
 }
-

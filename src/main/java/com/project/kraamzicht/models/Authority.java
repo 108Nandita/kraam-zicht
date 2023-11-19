@@ -50,4 +50,3 @@ public class Authority implements Serializable {
 //        this.user = user;
 //    }
 }
-
