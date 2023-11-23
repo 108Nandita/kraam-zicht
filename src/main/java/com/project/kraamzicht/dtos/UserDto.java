@@ -21,6 +21,30 @@ public class UserDto {
     private String role;
     private String apikey;
 
+    public UserDto() {
+    }
+
+    public UserDto(String username, String password, Boolean enabled, String authority,
+                   String name, String surname, LocalDate dob, String address,
+                   String postalcode, String place, String phoneNr, String email,
+                   String role, String apikey, Set<Authority> authorities) {
+        this.username = username;
+        this.password = password;
+        this.enabled = enabled;
+        this.authority = authority;
+        this.name = name;
+        this.surname = surname;
+        this.dob = dob;
+        this.address = address;
+        this.postalcode = postalcode;
+        this.place = place;
+        this.phoneNr = phoneNr;
+        this.email = email;
+        this.role = role;
+        this.apikey = apikey;
+        this.authorities = authorities;
+    }
+
     public Set<Authority> authorities;
 
     public String getUsername() {
@@ -128,14 +152,6 @@ public class UserDto {
 
     public void setRole(String role) {
         this.role = role;
-    }
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
     }
 
     public String getApikey() {

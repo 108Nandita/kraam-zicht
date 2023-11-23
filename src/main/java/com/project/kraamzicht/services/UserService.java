@@ -103,8 +103,6 @@ public class UserService {
         dto.setAddress(user.getAddress());
         dto.setPostalcode(user.getPostalcode());
         dto.setPlace(user.getPlace());
-        dto.setPhoneNr(user.getPhoneNr());
-        dto.setRole(user.getRole());
 
         return dto;
     }

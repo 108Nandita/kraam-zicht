@@ -1,15 +1,13 @@
 package com.project.kraamzicht.services;
 
 import com.project.kraamzicht.dtos.UserDto;
-import com.project.kraamzicht.models.Authority;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 
 @Service
@@ -21,23 +19,17 @@ public class CustomUserDetailsService implements UserDetailsService {
         this.userService = userService;
     }
 
-//    @Autowired
-//    private AuthorityService authorityService;
-
     @Override
     public UserDetails loadUserByUsername(String username) {
-        UserDto userDto = userService.getUser(username);
+        UserDto user = userService.getUser(username);
 
+        Set<GrantedAuthority> authorities = new HashSet<>();
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + user.getRole()));
 
-        String password = userDto.getPassword();
-
-        Set<Authority> authorities = userDto.getAuthorities();
-        List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-        for (Authority authority: authorities) {
-            grantedAuthorities.add(new SimpleGrantedAuthority(authority.getAuthority()));
-        }
-
-        return new org.springframework.security.core.userdetails.User(username, password, grantedAuthorities);
+        return new org.springframework.security.core.userdetails.User(
+                user.getUsername(),
+                user.getPassword(),
+                authorities
+        );
     }
-
 }

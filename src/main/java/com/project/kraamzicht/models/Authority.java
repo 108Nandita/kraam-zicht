@@ -11,7 +11,6 @@ public class Authority implements Serializable {
     @Column(nullable = false)
     private String username;
 
-    @Id
     @Column(nullable = false)
     private String authority;
 
