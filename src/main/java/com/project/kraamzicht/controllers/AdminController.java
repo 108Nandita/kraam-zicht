@@ -7,6 +7,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import com.project.kraamzicht.dtos.AdminDto;
+import com.project.kraamzicht.dtos.UserDto;
+import com.project.kraamzicht.services.AdminService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
@@ -26,9 +34,9 @@ public class AdminController {
 
     // Endpoint om een nieuwe gebruiker aan te maken
     @PostMapping("/createUser")
-    public ResponseEntity<String> createUser(@RequestBody UserDto userDto) {
-        adminService.createUser(userDto);
-        return ResponseEntity.ok("Gebruiker succesvol aangemaakt");
+    public ResponseEntity<String> createAdmin(@RequestBody AdminDto adminDto) {
+        adminService.createAdmin(adminDto);
+        return ResponseEntity.ok("Admin succesvol aangemaakt");
     }
 
     // Endpoint om alle gegevens van een specifieke gebruiker op te halen

@@ -5,6 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -21,14 +22,18 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) {
-        UserDto user = userService.getUser(username);
+        UserDto userDto = userService.getUser(username);
+
+        if (userDto == null) {
+            throw new UsernameNotFoundException("User not found with username: " + username);
+        }
 
         Set<GrantedAuthority> authorities = new HashSet<>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_" + user.getRole()));
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + userDto.getRole()));
 
         return new org.springframework.security.core.userdetails.User(
-                user.getUsername(),
-                user.getPassword(),
+                userDto.getUsername(),
+                userDto.getPassword(),
                 authorities
         );
     }

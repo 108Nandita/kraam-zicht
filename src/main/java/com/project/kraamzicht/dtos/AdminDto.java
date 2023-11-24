@@ -7,8 +7,16 @@ import com.project.kraamzicht.models.Midwife;
 
 import java.util.List;
 
+import com.project.kraamzicht.models.Admin;
+import com.project.kraamzicht.models.Authority;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Set;
+
 public class AdminDto extends UserDto {
     private long personnelNumber;
+    private boolean enabled;
     private List<MaternityNurseDto> createdMaternityNurses;
     private List<ClientDto> createdClients;
     private List<ClientFileDto> createdClientFiles;
@@ -20,6 +28,14 @@ public class AdminDto extends UserDto {
 
     public void setPersonnelNumber(long personnelNumber) {
         this.personnelNumber = personnelNumber;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public List<MaternityNurseDto> getCreatedMaternityNurses() {
@@ -56,10 +72,7 @@ public class AdminDto extends UserDto {
 
     public static AdminDto fromAdmin(Admin admin) {
         AdminDto dto = new AdminDto();
-        // Mapping from Admin to AdminDto
         dto.setPersonnelNumber(admin.getPersonnelNumber());
-        // Map other properties as needed
-        // Set common properties from User class
         dto.setUsername(admin.getUsername());
         dto.setPassword(admin.getPassword());
         dto.setEnabled(admin.isEnabled());
@@ -77,4 +90,26 @@ public class AdminDto extends UserDto {
 
         return dto;
     }
+
+    public Admin toAdmin() {
+        Admin admin = new Admin();
+        admin.setPersonnelNumber(this.getPersonnelNumber());
+        admin.setUsername(this.getUsername());
+        admin.setPassword(this.getPassword());
+        admin.setEnabled(this.isEnabled());
+        admin.setApikey(this.getApikey());
+        admin.setEmail(this.getEmail());
+        admin.setAuthorities(this.getAuthorities());
+        admin.setName(this.getName());
+        admin.setSurname(this.getSurname());
+        admin.setDob(this.getDob());
+        admin.setAddress(this.getAddress());
+        admin.setPostalcode(this.getPostalcode());
+        admin.setPlace(this.getPlace());
+        admin.setPhoneNr(this.getPhoneNr());
+        admin.setRole(this.getRole());
+
+        return admin;
+    }
+
 }

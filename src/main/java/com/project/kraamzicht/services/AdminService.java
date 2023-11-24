@@ -1,9 +1,12 @@
 package com.project.kraamzicht.services;
 
 
+import com.project.kraamzicht.dtos.AdminDto;
 import com.project.kraamzicht.dtos.UserDto;
+import com.project.kraamzicht.models.Admin;
 import com.project.kraamzicht.models.Authority;
-import com.project.kraamzicht.repositories.UserRepository;
+import com.project.kraamzicht.models.UserEntity;
+import com.project.kraamzicht.repositories.UserEntityRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -13,10 +16,10 @@ import java.util.Set;
 @Service
 public class AdminService {
 
-    private final UserRepository userRepository;
+    private final UserEntityRepository userEntityRepository;
 
-    public AdminService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public AdminService(UserEntityRepository userEntityRepository) {
+        this.userEntityRepository = userEntityRepository;
     }
 
     public List<UserDto> getAllUsers() {
@@ -24,8 +27,16 @@ public class AdminService {
         return null;
     }
 
-    public void createUser(UserDto userDto) {
-        // Implementatie voor het aanmaken van een nieuwe gebruiker
+//    public void createUser(UserDto userDto) {
+//        // Implementatie voor het aanmaken van een nieuwe gebruiker
+//    }
+
+
+    public void createAdmin(AdminDto adminDto) {
+        Admin admin = adminDto.toAdmin();
+        UserEntity userEntity = admin.toUserEntity(); // Maak UserEntity van Admin
+        admin.copyToUserEntity(userEntity); // Kopieer Admin-gegevens naar UserEntity
+        userEntityRepository.save(userEntity); // Sla de UserEntity op
     }
 
     public UserDto getUser(String username) {
