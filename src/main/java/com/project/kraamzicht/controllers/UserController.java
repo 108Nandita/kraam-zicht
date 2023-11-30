@@ -35,16 +35,16 @@ public class UserController {
         return ResponseEntity.ok().body(optionalUser);
     }
 
-    @PostMapping(value = "")
-    public ResponseEntity<UserDto> createUser(@RequestBody UserDto dto) {
-        String newUsername = userService.createUser(dto);
-        userService.addAuthority(newUsername, "ROLE_USER");
-
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{username}")
-                .buildAndExpand(newUsername).toUri();
-
-        return ResponseEntity.created(location).build();
-    }
+//    @PostMapping(value = "")
+//    public ResponseEntity<UserDto> createUser(@RequestBody UserDto dto) {
+//        String newUsername = userService.createUser(dto);
+//        userService.addAuthority(newUsername, "ROLE_USER");
+//
+//        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{username}")
+//                .buildAndExpand(newUsername).toUri();
+//
+//        return ResponseEntity.created(location).build();
+//    }
 
     @PutMapping(value = "/{username}")
     public ResponseEntity<UserDto> updateUser(@PathVariable("username") String username, @RequestBody UserDto dto) {
@@ -63,20 +63,20 @@ public class UserController {
         return ResponseEntity.ok().body(userService.getAuthorities(username));
     }
 
-    @PostMapping(value = "/{username}/authorities")
-    public ResponseEntity<Object> addUserAuthority(@PathVariable("username") String username, @RequestBody Map<String, Object> fields) {
-        try {
-            String authorityName = (String) fields.get("authority");
-            userService.addAuthority(username, authorityName);
-            return ResponseEntity.noContent().build();
-        } catch (Exception ex) {
-            throw new BadRequestException();
-        }
-    }
+//    @PostMapping(value = "/{username}/authorities")
+//    public ResponseEntity<Object> addUserAuthority(@PathVariable("username") String username, @RequestBody Map<String, Object> fields) {
+//        try {
+//            String authorityName = (String) fields.get("authority");
+//            userService.addAuthority(username, authorityName);
+//            return ResponseEntity.noContent().build();
+//        } catch (Exception ex) {
+//            throw new BadRequestException();
+//        }
+//    }
 
-    @DeleteMapping(value = "/{username}/authorities/{authority}")
-    public ResponseEntity<Object> deleteUserAuthority(@PathVariable("username") String username, @PathVariable("authority") String authority) {
-        userService.removeAuthority(username, authority);
-        return ResponseEntity.noContent().build();
-    }
+//    @DeleteMapping(value = "/{username}/authorities/{authority}")
+//    public ResponseEntity<Object> deleteUserAuthority(@PathVariable("username") String username, @PathVariable("authority") String authority) {
+//        userService.removeAuthority(username, authority);
+//        return ResponseEntity.noContent().build();
+//    }
 }

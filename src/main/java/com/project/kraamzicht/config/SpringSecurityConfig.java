@@ -1,11 +1,10 @@
 package com.project.kraamzicht.config;
 
 import com.project.kraamzicht.filter.JwtRequestFilter;
-import com.project.kraamzicht.services.ClientService;
-import com.project.kraamzicht.services.CustomUserDetailsService;
+import com.project.kraamzicht.repositories.UserEntityRepository;
+import com.project.kraamzicht.services.MyUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -13,24 +12,25 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration;
 
 @Configuration
 @EnableWebSecurity
 public class SpringSecurityConfig {
 
-    public final CustomUserDetailsService customUserDetailsService;
+    public final MyUserDetailsService myUserDetailsService;
 
     private final JwtRequestFilter jwtRequestFilter;
 
-    public SpringSecurityConfig(CustomUserDetailsService customUserDetailsService, JwtRequestFilter jwtRequestFilter) {
-        this.customUserDetailsService = customUserDetailsService;
+    private final UserEntityRepository userEntityRepository;
+
+    public SpringSecurityConfig(MyUserDetailsService myUserDetailsService, JwtRequestFilter jwtRequestFilter, UserEntityRepository userEntityRepository) {
+        this.myUserDetailsService = myUserDetailsService;
         this.jwtRequestFilter = jwtRequestFilter;
+        this.userEntityRepository = userEntityRepository;
     }
 
     // PasswordEncoderBean. Deze kun je overal in je applicatie injecteren waar nodig.
@@ -46,7 +46,7 @@ public class SpringSecurityConfig {
     public AuthenticationManager authenticationManager(HttpSecurity http, PasswordEncoder passwordEncoder) throws Exception {
         var auth = new DaoAuthenticationProvider();
         auth.setPasswordEncoder(passwordEncoder);
-        auth.setUserDetailsService(customUserDetailsService);
+        auth.setUserDetailsService(myUserDetailsService);
         return new ProviderManager(auth);
     }
 
@@ -65,7 +65,7 @@ public class SpringSecurityConfig {
 //                .requestMatchers("/**").permitAll()
                                         .requestMatchers("/authenticate").permitAll()
                                         .requestMatchers("/authenticated").authenticated()
-                                        .requestMatchers("/users/**").hasRole("ADMIN")
+                                        .requestMatchers("/admin/**").hasRole("ADMIN")
 //                                        .requestMatchers(HttpMethod.GET, "/clientFiles").hasAnyRole("MATERNITYNURSE", "MIDWIFE")
 //                                        .requestMatchers(HttpMethod.PUT, "/clientFiles/**").hasAnyRole("MATERNITYNURSE", "CLIENT")
 //                                        .requestMatchers(HttpMethod.GET, "/clientFiles/{clientId}")

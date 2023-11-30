@@ -2,7 +2,7 @@ package com.project.kraamzicht.controllers;
 
 import com.project.kraamzicht.dtos.AuthenticationRequest;
 import com.project.kraamzicht.dtos.AuthenticationResponse;
-import com.project.kraamzicht.services.CustomUserDetailsService;
+import com.project.kraamzicht.services.MyUserDetailsService;
 import com.project.kraamzicht.utils.JwtUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,11 +20,11 @@ public class AuthenticationController {
 
     private final AuthenticationManager authenticationManager;
 
-    private final CustomUserDetailsService userDetailsService;
+    private final MyUserDetailsService userDetailsService;
 
     private final JwtUtil jwtUtl;
 
-    public AuthenticationController(AuthenticationManager authenticationManager, CustomUserDetailsService userDetailsService, JwtUtil jwtUtl) {
+    public AuthenticationController(AuthenticationManager authenticationManager, MyUserDetailsService userDetailsService, JwtUtil jwtUtl) {
         this.authenticationManager = authenticationManager;
         this.userDetailsService = userDetailsService;
         this.jwtUtl = jwtUtl;

@@ -9,7 +9,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users")
-public class UserEntity extends User implements Serializable {
+public class UserEntity {
 
     @Id
     @Column(nullable = false, unique = true)
@@ -18,39 +18,39 @@ public class UserEntity extends User implements Serializable {
     @Column(nullable = false, length = 255)
     private String password;
 
-    @Column
-    private String authority;
-
-    @Column(nullable = false)
-    private String name;
-
-    @Column(nullable = false)
-    private String surname;
-
-    @Column
-    @Temporal(TemporalType.DATE)
-    private LocalDate dob;
-
-    private String address;
-
-    private String postalcode;
-
-    private String place;
-
-    private String phoneNr;
-
-    @Column(nullable = false)
-    private String email;
-
-    @Column(nullable = false)
-    private String role;
-
-    private boolean enabled = true;
-
-    private String apikey;
-
-    @OneToOne(mappedBy = "userEntity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Admin admin;
+//    @Column
+//    private String authority;
+//
+//    @Column(nullable = false)
+//    private String name;
+//
+//    @Column(nullable = false)
+//    private String surname;
+//
+//    @Column
+//    @Temporal(TemporalType.DATE)
+//    private LocalDate dob;
+//
+//    private String address;
+//
+//    private String postalcode;
+//
+//    private String place;
+//
+//    private String phoneNr;
+//
+//    @Column(nullable = false)
+//    private String email;
+//
+//    @Column(nullable = false)
+//    private String role;
+//
+//    private boolean enabled = true;
+//
+//    private String apikey;
+//
+//    @OneToOne(mappedBy = "userEntity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    private Admin admin;
 
     @OneToMany(
             targetEntity = Authority.class,
@@ -61,50 +61,45 @@ public class UserEntity extends User implements Serializable {
     private Set<Authority> authorities = new HashSet<>();
 
     // Getters and Setters for UserEntity specific fields
+//
+//    public Admin getAdmin() {
+//        return admin;
+//    }
+//
+//    public void setAdmin(Admin admin) {
+//        this.admin = admin;
+//        admin.setUserEntity(this);
+//    }
 
-    public Admin getAdmin() {
-        return admin;
-    }
-
-    public void setAdmin(Admin admin) {
-        this.admin = admin;
-        admin.setUserEntity(this);
-    }
-
-    @Override
     public String getUsername() {
         return username;
     }
 
-    @Override
     public void setUsername(String username) {
         this.username = username;
     }
 
-    @Override
     public String getPassword() {
         return password;
     }
 
-    @Override
     public void setPassword(String password) {
         this.password = password;
     }
 
-    // ... (repeat for other fields)
+//    // ... (repeat for other fields)
+//
 
-    @Override
     public Set<Authority> getAuthorities() {
         return authorities;
     }
 
-    @Override
     public void addAuthority(Authority authority) {
         this.authorities.add(authority);
     }
 
-    @Override
-    public void removeAuthority(Authority authority) {
-        this.authorities.remove(authority);
-    }
+//    @Override
+//    public void removeAuthority(Authority authority) {
+//        this.authorities.remove(authority);
+//    }
 }

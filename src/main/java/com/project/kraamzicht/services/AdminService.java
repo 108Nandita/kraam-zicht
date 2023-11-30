@@ -3,40 +3,51 @@ package com.project.kraamzicht.services;
 
 import com.project.kraamzicht.dtos.AdminDto;
 import com.project.kraamzicht.dtos.UserDto;
+import com.project.kraamzicht.exceptions.RecordNotFoundException;
 import com.project.kraamzicht.models.Admin;
 import com.project.kraamzicht.models.Authority;
-import com.project.kraamzicht.models.UserEntity;
-import com.project.kraamzicht.repositories.UserEntityRepository;
+import com.project.kraamzicht.models.MaternityNurse;
+import com.project.kraamzicht.repositories.AdminRepository;
+import com.project.kraamzicht.repositories.MaternityNurseRepository;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 @Service
 public class AdminService {
 
-    private final UserEntityRepository userEntityRepository;
 
-    public AdminService(UserEntityRepository userEntityRepository) {
-        this.userEntityRepository = userEntityRepository;
+    private final AdminRepository adminRepository; // Verander dit veld naar AdminRepository
+    private final MaternityNurseRepository maternityNurseRepository; // Verander dit veld naar AdminRepository
+
+    public AdminService(AdminRepository adminRepository, MaternityNurseRepository maternityNurseRepository) {
+        this.adminRepository = adminRepository;
+        this.maternityNurseRepository = maternityNurseRepository;
     }
-
     public List<UserDto> getAllUsers() {
         // Implementatie voor het ophalen van alle gebruikers
         return null;
     }
 
-//    public void createUser(UserDto userDto) {
-//        // Implementatie voor het aanmaken van een nieuwe gebruiker
-//    }
-
+    public List<UserDto> getUsers() {
+        List<UserDto> collection = new ArrayList<>();
+        List<Admin> adminList = adminRepository.findAll();
+        List<MaternityNurse> maternityNurseList = maternityNurseRepository.findAll();
+        for (Admin admin : adminList) {
+//            collection.add(fromAdmin(admin));
+//        }
+//        for (MaternityNurse maternityNurse : maternityNurseList) {
+//            collection.add(fromMaternityNurse(maternityNurse));
+        }
+        return collection;
+    }
 
     public void createAdmin(AdminDto adminDto) {
         Admin admin = adminDto.toAdmin();
-        UserEntity userEntity = admin.toUserEntity(); // Maak UserEntity van Admin
-        admin.copyToUserEntity(userEntity); // Kopieer Admin-gegevens naar UserEntity
-        userEntityRepository.save(userEntity); // Sla de UserEntity op
     }
 
     public UserDto getUser(String username) {
@@ -56,4 +67,22 @@ public class AdminService {
         return new UserDto(username, password, enabled, authority, name, surname, dob,
                 address, postalcode, place, phoneNr, email, role, apikey, authorities);
     }
+
+    public void addAuthority(String username, String authority) {
+        if (!adminRepository.existsById(Long.valueOf(username))) throw new UsernameNotFoundException(username);
+        Admin admin = adminRepository.findById(Long.valueOf(username)).orElseThrow(() -> new RecordNotFoundException("Admin not found"));
+        admin.addAuthority(new Authority(username, authority));
+        adminRepository.save(admin);
+    }
+
+    public void removeAuthority(String username, String authority) {
+        if (!adminRepository.existsById(Long.valueOf(username))) throw new UsernameNotFoundException(username);
+        Admin admin = adminRepository.findById(Long.valueOf(username)).orElseThrow(() -> new RecordNotFoundException("Admin not found"));
+        Authority authorityToRemove = admin.getAuthorities().stream()
+                .filter(a -> a.getAuthority().equalsIgnoreCase(authority))
+                .findAny().orElseThrow(() -> new RecordNotFoundException("Authority not found"));
+        admin.removeAuthority(authorityToRemove);
+        adminRepository.save(admin);
+    }
+
 }

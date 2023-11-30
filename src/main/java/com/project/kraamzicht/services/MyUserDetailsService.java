@@ -12,11 +12,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Service
-public class CustomUserDetailsService implements UserDetailsService {
+public class MyUserDetailsService implements UserDetailsService {
 
     private final UserService userService;
 
-    public CustomUserDetailsService(UserService userService) {
+
+    public MyUserDetailsService(UserService userService) {
         this.userService = userService;
     }
 

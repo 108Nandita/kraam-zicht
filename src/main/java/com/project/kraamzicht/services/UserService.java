@@ -70,40 +70,27 @@ public class UserService {
         return userDto.getAuthorities();
     }
 
-    public void addAuthority(String username, String authority) {
-        if (!userEntityRepository.existsById(username)) throw new UsernameNotFoundException(username);
-        UserEntity user = userEntityRepository.findById(username).get();
-        user.addAuthority(new Authority(username, authority));
-        userEntityRepository.save(user);
-    }
-
-    public void removeAuthority(String username, String authority) {
-        if (!userEntityRepository.existsById(username)) throw new UsernameNotFoundException(username);
-        UserEntity user = userEntityRepository.findById(username).get();
-        Authority authorityToRemove = user.getAuthorities().stream()
-                .filter(a -> a.getAuthority().equalsIgnoreCase(authority))
-                .findAny().orElseThrow(() -> new RecordNotFoundException("Authority not found"));
-        user.removeAuthority(authorityToRemove);
-        userEntityRepository.save(user);
-    }
-
-
+//    public void addAuthority(String username, String authority) {
+//        if (!userEntityRepository.existsById(username)) throw new UsernameNotFoundException(username);
+//        UserEntity user = userEntityRepository.findById(username).get();
+//        user.addAuthority(new Authority(username, authority));
+//        userEntityRepository.save(user);
+//    }
+//
+//    public void removeAuthority(String username, String authority) {
+//        if (!userEntityRepository.existsById(username)) throw new UsernameNotFoundException(username);
+//        UserEntity user = userEntityRepository.findById(username).get();
+//        Authority authorityToRemove = user.getAuthorities().stream()
+//                .filter(a -> a.getAuthority().equalsIgnoreCase(authority))
+//                .findAny().orElseThrow(() -> new RecordNotFoundException("Authority not found"));
+//        user.removeAuthority(authorityToRemove);
+//        userEntityRepository.save(user);
+//    }
 
     public static UserDto fromUser(UserEntity user) {
         var dto = new UserDto();
         dto.setUsername(user.getUsername());
         dto.setPassword(user.getPassword());
-        dto.setEnabled(user.isEnabled());
-        dto.setApikey(user.getApikey());
-        dto.setEmail(user.getEmail());
-        dto.setAuthorities(user.getAuthorities());
-        // Set additional properties from the extended User class
-        dto.setName(user.getName());
-        dto.setSurname(user.getSurname());
-        dto.setDob(user.getDob());
-        dto.setAddress(user.getAddress());
-        dto.setPostalcode(user.getPostalcode());
-        dto.setPlace(user.getPlace());
 
         return dto;
     }
@@ -112,18 +99,6 @@ public class UserService {
         var user = new UserEntity();
         user.setUsername(userDto.getUsername());
         user.setPassword(userDto.getPassword());
-        user.setEnabled(userDto.getEnabled());
-        user.setApikey(userDto.getApikey());
-        user.setEmail(userDto.getEmail());
-        // Set additional properties from the extended UserDto class
-        user.setName(userDto.getName());
-        user.setSurname(userDto.getSurname());
-        user.setDob(userDto.getDob());
-        user.setAddress(userDto.getAddress());
-        user.setPostalcode(userDto.getPostalcode());
-        user.setPlace(userDto.getPlace());
-        user.setPhoneNr(userDto.getPhoneNr());
-        user.setRole(userDto.getRole());
 
         return user;
     }

@@ -32,25 +32,25 @@
         @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
         private List<Midwife> createdMidwives;
 
-        @ManyToMany(cascade = CascadeType.ALL)
-        @JoinTable(
-                name = "admin_authority",
-                joinColumns = @JoinColumn(name = "admin_username"),
-                inverseJoinColumns = {
-                        @JoinColumn(name = "authority_username", referencedColumnName = "username"),
-                        @JoinColumn(name = "authority_name", referencedColumnName = "authority")
-                }
-        )
-        private Set<Authority> authorities;
+//        @ManyToMany(cascade = CascadeType.ALL)
+//        @JoinTable(
+//                name = "admin_authority",
+//                joinColumns = @JoinColumn(name = "admin_username"),
+//                inverseJoinColumns = {
+//                        @JoinColumn(name = "authority_username", referencedColumnName = "username"),
+//                        @JoinColumn(name = "authority_name", referencedColumnName = "authority")
+//                }
+//        )
+//        private Set<Authority> authorities;
 
         public UserEntity getUserEntity() {
             return userEntity;
         }
 
-        public void setUserEntity(UserEntity userEntity) {
-            this.userEntity = userEntity;
-            userEntity.setAdmin(this);
-        }
+//        public void setUserEntity(UserEntity userEntity) {
+//            this.userEntity = userEntity;
+//            userEntity.setAdmin(this);
+//        }
 
         public long getPersonnelNumber() {
             return personnelNumber;
@@ -92,35 +92,29 @@
             this.createdClientFiles = createdClientFiles;
         }
 
-        public Set<Authority> getAuthorities() {
-            return authorities;
+
+
+//        public void copyToUserEntity(UserEntity userEntity) {
+//            userEntity.setUsername(this.getUsername());
+//            userEntity.setPassword(this.getPassword());
+//            userEntity.setAuthority(this.getAuthority());
+//            userEntity.setName(this.getName());
+//            userEntity.setSurname(this.getSurname());
+//            userEntity.setDob(this.getDob());
+//            userEntity.setAddress(this.getAddress());
+//            userEntity.setPostalcode(this.getPostalcode());
+//            userEntity.setPlace(this.getPlace());
+//            userEntity.setPhoneNr(this.getPhoneNr());
+//            userEntity.setEmail(this.getEmail());
+//            userEntity.setRole(this.getRole());
+//            userEntity.setEnabled(this.isEnabled());
+//            userEntity.setApikey(this.getApikey());
         }
 
-        public void setAuthorities(Set<Authority> authorities) {
-            this.authorities = authorities;
-        }
+//        public UserEntity toUserEntity() {
+//            UserEntity userEntity = new UserEntity();
+//            copyToUserEntity(userEntity); // Gebruik de bestaande methode om gegevens te kopiëren
+//            return userEntity;
+//        }
 
-        public void copyToUserEntity(UserEntity userEntity) {
-            userEntity.setUsername(this.getUsername());
-            userEntity.setPassword(this.getPassword());
-            userEntity.setAuthority(this.getAuthority());
-            userEntity.setName(this.getName());
-            userEntity.setSurname(this.getSurname());
-            userEntity.setDob(this.getDob());
-            userEntity.setAddress(this.getAddress());
-            userEntity.setPostalcode(this.getPostalcode());
-            userEntity.setPlace(this.getPlace());
-            userEntity.setPhoneNr(this.getPhoneNr());
-            userEntity.setEmail(this.getEmail());
-            userEntity.setRole(this.getRole());
-            userEntity.setEnabled(this.isEnabled());
-            userEntity.setApikey(this.getApikey());
-        }
 
-        public UserEntity toUserEntity() {
-            UserEntity userEntity = new UserEntity();
-            copyToUserEntity(userEntity); // Gebruik de bestaande methode om gegevens te kopiëren
-            return userEntity;
-        }
-
-    }

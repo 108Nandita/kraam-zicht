@@ -78,7 +78,7 @@ public class AdminDto extends UserDto {
         dto.setEnabled(admin.isEnabled());
         dto.setApikey(admin.getApikey());
         dto.setEmail(admin.getEmail());
-        dto.setAuthorities(admin.getAuthorities());
+//        dto.setAuthorities(admin.getAuthorities());
         dto.setName(admin.getName());
         dto.setSurname(admin.getSurname());
         dto.setDob(admin.getDob());
@@ -99,7 +99,7 @@ public class AdminDto extends UserDto {
         admin.setEnabled(this.isEnabled());
         admin.setApikey(this.getApikey());
         admin.setEmail(this.getEmail());
-        admin.setAuthorities(this.getAuthorities());
+//        admin.setAuthorities(this.getAuthorities());
         admin.setName(this.getName());
         admin.setSurname(this.getSurname());
         admin.setDob(this.getDob());

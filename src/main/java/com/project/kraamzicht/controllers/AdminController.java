@@ -32,7 +32,7 @@ public class AdminController {
         return ResponseEntity.ok(users);
     }
 
-    // Endpoint om een nieuwe gebruiker aan te maken
+//     Endpoint om een nieuwe gebruiker aan te maken
     @PostMapping("/createUser")
     public ResponseEntity<String> createAdmin(@RequestBody AdminDto adminDto) {
         adminService.createAdmin(adminDto);
