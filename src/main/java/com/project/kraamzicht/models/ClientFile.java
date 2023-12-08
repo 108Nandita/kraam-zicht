@@ -62,12 +62,19 @@ public class ClientFile {
 
     public ClientFile() {}
 
-//    public ClientFile(Client client, Midwife midwife, MaternityNurse maternityNurse, List<Indication> indications) {
-//        this.client = client;
-//        this.midwife = midwife;
-//        this.maternityNurse = maternityNurse;
-//        this.indications = indications;
-//    }
+    public ClientFile(LocalDate dueDate, LocalDate deliveryDate, String deliveryPlace, String report,
+                      Admin admin, Client client, List<Midwife> midwives, MaternityNurse maternityNurse,
+                      List<Indication> indications) {
+        this.dueDate = dueDate;
+        this.deliveryDate = deliveryDate;
+        this.deliveryPlace = deliveryPlace;
+        this.report = report;
+        this.admin = admin;
+        this.client = client;
+        this.midwives = midwives;
+        this.maternityNurse = maternityNurse;
+        this.indications = indications;
+    }
 
     public Admin getAdmin() {
         return admin;

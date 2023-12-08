@@ -107,5 +107,12 @@ public class Indication {
     public void setMidwife(Midwife midwife) {
         this.midwife = midwife;
     }
+
+    public boolean isApproved() {
+        return approved;
+    }
+
+
+
 }
 

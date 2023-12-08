@@ -91,7 +91,7 @@ public class UserService {
         var dto = new UserDto();
         dto.setUsername(user.getUsername());
         dto.setPassword(user.getPassword());
-
+        dto.setAuthorities(user.getAuthorities());
         return dto;
     }
 

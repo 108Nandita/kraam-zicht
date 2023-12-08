@@ -7,9 +7,9 @@ import com.project.kraamzicht.models.MaternityNurse;
 import java.util.List;
 
 public class MaternityNurseDto extends UserDto {
-    private String kckzNumber;
-    private List<ClientFile> clientFiles;
-    private List<Indication> indications;
+//    private String kckzNumber;
+//    private List<ClientFile> clientFiles;
+//    private List<Indication> indications;
 
     public String getKckzNumber() {
         return kckzNumber;
@@ -48,7 +48,6 @@ public class MaternityNurseDto extends UserDto {
         dto.setEnabled(maternityNurse.isEnabled());
         dto.setApikey(maternityNurse.getApikey());
         dto.setEmail(maternityNurse.getEmail());
-        dto.setAuthorities(maternityNurse.getAuthorities());
         dto.setName(maternityNurse.getName());
         dto.setSurname(maternityNurse.getSurname());
         dto.setDob(maternityNurse.getDob());
@@ -56,7 +55,6 @@ public class MaternityNurseDto extends UserDto {
         dto.setPostalcode(maternityNurse.getPostalcode());
         dto.setPlace(maternityNurse.getPlace());
         dto.setPhoneNr(maternityNurse.getPhoneNr());
-        dto.setRole(maternityNurse.getRole());
 
         return dto;
     }

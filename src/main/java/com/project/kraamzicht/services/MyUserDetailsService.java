@@ -1,6 +1,7 @@
 package com.project.kraamzicht.services;
 
 import com.project.kraamzicht.dtos.UserDto;
+import com.project.kraamzicht.models.Authority;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -30,7 +31,9 @@ public class MyUserDetailsService implements UserDetailsService {
         }
 
         Set<GrantedAuthority> authorities = new HashSet<>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_" + userDto.getRole()));
+        for(Authority authority : userDto.getAuthorities()) {
+            authorities.add(new SimpleGrantedAuthority(authority.getAuthority()));
+        }
 
         return new org.springframework.security.core.userdetails.User(
                 userDto.getUsername(),

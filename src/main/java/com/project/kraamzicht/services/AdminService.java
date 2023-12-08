@@ -38,10 +38,10 @@ public class AdminService {
         List<Admin> adminList = adminRepository.findAll();
         List<MaternityNurse> maternityNurseList = maternityNurseRepository.findAll();
         for (Admin admin : adminList) {
-//            collection.add(fromAdmin(admin));
-//        }
-//        for (MaternityNurse maternityNurse : maternityNurseList) {
-//            collection.add(fromMaternityNurse(maternityNurse));
+            collection.add(fromAdmin(admin));
+        }
+        for (MaternityNurse maternityNurse : maternityNurseList) {
+            collection.add(fromMaternityNurse(maternityNurse));
         }
         return collection;
     }
@@ -63,9 +63,9 @@ public class AdminService {
     public UserDto createUserDto(String username, String password, Boolean enabled, String authority,
                                  String name, String surname, LocalDate dob, String address,
                                  String postalcode, String place, String phoneNr, String email,
-                                 String role, String apikey, Set<Authority> authorities) {
-        return new UserDto(username, password, enabled, authority, name, surname, dob,
-                address, postalcode, place, phoneNr, email, role, apikey, authorities);
+                                 String apikey, Set<Authority> authorities) {
+        return new UserDto(username, password, enabled, name, surname, dob,
+                address, postalcode, place, phoneNr, email, apikey, authorities);
     }
 
     public void addAuthority(String username, String authority) {
