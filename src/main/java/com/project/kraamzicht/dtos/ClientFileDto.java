@@ -13,18 +13,18 @@ public class ClientFileDto {
     private LocalDate deliveryDate;
     private String deliveryPlace;
     private String report;
-    private UserDto admin;
-    private UserDto client;
-    private List<UserDto> midwives;
-    private UserDto maternityNurse;
+    private AdminDto admin;
+    private ClientDto client;
+    private List<UserEntityDto> midwives;
+    private MaternityNurseDto maternityNurse;
     private List<IndicationDto> indications;
 
     public ClientFileDto() {
     }
 
     public ClientFileDto(long clientFileId, LocalDate dueDate, LocalDate deliveryDate, String deliveryPlace,
-                         String report, UserDto admin, UserDto client, List<UserDto> midwives,
-                         UserDto maternityNurse, List<IndicationDto> indications) {
+                         String report, AdminDto admin, ClientDto client, List<UserEntityDto> midwives,
+                         MaternityNurseDto maternityNurse, List<IndicationDto> indications) {
         this.clientFileId = clientFileId;
         this.dueDate = dueDate;
         this.deliveryDate = deliveryDate;
@@ -77,27 +77,27 @@ public class ClientFileDto {
         this.report = report;
     }
 
-    public UserDto getAdmin() {
+    public AdminDto getAdmin() {
         return admin;
     }
 
-    public void setAdmin(UserDto admin) {
+    public void setAdmin(AdminDto admin) {
         this.admin = admin;
     }
 
-    public UserDto getClient() {
+    public ClientDto getClient() {
         return client;
     }
 
-    public void setClient(UserDto client) {
+    public void setClient(ClientDto client) {
         this.client = client;
     }
 
-    public List<UserDto> getMidwives() {
+    public List<UserEntityDto> getMidwives() {
         return midwives;
     }
 
-    public void setMidwives(List<UserDto> midwives) {
+    public void setMidwives(List<UserEntityDto> midwives) {
         this.midwives = midwives;
     }
 
@@ -105,7 +105,7 @@ public class ClientFileDto {
         return maternityNurse;
     }
 
-    public void setMaternityNurse(UserDto maternityNurse) {
+    public void setMaternityNurse(MaternityNurseDto maternityNurse) {
         this.maternityNurse = maternityNurse;
     }
 
@@ -125,11 +125,11 @@ public class ClientFileDto {
         dto.setDeliveryPlace(clientFile.getDeliveryPlace());
         dto.setReport(clientFile.getReport());
 
-        // Mapping van Admin, Client en MaternityNurse naar UserDto
-        dto.setAdmin(UserDto.fromAdmin(clientFile.getAdmin()));
-        dto.setClient(UserDto.fromClient(clientFile.getClient()));
-        dto.setMidwives(clientFile.getMidwives().stream().map(UserDto::fromMidwife).collect(Collectors.toList()));
-        dto.setMaternityNurse(UserDto.fromMaternityNurse(clientFile.getMaternityNurse()));
+//        // Mapping van Admin, Client en MaternityNurse naar UserDto
+//        dto.setAdmin(UserDto.fromAdmin(clientFile.getAdmin()));
+//        dto.setClient(UserDto.fromClient(clientFile.getClient()));
+//        dto.setMidwives(clientFile.getMidwives().stream().map(UserDto::fromMidwife).collect(Collectors.toList()));
+//        dto.setMaternityNurse(UserDto.fromMaternityNurse(clientFile.getMaternityNurse()));
 
         // Mapping van Indication naar IndicationDto
         dto.setIndications(clientFile.getIndications().stream().map(IndicationDto::fromIndication).collect(Collectors.toList()));

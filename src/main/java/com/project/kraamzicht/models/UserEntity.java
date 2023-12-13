@@ -18,40 +18,6 @@ public class UserEntity {
     @Column(nullable = false, length = 255)
     private String password;
 
-//    @Column
-//    private String authority;
-//
-//    @Column(nullable = false)
-//    private String name;
-//
-//    @Column(nullable = false)
-//    private String surname;
-//
-//    @Column
-//    @Temporal(TemporalType.DATE)
-//    private LocalDate dob;
-//
-//    private String address;
-//
-//    private String postalcode;
-//
-//    private String place;
-//
-//    private String phoneNr;
-//
-//    @Column(nullable = false)
-//    private String email;
-//
-//    @Column(nullable = false)
-//    private String role;
-//
-//    private boolean enabled = true;
-//
-//    private String apikey;
-//
-//    @OneToOne(mappedBy = "userEntity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    private Admin admin;
-
     @OneToMany(
             targetEntity = Authority.class,
             mappedBy = "username",
@@ -59,17 +25,6 @@ public class UserEntity {
             orphanRemoval = true,
             fetch = FetchType.EAGER)
     private Set<Authority> authorities = new HashSet<>();
-
-    // Getters and Setters for UserEntity specific fields
-//
-//    public Admin getAdmin() {
-//        return admin;
-//    }
-//
-//    public void setAdmin(Admin admin) {
-//        this.admin = admin;
-//        admin.setUserEntity(this);
-//    }
 
     public String getUsername() {
         return username;
@@ -87,19 +42,19 @@ public class UserEntity {
         this.password = password;
     }
 
-//    // ... (repeat for other fields)
-//
-
     public Set<Authority> getAuthorities() {
         return authorities;
+    }
+
+    public void setAuthorities(Set<Authority> authorities) {
+        this.authorities = authorities;
     }
 
     public void addAuthority(Authority authority) {
         this.authorities.add(authority);
     }
 
-//    @Override
-//    public void removeAuthority(Authority authority) {
-//        this.authorities.remove(authority);
-//    }
+    public void removeAuthority(Authority authority) {
+        this.authorities.remove(authority);
+    }
 }

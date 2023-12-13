@@ -3,6 +3,7 @@ package com.project.kraamzicht.models;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Table(name = "authorities")
@@ -12,18 +13,16 @@ public class Authority implements Serializable {
     @Column(nullable = false)
     private String username;
 
-    @Column(nullable = false)
-    private String authority;
-
-//    @ManyToOne
-//    @JoinColumn(name = "username", referencedColumnName = "username", insertable = false, updatable = false)
-//    private User user;
+    @ElementCollection
+    @CollectionTable(name = "authorities", joinColumns = @JoinColumn(name = "username"))
+    @Column(name = "authority")
+    private Set<String> authorities;
 
     public Authority() {}
 
-    public Authority(String username, String authority) {
+    public Authority(String username, Set<String> authorities) {
         this.username = username;
-        this.authority = authority;
+        this.authorities = authorities;
     }
 
     public String getUsername() {
@@ -34,19 +33,11 @@ public class Authority implements Serializable {
         this.username = username;
     }
 
-    public String getAuthority() {
-        return authority;
+    public Set<String> getAuthorities() {
+        return authorities;
     }
 
-    public void setAuthority(String authority) {
-        this.authority = authority;
+    public void setAuthorities(Set<String> authorities) {
+        this.authorities = authorities;
     }
-
-//    public User getUser() {
-//        return user;
-//    }
-//
-//    public void setUser(User user) {
-//        this.user = user;
-//    }
 }

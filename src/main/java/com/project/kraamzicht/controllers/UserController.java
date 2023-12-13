@@ -1,16 +1,11 @@
 package com.project.kraamzicht.controllers;
 
-import com.project.kraamzicht.dtos.UserDto;
-import com.project.kraamzicht.exceptions.BadRequestException;
+import com.project.kraamzicht.dtos.UserEntityDto;
 import com.project.kraamzicht.services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 import java.util.List;
-import java.util.Map;
 
 @CrossOrigin
 @RestController
@@ -24,14 +19,14 @@ public class UserController {
     }
 
     @GetMapping(value = "")
-    public ResponseEntity<List<UserDto>> getUsers() {
-        List<UserDto> userDtos = userService.getUsers();
-        return ResponseEntity.ok().body(userDtos);
+    public ResponseEntity<List<UserEntityDto>> getUsers() {
+        List<UserEntityDto> userEntityDtos = userService.getUsers();
+        return ResponseEntity.ok().body(userEntityDtos);
     }
 
     @GetMapping(value = "/{username}")
-    public ResponseEntity<UserDto> getUser(@PathVariable("username") String username) {
-        UserDto optionalUser = userService.getUser(username);
+    public ResponseEntity<UserEntityDto> getUser(@PathVariable("username") String username) {
+        UserEntityDto optionalUser = userService.getUser(username);
         return ResponseEntity.ok().body(optionalUser);
     }
 
@@ -47,7 +42,7 @@ public class UserController {
 //    }
 
     @PutMapping(value = "/{username}")
-    public ResponseEntity<UserDto> updateUser(@PathVariable("username") String username, @RequestBody UserDto dto) {
+    public ResponseEntity<UserEntityDto> updateUser(@PathVariable("username") String username, @RequestBody UserEntityDto dto) {
         userService.updateUser(username, dto);
         return ResponseEntity.noContent().build();
     }
@@ -58,10 +53,10 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping(value = "/{username}/authorities")
-    public ResponseEntity<Object> getUserAuthorities(@PathVariable("username") String username) {
-        return ResponseEntity.ok().body(userService.getAuthorities(username));
-    }
+//    @GetMapping(value = "/{username}/authorities")
+//    public ResponseEntity<Object> getUserAuthorities(@PathVariable("username") String username) {
+//        return ResponseEntity.ok().body(userService.getAuthority(username));
+//    }
 
 //    @PostMapping(value = "/{username}/authorities")
 //    public ResponseEntity<Object> addUserAuthority(@PathVariable("username") String username, @RequestBody Map<String, Object> fields) {

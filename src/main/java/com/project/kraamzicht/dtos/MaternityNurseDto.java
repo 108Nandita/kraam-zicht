@@ -7,9 +7,9 @@ import com.project.kraamzicht.models.MaternityNurse;
 import java.util.List;
 
 public class MaternityNurseDto extends UserDto {
-//    private String kckzNumber;
-//    private List<ClientFile> clientFiles;
-//    private List<Indication> indications;
+    private String kckzNumber;
+    private List<ClientFile> clientFiles;
+    private List<Indication> indications;
 
     public String getKckzNumber() {
         return kckzNumber;
@@ -42,9 +42,6 @@ public class MaternityNurseDto extends UserDto {
         dto.setKckzNumber(maternityNurse.getKckzNumber());
         dto.setClientFiles(maternityNurse.getClientFiles());
         dto.setIndications(maternityNurse.getIndications());
-        // Set common properties from User class
-        dto.setUsername(maternityNurse.getUsername());
-        dto.setPassword(maternityNurse.getPassword());
         dto.setEnabled(maternityNurse.isEnabled());
         dto.setApikey(maternityNurse.getApikey());
         dto.setEmail(maternityNurse.getEmail());

@@ -1,10 +1,6 @@
 package com.project.kraamzicht.dtos;
 
-import com.project.kraamzicht.models.ClientFile;
 import com.project.kraamzicht.models.Indication;
-import com.project.kraamzicht.models.MaternityNurse;
-import com.project.kraamzicht.models.Midwife;
-import com.project.kraamzicht.dtos.ClientFileDto;
 
 import java.time.LocalDate;
 
@@ -17,12 +13,12 @@ public class IndicationDto {
     private LocalDate approvalDate;
     private ClientFileDto clientFile;
     private MaternityNurseDto maternityNurse;
-    private UserDto midwife;
+    private MidwifeDto midwife;
 
     public IndicationDto(Long indicationId, String indicationDescription, int hoursNeeded,
                          boolean approved, LocalDate indicationDate, LocalDate approvalDate,
                          ClientFileDto clientFile, MaternityNurseDto maternityNurse,
-                         UserDto midwife) {
+                         MidwifeDto midwife) {
         this.indicationId = indicationId;
         this.indicationDescription = indicationDescription;
         this.hoursNeeded = hoursNeeded;
@@ -89,7 +85,7 @@ public class IndicationDto {
         this.clientFile = clientFile;
     }
 
-    public UserDto getMaternityNurse() {
+    public MaternityNurseDto getMaternityNurse() {
         return maternityNurse;
     }
 
@@ -97,11 +93,11 @@ public class IndicationDto {
         this.maternityNurse = maternityNurse;
     }
 
-    public UserDto getMidwife() {
+    public MidwifeDto getMidwife() {
         return midwife;
     }
 
-    public void setMidwife(UserDto midwife) {
+    public void setMidwife(MidwifeDto midwife) {
         this.midwife = midwife;
     }
 
@@ -116,10 +112,10 @@ public class IndicationDto {
         dto.setIndicationDate(indication.getIndicationDate());
         dto.setApprovalDate(indication.getApprovalDate());
 
-        // Mapping van ClientFile, MaternityNurse en Midwife naar hun respectievelijke DTO's
-        dto.setClientFile(ClientFileDto.fromClientFiles(indication.getClientFile()));
-        dto.setMaternityNurse(MaternityNurseDto.fromMaternityNurse(indication.getMaternityNurse()));
-        dto.setMidwife(UserDto.fromMidwife(indication.getMidwife()));
+//        // Mapping van ClientFile, MaternityNurse en Midwife naar hun respectievelijke DTO's
+//        dto.setClientFile(ClientFileDto.fromClientFiles(indication.getClientFile()));
+//        dto.setMaternityNurse(UserDto.fromMaternityNurse(indication.getMaternityNurse()));
+//        dto.setMidwife(UserDto.fromMidwife(indication.getMidwife()));
 
         return dto;
     }

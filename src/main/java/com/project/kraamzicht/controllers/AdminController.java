@@ -1,6 +1,7 @@
 package com.project.kraamzicht.controllers;
 
 import com.project.kraamzicht.dtos.UserDto;
+import com.project.kraamzicht.dtos.UserEntityDto;
 import com.project.kraamzicht.services.AdminService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -8,12 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 import com.project.kraamzicht.dtos.AdminDto;
-import com.project.kraamzicht.dtos.UserDto;
-import com.project.kraamzicht.services.AdminService;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/admin")
@@ -41,15 +36,15 @@ public class AdminController {
 
     // Endpoint om alle gegevens van een specifieke gebruiker op te halen
     @GetMapping("/user/{username}")
-    public ResponseEntity<UserDto> getUser(@PathVariable String username) {
-        UserDto user = adminService.getUser(username);
+    public ResponseEntity<UserEntityDto> getUser(@PathVariable String username) {
+        UserEntityDto user = adminService.getUser(username);
         return ResponseEntity.ok(user);
     }
 
     // Endpoint om alle gegevens van alle gebruikers op te halen
     @GetMapping("/allUserData")
-    public ResponseEntity<List<UserDto>> getAllUserData() {
-        List<UserDto> users = adminService.getAllUserData();
+    public ResponseEntity<List<UserEntityDto>> getAllUserData() {
+        List<UserEntityDto> users = adminService.getAllUserData();
         return ResponseEntity.ok(users);
     }
 }

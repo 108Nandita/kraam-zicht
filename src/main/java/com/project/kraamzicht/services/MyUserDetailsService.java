@@ -1,6 +1,7 @@
 package com.project.kraamzicht.services;
 
 import com.project.kraamzicht.dtos.UserDto;
+import com.project.kraamzicht.dtos.UserEntityDto;
 import com.project.kraamzicht.models.Authority;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -9,7 +10,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -24,21 +27,17 @@ public class MyUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) {
-        UserDto userDto = userService.getUser(username);
+        UserEntityDto userEntityDto = userService.getUser(username);
 
-        if (userDto == null) {
-            throw new UsernameNotFoundException("User not found with username: " + username);
+
+        String password = userEntityDto.getPassword();
+
+        Set<Authority> authorities = userEntityDto.getAuthorities();
+        List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+        for (Authority authority: authorities) {
+            grantedAuthorities.add(new SimpleGrantedAuthority(authority.getAuthorities().toString()));
         }
 
-        Set<GrantedAuthority> authorities = new HashSet<>();
-        for(Authority authority : userDto.getAuthorities()) {
-            authorities.add(new SimpleGrantedAuthority(authority.getAuthority()));
-        }
-
-        return new org.springframework.security.core.userdetails.User(
-                userDto.getUsername(),
-                userDto.getPassword(),
-                authorities
-        );
+        return new org.springframework.security.core.userdetails.User(username, password, grantedAuthorities);
     }
-}
+    }

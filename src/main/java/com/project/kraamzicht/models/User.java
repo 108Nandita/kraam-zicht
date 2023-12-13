@@ -1,5 +1,6 @@
 package com.project.kraamzicht.models;
 
+import com.project.kraamzicht.dtos.UserEntityDto;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -19,8 +20,6 @@ public class User implements Serializable {
     @Column(nullable = false, length = 255)
     private String password;
 
-    @Column
-    private String authority;
 
     @Column(nullable = false)
     private String name;
@@ -43,7 +42,6 @@ public class User implements Serializable {
     @Column(nullable = false)
     private String email;
 
-    @Column(nullable = false)
     private String role;
 
     private boolean enabled = true;
@@ -72,14 +70,6 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getAuthority() {
-        return authority;
-    }
-
-    public void setAuthority(String authority) {
-        this.authority = authority;
     }
 
     public String getName() {
@@ -173,7 +163,7 @@ public class User implements Serializable {
     public void addAuthority(Authority authority) {
         this.authorities.add(authority);
     }
-    public void removeAuthority(Authority authority) {
+    public void removeAuthority(UserEntityDto authority) {
         this.authorities.remove(authority);
     }
 }
