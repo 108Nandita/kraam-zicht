@@ -2,6 +2,7 @@ package com.project.kraamzicht.dtos;
 
 
 import com.project.kraamzicht.models.Authority;
+import com.project.kraamzicht.models.UserEntity;
 
 import java.util.Set;
 
@@ -53,5 +54,15 @@ public class UserEntityDto {
 
     public void setAuthorities(Set<Authority> authorities) {
         this.authorities = authorities;
+    }
+
+    public static UserEntityDto fromUserEntity(UserEntity userEntity) {
+        UserEntityDto dto = new UserEntityDto();
+        dto.setUsername(userEntity.getUsername());
+        dto.setPassword(userEntity.getPassword());
+        dto.setEnabled(userEntity.getEnabled());
+        dto.setAuthorities(userEntity.getAuthorities());
+
+        return dto;
     }
 }

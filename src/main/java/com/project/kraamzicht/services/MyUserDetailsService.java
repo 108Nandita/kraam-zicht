@@ -35,7 +35,10 @@ public class MyUserDetailsService implements UserDetailsService {
         Set<Authority> authorities = userEntityDto.getAuthorities();
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
         for (Authority authority: authorities) {
-            grantedAuthorities.add(new SimpleGrantedAuthority(authority.getAuthorities().toString()));
+            for (String s: authority.getAuthorities()){
+                grantedAuthorities.add(new SimpleGrantedAuthority(s));
+            }
+
         }
 
         return new org.springframework.security.core.userdetails.User(username, password, grantedAuthorities);

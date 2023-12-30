@@ -1,17 +1,14 @@
 package com.project.kraamzicht.services;
 
 
-import com.project.kraamzicht.dtos.AdminDto;
-import com.project.kraamzicht.dtos.UserDto;
-import com.project.kraamzicht.dtos.UserEntityDto;
+import com.project.kraamzicht.dtos.*;
 import com.project.kraamzicht.exceptions.RecordNotFoundException;
 import com.project.kraamzicht.models.*;
-import com.project.kraamzicht.repositories.AdminRepository;
-import com.project.kraamzicht.repositories.ClientRepository;
-import com.project.kraamzicht.repositories.MaternityNurseRepository;
-import com.project.kraamzicht.repositories.MidwifeRepository;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import com.project.kraamzicht.repositories.*;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,23 +29,22 @@ public class AdminService {
 
     private final MidwifeRepository midwifeRepository;
 
+
     public AdminService(AdminRepository adminRepository, MaternityNurseRepository maternityNurseRepository, ClientRepository clientRepository, MidwifeRepository midwifeRepository) {
         this.adminRepository = adminRepository;
         this.maternityNurseRepository = maternityNurseRepository;
         this.clientRepository = clientRepository;
         this.midwifeRepository = midwifeRepository;
     }
-    public List<UserDto> getAllUsers() {
-        // Implementatie voor het ophalen van alle gebruikers
-        return null;
-    }
 
-    public List<UserDto> getUsers() {
+    public List<UserDto> getAllUsers() {
         List<UserDto> collection = new ArrayList<>();
         List<Admin> adminList = adminRepository.findAll();
         List<MaternityNurse> maternityNurseList = maternityNurseRepository.findAll();
         List<Client> clientList = clientRepository.findAll();
         List<Midwife> midwifeList = midwifeRepository.findAll();
+
+
         for (Admin admin : adminList) {
             collection.add(fromAdmin(admin));
         }
@@ -61,17 +57,72 @@ public class AdminService {
         for (Midwife midwife : midwifeList) {
             collection.add(fromMidwife(midwife));
         }
+
         return collection;
+    }
+
+    public List<UserDto> getAllAdmins() {
+        List<UserDto> collection = new ArrayList<>();
+        List<Admin> adminList = adminRepository.findAll();
+
+        for (Admin admin : adminList) {
+            collection.add(fromAdmin(admin));
+        }
+
+        return collection;
+    }
+
+    public AdminDto getAdmin(String username) {
+        Admin admin = adminRepository.findAdminByUsername(username);
+
+        if (admin == null) {
+
+            throw new RecordNotFoundException("Admin not found with username: " + username);
+        }
+        return AdminDto.fromAdmin(admin);
     }
 
 //    public void createAdmin(UserDto adminDto) {
 //        Admin admin = adminDto.toAdmin();
 //    }
 
-    public UserEntityDto getUser(String username) {
-        // Implementatie voor het ophalen van een specifieke gebruiker
-        return null;
+//    public UserEntityDto getUser(String username) {
+//        // Implementatie voor het ophalen van een specifieke gebruiker
+//        return null;
+//    }
+
+    public UserDto getUserByUsername(String username) {
+        Admin admin = adminRepository.findAdminByUsername(username);
+        if (admin != null) {
+            return AdminDto.fromAdmin(admin);
+        }
+
+        MaternityNurse maternityNurse = maternityNurseRepository.findMaternityNurseByUsername(username);
+        if (maternityNurse != null) {
+            return MaternityNurseDto.fromMaternityNurse(maternityNurse);
+        }
+
+        Midwife midwife = midwifeRepository.findMidwifeByUsername(username);
+        if (midwife != null) {
+            return MidwifeDto.fromMidwife(midwife);
+        }
+
+        Client client = clientRepository.findClientByUsername(username);
+        if (client != null) {
+            return ClientDto.fromClient(client);
+        }
+
+        throw new RecordNotFoundException("User not found with username: " + username);
     }
+
+
+    //     Endpoint om een nieuwe gebruiker aan te maken
+//    @PostMapping("/createUser")
+//    public ResponseEntity<String> createAdmin(@RequestBody AdminDto adminDto) {
+//        adminService.createAdmin(adminDto);
+//        return ResponseEntity.ok("Admin succesvol aangemaakt");
+//    }
+
 
     public List<UserEntityDto> getAllUserData() {
         // Implementatie voor het ophalen van alle gebruikersgegevens

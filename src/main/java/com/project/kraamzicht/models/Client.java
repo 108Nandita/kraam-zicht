@@ -1,14 +1,18 @@
 package com.project.kraamzicht.models;
 
 import jakarta.persistence.*;
+import org.springframework.data.annotation.Id;
+
 import java.util.List;
 
 @Entity
 @Table(name = "clients")
-@PrimaryKeyJoinColumn(name = "username")
+@PrimaryKeyJoinColumn(name = "clientId")
 @DiscriminatorValue("Client")
 public class Client extends User {
 
+
+    @Id
     @Column
     private String clientId;
 

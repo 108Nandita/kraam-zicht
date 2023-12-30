@@ -13,7 +13,7 @@ public class Authority implements Serializable {
     @Column(nullable = false)
     private String username;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "authorities", joinColumns = @JoinColumn(name = "username"))
     @Column(name = "authority")
     private Set<String> authorities;

@@ -6,12 +6,28 @@ import com.project.kraamzicht.dtos.UserDto;
 import java.util.List;
 
 public class AdminDto extends UserDto {
+
+    private String username;
     private long personnelNumber;
     private boolean enabled;
     private List<MaternityNurseDto> createdMaternityNurses;
     private List<ClientDto> createdClients;
     private List<ClientFileDto> createdClientFiles;
     private List<MidwifeDto> createdMidwives;
+
+    public AdminDto() {
+        // Default constructor
+    }
+
+    public AdminDto(String username, long personnelNumber, boolean enabled, List<MaternityNurseDto> createdMaternityNurses, List<ClientDto> createdClients, List<ClientFileDto> createdClientFiles, List<MidwifeDto> createdMidwives) {
+        this.username = username;
+        this.personnelNumber = personnelNumber;
+        this.enabled = enabled;
+        this.createdMaternityNurses = createdMaternityNurses;
+        this.createdClients = createdClients;
+        this.createdClientFiles = createdClientFiles;
+        this.createdMidwives = createdMidwives;
+    }
 
     public long getPersonnelNumber() {
         return personnelNumber;
@@ -24,6 +40,15 @@ public class AdminDto extends UserDto {
     public boolean isEnabled() {
         return enabled;
     }
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
@@ -63,10 +88,12 @@ public class AdminDto extends UserDto {
 
     public static AdminDto fromAdmin(Admin admin) {
         AdminDto dto = new AdminDto();
+        dto.setUsername(admin.getUsername());
         dto.setPersonnelNumber(admin.getPersonnelNumber());
         dto.setEnabled(admin.isEnabled());
         dto.setApikey(admin.getApikey());
         dto.setEmail(admin.getEmail());
+        dto.setRole(admin.getRole());
         dto.setName(admin.getName());
         dto.setSurname(admin.getSurname());
         dto.setDob(admin.getDob());
@@ -85,7 +112,8 @@ public class AdminDto extends UserDto {
         admin.setEnabled(this.isEnabled());
         admin.setApikey(this.getApikey());
         admin.setEmail(this.getEmail());
-//        admin.setAuthorities(this.getAuthorities());
+        admin.setRole(this.getRole());
+      //  admin.setAuthorities(this.getAuthorities());
         admin.setName(this.getName());
         admin.setSurname(this.getSurname());
         admin.setDob(this.getDob());

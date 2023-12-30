@@ -18,6 +18,8 @@ public class UserEntity {
     @Column(nullable = false, length = 255)
     private String password;
 
+    private Boolean enabled;
+
     @OneToMany(
             targetEntity = Authority.class,
             mappedBy = "username",
@@ -25,6 +27,17 @@ public class UserEntity {
             orphanRemoval = true,
             fetch = FetchType.EAGER)
     private Set<Authority> authorities = new HashSet<>();
+
+    public UserEntity(String username, String password, Boolean enabled, Set<Authority> authorities) {
+        this.username = username;
+        this.password = password;
+        this.enabled = enabled;
+        this.authorities = authorities;
+    }
+
+    public UserEntity() {
+    }
+
 
     public String getUsername() {
         return username;
@@ -40,6 +53,14 @@ public class UserEntity {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
     }
 
     public Set<Authority> getAuthorities() {
