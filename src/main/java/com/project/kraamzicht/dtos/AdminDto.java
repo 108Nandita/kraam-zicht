@@ -89,11 +89,12 @@ public class AdminDto extends UserDto {
     public static AdminDto fromAdmin(Admin admin) {
         AdminDto dto = new AdminDto();
         dto.setUsername(admin.getUsername());
+//        dto.setPassword(admin.getPassword());
         dto.setPersonnelNumber(admin.getPersonnelNumber());
         dto.setEnabled(admin.isEnabled());
         dto.setApikey(admin.getApikey());
         dto.setEmail(admin.getEmail());
-        dto.setRole(admin.getRole());
+//        dto.setRole(admin.getRole());
         dto.setName(admin.getName());
         dto.setSurname(admin.getSurname());
         dto.setDob(admin.getDob());
@@ -108,11 +109,13 @@ public class AdminDto extends UserDto {
 
     public Admin toAdmin() {
         Admin admin = new Admin();
+        admin.setUsername(this.getUsername());
+//        admin.setPassword(this.getPassword());
         admin.setPersonnelNumber(this.getPersonnelNumber());
         admin.setEnabled(this.isEnabled());
         admin.setApikey(this.getApikey());
         admin.setEmail(this.getEmail());
-        admin.setRole(this.getRole());
+//        admin.setRole(this.getRole());
       //  admin.setAuthorities(this.getAuthorities());
         admin.setName(this.getName());
         admin.setSurname(this.getSurname());
@@ -123,5 +126,30 @@ public class AdminDto extends UserDto {
         admin.setPhoneNr(this.getPhoneNr());
         return admin;
     }
+    public static Admin toAdmin(AdminDto adminDto) {
+        Admin admin = new Admin();
+        admin.setUsername(adminDto.getUsername());
+        admin.setPersonnelNumber(adminDto.getPersonnelNumber());
+        admin.setEnabled(adminDto.isEnabled());
+        admin.setApikey(adminDto.getApikey());
+        admin.setEmail(adminDto.getEmail());
+//        admin.setRole(adminDto.getRole());
+        admin.setName(adminDto.getName());
+        admin.setSurname(adminDto.getSurname());
+        admin.setDob(adminDto.getDob());
+        admin.setAddress(adminDto.getAddress());
+        admin.setPostalcode(adminDto.getPostalcode());
+        admin.setPlace(adminDto.getPlace());
+        admin.setPhoneNr(adminDto.getPhoneNr());
+        return admin;
+    }
 
+
+//    public String getPassword() {
+//        return password;
+//    }
+//
+//    public void setPassword(String password) {
+//        this.password = password;
+//    }
 }

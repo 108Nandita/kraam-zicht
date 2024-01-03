@@ -1,10 +1,15 @@
 package com.project.kraamzicht.controllers;
 
+import com.project.kraamzicht.dtos.AdminDto;
 import com.project.kraamzicht.dtos.UserEntityDto;
+import com.project.kraamzicht.models.UserEntity;
+import com.project.kraamzicht.services.AdminService;
 import com.project.kraamzicht.services.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @CrossOrigin
@@ -30,7 +35,7 @@ public class UserController {
         return ResponseEntity.ok().body(optionalUser);
     }
 
-//    @PostMapping(value = "")
+    //    @PostMapping(value = "")
 //    public ResponseEntity<UserDto> createUser(@RequestBody UserDto dto) {
 //        String newUsername = userService.createUser(dto);
 //        userService.addAuthority(newUsername, "ROLE_USER");
@@ -41,16 +46,27 @@ public class UserController {
 //        return ResponseEntity.created(location).build();
 //    }
 
-    @PutMapping(value = "/{username}")
-    public ResponseEntity<UserEntityDto> updateUser(@PathVariable("username") String username, @RequestBody UserEntityDto dto) {
-        userService.updateUser(username, dto);
-        return ResponseEntity.noContent().build();
-    }
+    @PostMapping("/createUser")
+    public ResponseEntity<UserEntityDto> createUser(@RequestBody UserEntityDto dto) {;
 
-    @DeleteMapping(value = "/{username}")
-    public ResponseEntity<Object> deleteUser(@PathVariable("username") String username) {
-        userService.deleteUser(username);
-        return ResponseEntity.noContent().build();
+        // Let op: het password van een nieuwe gebruiker wordt in deze code nog niet encrypted opgeslagen.
+        // Je kan dus (nog) niet inloggen met een nieuwe user.
+
+        String newUsername = UserService.createUserEntity((UserEntityDto) dto);
+        userService.addAuthority(newUsername, "ROLE_ADMIN");
+
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{username}")
+                .buildAndExpand(newUsername).toUri();
+
+        return ResponseEntity.created(location).build();
+
+//    @PostMapping("/create")
+//    public ResponseEntity<UserEntity> createUser(@RequestBody UserEntityDto dto) {
+//        // Creëer een nieuwe gebruiker met behulp van de UserService
+//        UserEntity createdUser = userService.createUser(request.getUsername(), request.getPassword(), request.getEnabled());
+//
+//        // Retourneer de aangemaakte gebruiker als reactie
+//        return ResponseEntity.ok(createdUser);
     }
 
 //    @GetMapping(value = "/{username}/authorities")
@@ -68,6 +84,20 @@ public class UserController {
 //            throw new BadRequestException();
 //        }
 //    }
+
+
+    @PutMapping(value = "/{username}")
+    public ResponseEntity<UserEntityDto> updateUser(@PathVariable("username") String username, @RequestBody UserEntityDto dto) {
+        userService.updateUser(username, dto);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping(value = "/{username}")
+    public ResponseEntity<Object> deleteUser(@PathVariable("username") String username) {
+        userService.deleteUser(username);
+        return ResponseEntity.noContent().build();
+    }
+
 
 //    @DeleteMapping(value = "/{username}/authorities/{authority}")
 //    public ResponseEntity<Object> deleteUserAuthority(@PathVariable("username") String username, @PathVariable("authority") String authority) {

@@ -1,8 +1,10 @@
 package com.project.kraamzicht.services;
 import com.project.kraamzicht.dtos.UserEntityDto;
 import com.project.kraamzicht.exceptions.RecordNotFoundException;
+import com.project.kraamzicht.models.Authority;
 import com.project.kraamzicht.models.UserEntity;
 import com.project.kraamzicht.repositories.UserEntityRepository;
+import com.project.kraamzicht.utils.RandomStringGenerator;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -10,19 +12,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static com.project.kraamzicht.dtos.UserEntityDto.fromUserEntity;
+import static com.project.kraamzicht.dtos.UserEntityDto.toUserEntity;
+
 @Service
 public class UserService {
-    private final UserEntityRepository userEntityRepository;
+    private static UserEntityRepository userEntityRepository = null;
 
     public UserService(UserEntityRepository userEntityRepository) {
-        this.userEntityRepository = userEntityRepository;
+        UserService.userEntityRepository = userEntityRepository;
     }
 
     public List<UserEntityDto> getUsers() {
         List<UserEntityDto> collection = new ArrayList<>();
         List<UserEntity> list = userEntityRepository.findAll();
         for (UserEntity user : list) {
-            collection.add(fromUser(user));
+            collection.add(fromUserEntity(user));
         }
         return collection;
     }
@@ -31,7 +36,7 @@ public class UserService {
         UserEntityDto dto = new UserEntityDto();
         Optional<UserEntity> user = userEntityRepository.findById(username);
         if (user.isPresent()) {
-            dto = fromUser(user.get());
+            dto = fromUserEntity(user.get());
         } else {
             throw new UsernameNotFoundException(username);
         }
@@ -42,12 +47,12 @@ public class UserService {
         return userEntityRepository.existsById(username);
     }
 
-//    public String createUser(UserEntityDto userEntityDto) {
-//        String randomString = RandomStringGenerator.generateAlphaNumeric(20);
-//        userEntityDto.setApikey(randomString);
-//        UserEntity newUser = userEntityRepository.save(toUser(userEntityDto));
-//        return newUser.getUsername();
-//    }
+    public static String createUserEntity(UserEntityDto userEntityDto) {
+        String randomString = RandomStringGenerator.generateAlphaNumeric(20);
+        userEntityDto.setApikey(randomString);
+        UserEntity newUserEntity = userEntityRepository.save(toUserEntity(userEntityDto));
+        return newUserEntity.getUsername();
+    }
 
     public void deleteUser(String username) {
         userEntityRepository.deleteById(username);
@@ -63,7 +68,7 @@ public class UserService {
     public String getAuthorities(String username) {
         if (!userEntityRepository.existsById(username)) throw new UsernameNotFoundException(username);
         UserEntity user = userEntityRepository.findById(username).get();
-        UserEntityDto userEntityDto = fromUser(user);
+        UserEntityDto userEntityDto = fromUserEntity(user);
 
         String authoritiesAsString = userEntityDto.getAuthorities().toString();
 
@@ -87,19 +92,12 @@ public class UserService {
 //        userEntityRepository.save(user);
 //    }
 
-    public static UserEntityDto fromUser(UserEntity user) {
-        var dto = new UserEntityDto();
-        dto.setUsername(user.getUsername());
-        dto.setPassword(user.getPassword());
-        dto.setAuthorities(user.getAuthorities());
-        return dto;
+    public void addAuthority(String username, String authority) {
+        if (!userEntityRepository.existsById(String.valueOf(Long.valueOf(username)))) throw new UsernameNotFoundException(username);
+        UserEntity user = userEntityRepository.findById(String.valueOf(Long.valueOf(username))).orElseThrow(() -> new RecordNotFoundException("Admin not found"));
+        user.addAuthority(new Authority(username, authority));
+        userEntityRepository.save(user);
     }
 
-    public UserEntity toUser(UserEntityDto userEntityDto) {
-        var user = new UserEntity();
-        user.setUsername(userEntityDto.getUsername());
-        user.setPassword(userEntityDto.getPassword());
 
-        return user;
-    }
 }

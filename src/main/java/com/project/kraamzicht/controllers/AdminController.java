@@ -1,24 +1,31 @@
 package com.project.kraamzicht.controllers;
 
 import com.project.kraamzicht.dtos.UserDto;
-import com.project.kraamzicht.dtos.UserEntityDto;
+import com.project.kraamzicht.dtos.AdminDto;
 import com.project.kraamzicht.exceptions.RecordNotFoundException;
+import com.project.kraamzicht.models.Admin;
+import com.project.kraamzicht.repositories.AdminRepository;
 import com.project.kraamzicht.services.AdminService;
+import com.project.kraamzicht.utils.RandomStringGenerator;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 
 import com.project.kraamzicht.dtos.AdminDto;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
 
     private final AdminService adminService;
+    private final AdminRepository adminRepository;
 
-    public AdminController(AdminService adminService) {
+    public AdminController(AdminService adminService, AdminRepository adminRepository) {
         this.adminService = adminService;
+        this.adminRepository = adminRepository;
     }
 
     // Endpoint om alle gebruikers op te halen
@@ -63,10 +70,27 @@ public class AdminController {
         }
     }
 
-    // Endpoint om alle gegevens van alle gebruikers op te halen
-    @GetMapping("/allUserData")
-    public ResponseEntity<List<UserEntityDto>> getAllUserData() {
-        List<UserEntityDto> users = adminService.getAllUserData();
-        return ResponseEntity.ok(users);
+    @PostMapping("/createAdmin")
+    public ResponseEntity<AdminDto> createUser(@RequestBody AdminDto dto) {;
+
+        // Let op: het password van een nieuwe gebruiker wordt in deze code nog niet encrypted opgeslagen.
+        // Je kan dus (nog) niet inloggen met een nieuwe user.
+
+        String newUsername = AdminService.createAdmin((AdminDto) dto);
+        adminService.addAuthority(newUsername, "ROLE_ADMIN");
+
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{username}")
+                .buildAndExpand(newUsername).toUri();
+
+        return ResponseEntity.created(location).build();
     }
+
+
+
+
+
+
+
+
+
 }

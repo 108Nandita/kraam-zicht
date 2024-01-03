@@ -56,13 +56,35 @@ public class UserEntityDto {
         this.authorities = authorities;
     }
 
+//    public static UserEntityDto fromUserEntity(UserEntity userEntity) {
+//        UserEntityDto dto = new UserEntityDto();
+//        dto.setUsername(userEntity.getUsername());
+//        dto.setPassword(userEntity.getPassword());
+//        dto.setEnabled(userEntity.getEnabled());
+//        dto.setAuthorities(userEntity.getAuthorities());
+//
+//        return dto;
+//    }
+
     public static UserEntityDto fromUserEntity(UserEntity userEntity) {
         UserEntityDto dto = new UserEntityDto();
         dto.setUsername(userEntity.getUsername());
         dto.setPassword(userEntity.getPassword());
-        dto.setEnabled(userEntity.getEnabled());
         dto.setAuthorities(userEntity.getAuthorities());
-
+        dto.setEnabled(userEntity.getEnabled());
         return dto;
+    }
+
+    public static UserEntity toUserEntity(UserEntityDto userEntityDto) {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setUsername(userEntityDto.getUsername());
+        userEntity.setPassword(userEntityDto.getPassword());
+        userEntity.setAuthorities(userEntityDto.getAuthorities());
+        userEntity.setEnabled(userEntityDto.getEnabled());
+
+        return userEntity;
+    }
+
+    public void setApikey(String randomString) {
     }
 }

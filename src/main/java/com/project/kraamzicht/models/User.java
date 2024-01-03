@@ -14,11 +14,11 @@ import java.util.Set;
 public class User implements Serializable {
 
     @Id
-    @Column(nullable = false, unique = true)
+    @Column(nullable = true, unique = true)
     private String username;
 
-    @Column(nullable = false, length = 255)
-    private String password;
+//    @Column(nullable = true, length = 255)
+//    private String password;
 
 
     @Column(nullable = false)
@@ -64,13 +64,13 @@ public class User implements Serializable {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
+//    public String getPassword() {
+//        return password;
+//    }
+//
+//    public void setPassword(String password) {
+//        this.password = password;
+//    }
 
     public String getName() {
         return name;
@@ -166,4 +166,6 @@ public class User implements Serializable {
     public void removeAuthority(UserEntityDto authority) {
         this.authorities.remove(authority);
     }
+
+
 }

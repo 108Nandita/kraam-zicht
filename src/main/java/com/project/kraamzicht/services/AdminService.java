@@ -2,10 +2,15 @@ package com.project.kraamzicht.services;
 
 
 import com.project.kraamzicht.dtos.*;
+import com.project.kraamzicht.dtos.AdminDto;
 import com.project.kraamzicht.exceptions.RecordNotFoundException;
 import com.project.kraamzicht.models.*;
 import com.project.kraamzicht.repositories.*;
+import com.project.kraamzicht.utils.RandomStringGenerator;
+import org.jetbrains.annotations.NotNull;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.project.kraamzicht.dtos.AdminDto.fromAdmin;
+import static com.project.kraamzicht.dtos.AdminDto.toAdmin;
 import static com.project.kraamzicht.dtos.ClientDto.fromClient;
 import static com.project.kraamzicht.dtos.MaternityNurseDto.fromMaternityNurse;
 import static com.project.kraamzicht.dtos.MidwifeDto.fromMidwife;
@@ -22,7 +28,7 @@ import static com.project.kraamzicht.dtos.MidwifeDto.fromMidwife;
 public class AdminService {
 
 
-    private final AdminRepository adminRepository;
+    private static AdminRepository adminRepository;
     private final MaternityNurseRepository maternityNurseRepository;
 
     private final ClientRepository clientRepository;
@@ -116,13 +122,26 @@ public class AdminService {
     }
 
 
-    //     Endpoint om een nieuwe gebruiker aan te maken
-//    @PostMapping("/createUser")
-//    public ResponseEntity<String> createAdmin(@RequestBody AdminDto adminDto) {
-//        adminService.createAdmin(adminDto);
-//        return ResponseEntity.ok("Admin succesvol aangemaakt");
+     //    Endpoint om een nieuwe gebruiker aan te maken
+
+//    public String createAdmin(@NotNull AdminDto adminDto) {
+//        String randomString = RandomStringGenerator.generateAlphaNumeric(20);
+//        adminDto.setApikey(randomString);
+//
+//        // Hier roep je de toAdmin-methode aan op de AdminDto
+//        Admin newAdmin = adminDto.toAdmin();
+//
+//        Admin savedAdmin = adminRepository.save(newAdmin);
+//        return savedAdmin.getUsername();
 //    }
 
+
+    public static String createAdmin(AdminDto adminDto) {
+        String randomString = RandomStringGenerator.generateAlphaNumeric(20);
+        adminDto.setApikey(randomString);
+        Admin newAdmin = adminRepository.save(toAdmin(adminDto));
+        return newAdmin.getUsername();
+    }
 
     public List<UserEntityDto> getAllUserData() {
         // Implementatie voor het ophalen van alle gebruikersgegevens
@@ -131,12 +150,12 @@ public class AdminService {
 
 
 
-//    public void addAuthority(String username, String authority) {
-//        if (!adminRepository.existsById(Long.valueOf(username))) throw new UsernameNotFoundException(username);
-//        Admin admin = adminRepository.findById(Long.valueOf(username)).orElseThrow(() -> new RecordNotFoundException("Admin not found"));
-//        admin.addAuthority(new Authority(username, authority));
-//        adminRepository.save(admin);
-//    }
+    public void addAuthority(String username, String authority) {
+        if (!adminRepository.existsById(String.valueOf(Long.valueOf(username)))) throw new UsernameNotFoundException(username);
+        Admin admin = adminRepository.findById(String.valueOf(Long.valueOf(username))).orElseThrow(() -> new RecordNotFoundException("Admin not found"));
+        admin.addAuthority(new Authority(username, authority));
+        adminRepository.save(admin);
+    }
 
 //    public void removeAuthority(String username, String authority) {
 //        if (!adminRepository.existsById(Long.valueOf(username))) throw new UsernameNotFoundException(username);
@@ -148,7 +167,5 @@ public class AdminService {
 //        adminRepository.save(admin);
 //    }
 
-    public void createAdmin(AdminDto adminDto) {
 
-    }
 }

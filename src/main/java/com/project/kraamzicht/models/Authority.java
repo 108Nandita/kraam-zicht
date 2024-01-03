@@ -25,6 +25,9 @@ public class Authority implements Serializable {
         this.authorities = authorities;
     }
 
+    public Authority(String username, String authority) {
+    }
+
     public String getUsername() {
         return username;
     }
