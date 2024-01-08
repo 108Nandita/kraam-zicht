@@ -1,9 +1,7 @@
 package com.project.kraamzicht.controllers;
 
-import com.project.kraamzicht.dtos.AdminDto;
 import com.project.kraamzicht.dtos.UserEntityDto;
 import com.project.kraamzicht.models.UserEntity;
-import com.project.kraamzicht.services.AdminService;
 import com.project.kraamzicht.services.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,8 +28,8 @@ public class UserController {
     }
 
     @GetMapping(value = "/{username}")
-    public ResponseEntity<UserEntityDto> getUser(@PathVariable("username") String username) {
-        UserEntityDto optionalUser = userService.getUser(username);
+    public ResponseEntity<UserEntity> getUser(@PathVariable("username") String username) {
+        UserEntity optionalUser = userService.getUser(username);
         return ResponseEntity.ok().body(optionalUser);
     }
 
@@ -53,7 +51,7 @@ public class UserController {
         // Je kan dus (nog) niet inloggen met een nieuwe user.
 
         String newUsername = UserService.createUserEntity((UserEntityDto) dto);
-        userService.addAuthority(newUsername, "ROLE_ADMIN");
+//        userService.addAuthority(newUsername, "ROLE_ADMIN");
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{username}")
                 .buildAndExpand(newUsername).toUri();

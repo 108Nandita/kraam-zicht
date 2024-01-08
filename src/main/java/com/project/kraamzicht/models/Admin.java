@@ -8,16 +8,17 @@
 
     @Entity
     @Table(name = "admins")
-    @PrimaryKeyJoinColumn(name = "username")
     public class Admin extends User {
 
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        @GeneratedValue
         @Column(nullable = false, unique = true)
         private long personnelNumber;
 
-        @OneToOne(fetch = FetchType.LAZY)
+        @OneToOne(cascade = CascadeType.ALL)
         @JoinColumn(name = "username")
         private UserEntity userEntity;
+
+
 
 //        @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 //        private List<MaternityNurse> createdMaternityNurses;
@@ -44,6 +45,10 @@
 
         public UserEntity getUserEntity() {
             return userEntity;
+        }
+
+        public void setUserEntity(UserEntity userEntity) {
+            this.userEntity = userEntity;
         }
 
 //        public void setUserEntity(UserEntity userEntity) {

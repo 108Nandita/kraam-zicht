@@ -6,7 +6,7 @@ import com.project.kraamzicht.models.UserEntity;
 
 import java.util.Set;
 
-public class UserEntityDto {
+public class UserEntityDto extends UserEntity {
     private String username;
     private String password;
     private Boolean enabled;

@@ -1,17 +1,14 @@
 package com.project.kraamzicht.services;
 
-import com.project.kraamzicht.dtos.UserDto;
-import com.project.kraamzicht.dtos.UserEntityDto;
 import com.project.kraamzicht.models.Authority;
+import com.project.kraamzicht.models.UserEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -27,7 +24,7 @@ public class MyUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) {
-        UserEntityDto userEntityDto = userService.getUser(username);
+        UserEntity userEntityDto = userService.getUser(username);
 
 
         String password = userEntityDto.getPassword();

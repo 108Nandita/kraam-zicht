@@ -28,6 +28,9 @@ public class UserEntity {
             fetch = FetchType.EAGER)
     private Set<Authority> authorities = new HashSet<>();
 
+    @OneToOne(mappedBy = "userEntity", cascade = CascadeType.ALL)
+    private Admin admin;
+
     public UserEntity(String username, String password, Boolean enabled, Set<Authority> authorities) {
         this.username = username;
         this.password = password;
@@ -78,4 +81,14 @@ public class UserEntity {
     public void removeAuthority(Authority authority) {
         this.authorities.remove(authority);
     }
+
+    public Admin getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Admin admin) {
+        this.admin = admin;
+    }
+
+
 }

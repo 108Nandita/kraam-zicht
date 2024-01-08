@@ -10,4 +10,5 @@ import org.springframework.data.repository.query.Param;
 public interface AdminRepository extends JpaRepository<Admin, String> {
     @Query("SELECT a FROM Admin a WHERE a.username = :username")
     Admin findAdminByUsername(@Param("username") String username);
+
 }

@@ -3,8 +3,10 @@ package com.project.kraamzicht.services;
 
 import com.project.kraamzicht.dtos.*;
 import com.project.kraamzicht.dtos.AdminDto;
+import com.project.kraamzicht.dtos.UserEntityDto;
 import com.project.kraamzicht.exceptions.RecordNotFoundException;
 import com.project.kraamzicht.models.*;
+import com.project.kraamzicht.models.UserEntity;
 import com.project.kraamzicht.repositories.*;
 import com.project.kraamzicht.utils.RandomStringGenerator;
 import org.jetbrains.annotations.NotNull;
@@ -24,23 +26,35 @@ import static com.project.kraamzicht.dtos.ClientDto.fromClient;
 import static com.project.kraamzicht.dtos.MaternityNurseDto.fromMaternityNurse;
 import static com.project.kraamzicht.dtos.MidwifeDto.fromMidwife;
 
+
 @Service
 public class AdminService {
 
 
     private static AdminRepository adminRepository;
+    private static UserEntity userEntityDto;
     private final MaternityNurseRepository maternityNurseRepository;
-
     private final ClientRepository clientRepository;
-
     private final MidwifeRepository midwifeRepository;
 
+    private final UserEntityRepository userEntityRepository;
+    private static UserService userService;
 
-    public AdminService(AdminRepository adminRepository, MaternityNurseRepository maternityNurseRepository, ClientRepository clientRepository, MidwifeRepository midwifeRepository) {
+
+
+    public AdminService(
+            AdminRepository adminRepository,
+            MaternityNurseRepository maternityNurseRepository,
+            ClientRepository clientRepository,
+            MidwifeRepository midwifeRepository,
+            UserEntityRepository userEntityRepository,
+            UserService userService) {
         this.adminRepository = adminRepository;
         this.maternityNurseRepository = maternityNurseRepository;
         this.clientRepository = clientRepository;
         this.midwifeRepository = midwifeRepository;
+        this.userEntityRepository = userEntityRepository;
+        this.userService = userService;
     }
 
     public List<UserDto> getAllUsers() {
@@ -139,7 +153,11 @@ public class AdminService {
     public static String createAdmin(AdminDto adminDto) {
         String randomString = RandomStringGenerator.generateAlphaNumeric(20);
         adminDto.setApikey(randomString);
-        Admin newAdmin = adminRepository.save(toAdmin(adminDto));
+
+        UserEntity userEntity = userService.getUser(userEntityDto.getUsername());
+        Admin newAdmin = toAdmin(adminDto);
+        newAdmin.setUserEntity(userEntity);
+        adminRepository.save(newAdmin);
         return newAdmin.getUsername();
     }
 
@@ -150,12 +168,31 @@ public class AdminService {
 
 
 
+//    public void addAuthority(String username, String authority) {
+//        if (!userEntityRepository.existsById(username)) {
+//            throw new UsernameNotFoundException(username);
+//        }
+//        UserEntity userEntity = userEntityRepository.findById(username)
+//                .orElseThrow(() -> new RecordNotFoundException("UserEntity not found with username: " + username));
+//
+//        Admin admin = new Admin();
+//        admin.setUserEntity(userEntity);
+//        admin.addAuthority(new Authority(username, authority));
+//        adminRepository.save(admin);
+//    }
+
     public void addAuthority(String username, String authority) {
-        if (!adminRepository.existsById(String.valueOf(Long.valueOf(username)))) throw new UsernameNotFoundException(username);
-        Admin admin = adminRepository.findById(String.valueOf(Long.valueOf(username))).orElseThrow(() -> new RecordNotFoundException("Admin not found"));
+        UserEntity userEntity = userEntityRepository.findByUsername(username);
+        if (userEntity == null) {
+            throw new RecordNotFoundException("UserEntity not found with username: " + username);
+        }
+
+        Admin admin = new Admin();
+        admin.setUserEntity(userEntity);
         admin.addAuthority(new Authority(username, authority));
         adminRepository.save(admin);
     }
+
 
 //    public void removeAuthority(String username, String authority) {
 //        if (!adminRepository.existsById(Long.valueOf(username))) throw new UsernameNotFoundException(username);

@@ -17,7 +17,7 @@ import static com.project.kraamzicht.dtos.UserEntityDto.toUserEntity;
 
 @Service
 public class UserService {
-    private static UserEntityRepository userEntityRepository = null;
+    static UserEntityRepository userEntityRepository = null;
 
     public UserService(UserEntityRepository userEntityRepository) {
         UserService.userEntityRepository = userEntityRepository;
@@ -32,7 +32,7 @@ public class UserService {
         return collection;
     }
 
-    public UserEntityDto getUser(String username) {
+    public UserEntity getUser(String username) {
         UserEntityDto dto = new UserEntityDto();
         Optional<UserEntity> user = userEntityRepository.findById(username);
         if (user.isPresent()) {

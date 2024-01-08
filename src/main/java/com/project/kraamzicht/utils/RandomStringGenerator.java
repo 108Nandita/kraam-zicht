@@ -2,12 +2,12 @@ package com.project.kraamzicht.utils;
 
 import java.util.Random;
 
-public class RandomStringGenerator {
+                                        public class RandomStringGenerator {
 
     public static String generateAlphaNumeric(int length) {
         int leftLimit = 48; // numeral '0'
         int rightLimit = 122; // letter 'z'
-        int targetStringLength = 10;
+//        int targetStringLength = 10;
         Random random = new Random();
 
         String generatedString = random.ints(leftLimit, rightLimit + 1)
