@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import static com.project.kraamzicht.dtos.AdminDto.fromAdmin;
 import static com.project.kraamzicht.dtos.AdminDto.toAdmin;
@@ -55,6 +56,9 @@ public class AdminService {
         this.midwifeRepository = midwifeRepository;
         this.userEntityRepository = userEntityRepository;
         this.userService = userService;
+    }
+    public void setUserEntityDto(UserEntity userEntityDto) {
+        this.userEntityDto = userEntityDto;
     }
 
     public List<UserDto> getAllUsers() {
@@ -154,7 +158,8 @@ public class AdminService {
         String randomString = RandomStringGenerator.generateAlphaNumeric(20);
         adminDto.setApikey(randomString);
 
-        UserEntity userEntity = userService.getUser(userEntityDto.getUsername());
+        UserEntityDto userEntityDto = userService.getUser(adminDto.getUsername());
+        UserEntity userEntity = UserEntityDto.toUserEntity(userEntityDto);
         Admin newAdmin = toAdmin(adminDto);
         newAdmin.setUserEntity(userEntity);
         adminRepository.save(newAdmin);
@@ -186,11 +191,15 @@ public class AdminService {
         if (userEntity == null) {
             throw new RecordNotFoundException("UserEntity not found with username: " + username);
         }
+        Authority authorityUser = new Authority(username, Set.of(authority));
+        userEntity.addAuthority(authorityUser);
+        userEntityRepository.save(userEntity);
 
-        Admin admin = new Admin();
-        admin.setUserEntity(userEntity);
-        admin.addAuthority(new Authority(username, authority));
-        adminRepository.save(admin);
+
+//        Admin admin = new Admin();
+//        admin.setUserEntity(userEntity);
+//        admin.addAuthority(new Authority(username, authority));
+//        adminRepository.save(admin);
     }
 
 

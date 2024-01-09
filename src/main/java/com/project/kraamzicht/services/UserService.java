@@ -32,7 +32,7 @@ public class UserService {
         return collection;
     }
 
-    public UserEntity getUser(String username) {
+    public UserEntityDto getUser(String username) {
         UserEntityDto dto = new UserEntityDto();
         Optional<UserEntity> user = userEntityRepository.findById(username);
         if (user.isPresent()) {
@@ -92,12 +92,12 @@ public class UserService {
 //        userEntityRepository.save(user);
 //    }
 
-    public void addAuthority(String username, String authority) {
-        if (!userEntityRepository.existsById(String.valueOf(Long.valueOf(username)))) throw new UsernameNotFoundException(username);
-        UserEntity user = userEntityRepository.findById(String.valueOf(Long.valueOf(username))).orElseThrow(() -> new RecordNotFoundException("Admin not found"));
-        user.addAuthority(new Authority(username, authority));
-        userEntityRepository.save(user);
-    }
+//    public void addAuthority(String username, String authority) {
+//        if (!userEntityRepository.existsById(String.valueOf(Long.valueOf(username)))) throw new UsernameNotFoundException(username);
+//        UserEntity user = userEntityRepository.findById(String.valueOf(Long.valueOf(username))).orElseThrow(() -> new RecordNotFoundException("Admin not found"));
+//        user.addAuthority(new Authority(username, authority));
+//        userEntityRepository.save(user);
+//    }
 
 
 }
