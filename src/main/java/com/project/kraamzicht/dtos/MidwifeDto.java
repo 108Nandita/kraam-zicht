@@ -42,12 +42,9 @@ public class MidwifeDto extends UserDto {
         dto.setCertification(midwife.getCertification());
         dto.setApprovedIndications(midwife.getApprovedIndications());
         // Set common properties from User class
-        dto.setUsername(midwife.getUsername());
-        dto.setPassword(midwife.getPassword());
         dto.setEnabled(midwife.isEnabled());
         dto.setApikey(midwife.getApikey());
         dto.setEmail(midwife.getEmail());
-        dto.setAuthorities(midwife.getAuthorities());
         dto.setName(midwife.getName());
         dto.setSurname(midwife.getSurname());
         dto.setDob(midwife.getDob());
@@ -55,7 +52,6 @@ public class MidwifeDto extends UserDto {
         dto.setPostalcode(midwife.getPostalcode());
         dto.setPlace(midwife.getPlace());
         dto.setPhoneNr(midwife.getPhoneNr());
-        dto.setRole(midwife.getRole());
 
         return dto;
     }

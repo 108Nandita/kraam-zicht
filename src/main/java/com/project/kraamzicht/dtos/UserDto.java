@@ -1,15 +1,9 @@
 package com.project.kraamzicht.dtos;
 
-import com.project.kraamzicht.models.Authority;
-
 import java.time.LocalDate;
 import java.util.Set;
 
 public class UserDto {
-    private String username;
-    private String password;
-    public Boolean enabled;
-    private String authority;
     private String name;
     private String surname;
     private LocalDate dob;
@@ -18,41 +12,35 @@ public class UserDto {
     private String place;
     private String phoneNr;
     private String email;
+
     private String role;
+
+    private boolean enabled = true;
     private String apikey;
+    private Set<UserEntityDto> authorities;
 
-    public Set<Authority> authorities;
+    public UserDto() {
 
-    public String getUsername() {
-        return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setEnabled(Boolean enabled) {
+    public UserDto(String name, String surname,
+                   LocalDate dob, String address, String postalcode, String place, String phoneNr,
+                   String email, String role,  boolean enabled, String apikey,
+                   Set<UserEntityDto> authorities) {
+        this.name = name;
+        this.surname = surname;
+        this.dob = dob;
+        this.address = address;
+        this.postalcode = postalcode;
+        this.place = place;
+        this.phoneNr = phoneNr;
+        this.email = email;
+        this.role = role;
         this.enabled = enabled;
-    }
-    public Boolean getEnabled() {
-        return enabled;
-    }
-
-    public String getAuthority() {
-        return authority;
+        this.apikey = apikey;
+        this.authorities = authorities;
     }
 
-    public void setAuthority(String authority) {
-        this.authority = authority;
-    }
 
     public String getName() {
         return name;
@@ -118,10 +106,6 @@ public class UserDto {
         this.email = email;
     }
 
-    public Set<Authority> getAuthorities() {
-        return authorities;
-    }
-
     public String getRole() {
         return role;
     }
@@ -145,7 +129,12 @@ public class UserDto {
     public void setApikey(String apikey) {
         this.apikey = apikey;
     }
-    public void setAuthorities(Set<Authority> authorities) {
+
+    public Set<UserEntityDto> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(Set<UserEntityDto> authorities) {
         this.authorities = authorities;
     }
 }

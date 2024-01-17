@@ -3,21 +3,18 @@ package com.project.kraamzicht.models;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
+@Table(name = "authorities")
 public class Authority implements Serializable {
 
     @Id
+    private long id;
     @Column(nullable = false)
     private String username;
 
-    @Id
-    @Column(nullable = false)
     private String authority;
-
-//    @ManyToOne
-//    @JoinColumn(name = "username", referencedColumnName = "username", insertable = false, updatable = false)
-//    private User user;
 
     public Authority() {}
 
@@ -25,6 +22,7 @@ public class Authority implements Serializable {
         this.username = username;
         this.authority = authority;
     }
+
 
     public String getUsername() {
         return username;
@@ -42,11 +40,11 @@ public class Authority implements Serializable {
         this.authority = authority;
     }
 
-//    public User getUser() {
-//        return user;
-//    }
-//
-//    public void setUser(User user) {
-//        this.user = user;
-//    }
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 }

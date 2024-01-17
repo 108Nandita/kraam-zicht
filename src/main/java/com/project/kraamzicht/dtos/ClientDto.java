@@ -1,7 +1,5 @@
 package com.project.kraamzicht.dtos;
 
-import com.project.kraamzicht.models.Admin;
-import com.project.kraamzicht.models.Authority;
 import com.project.kraamzicht.models.Client;
 import com.project.kraamzicht.models.ClientFile;
 
@@ -30,16 +28,11 @@ public class ClientDto extends UserDto {
 
     public static ClientDto fromClient(Client client) {
         ClientDto dto = new ClientDto();
-        // Mapping from Client to ClientDto
         dto.setClientId(client.getClientId());
         dto.setClientFiles(client.getClientFiles());
-        // Set common properties from User class
-        dto.setUsername(client.getUsername());
-        dto.setPassword(client.getPassword());
         dto.setEnabled(client.isEnabled());
         dto.setApikey(client.getApikey());
         dto.setEmail(client.getEmail());
-        dto.setAuthorities(client.getAuthorities());
         dto.setName(client.getName());
         dto.setSurname(client.getSurname());
         dto.setDob(client.getDob());
@@ -47,7 +40,6 @@ public class ClientDto extends UserDto {
         dto.setPostalcode(client.getPostalcode());
         dto.setPlace(client.getPlace());
         dto.setPhoneNr(client.getPhoneNr());
-        dto.setRole(client.getRole());
 
         return dto;
     }

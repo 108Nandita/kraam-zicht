@@ -1,8 +1,6 @@
 package com.project.kraamzicht.dtos;
 
-import com.project.kraamzicht.models.ClientFile;
-import com.project.kraamzicht.models.MaternityNurse;
-import com.project.kraamzicht.models.Midwife;
+import com.project.kraamzicht.models.Indication;
 
 import java.time.LocalDate;
 
@@ -16,6 +14,24 @@ public class IndicationDto {
     private ClientFileDto clientFile;
     private MaternityNurseDto maternityNurse;
     private MidwifeDto midwife;
+
+    public IndicationDto(Long indicationId, String indicationDescription, int hoursNeeded,
+                         boolean approved, LocalDate indicationDate, LocalDate approvalDate,
+                         ClientFileDto clientFile, MaternityNurseDto maternityNurse,
+                         MidwifeDto midwife) {
+        this.indicationId = indicationId;
+        this.indicationDescription = indicationDescription;
+        this.hoursNeeded = hoursNeeded;
+        this.approved = approved;
+        this.indicationDate = indicationDate;
+        this.approvalDate = approvalDate;
+        this.clientFile = clientFile;
+        this.maternityNurse = maternityNurse;
+        this.midwife = midwife;
+    }
+
+    public IndicationDto() {
+    }
 
     public Long getIndicationId() {
         return indicationId;
@@ -83,5 +99,28 @@ public class IndicationDto {
 
     public void setMidwife(MidwifeDto midwife) {
         this.midwife = midwife;
+    }
+
+
+
+    public static IndicationDto fromIndication(Indication indication) {
+        IndicationDto dto = new IndicationDto();
+        dto.setIndicationId(indication.getIndicationId());
+        dto.setIndicationDescription(indication.getIndicationDescription());
+        dto.setHoursNeeded(indication.getHoursNeeded());
+        dto.setApproved(indication.isApproved());
+        dto.setIndicationDate(indication.getIndicationDate());
+        dto.setApprovalDate(indication.getApprovalDate());
+
+//        // Mapping van ClientFile, MaternityNurse en Midwife naar hun respectievelijke DTO's
+//        dto.setClientFile(ClientFileDto.fromClientFiles(indication.getClientFile()));
+//        dto.setMaternityNurse(UserDto.fromMaternityNurse(indication.getMaternityNurse()));
+//        dto.setMidwife(UserDto.fromMidwife(indication.getMidwife()));
+
+        return dto;
+    }
+
+    public void setIndicationId(Long indicationId) {
+        this.indicationId = indicationId;
     }
 }

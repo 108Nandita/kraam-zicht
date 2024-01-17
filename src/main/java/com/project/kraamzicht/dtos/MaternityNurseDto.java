@@ -42,13 +42,9 @@ public class MaternityNurseDto extends UserDto {
         dto.setKckzNumber(maternityNurse.getKckzNumber());
         dto.setClientFiles(maternityNurse.getClientFiles());
         dto.setIndications(maternityNurse.getIndications());
-        // Set common properties from User class
-        dto.setUsername(maternityNurse.getUsername());
-        dto.setPassword(maternityNurse.getPassword());
         dto.setEnabled(maternityNurse.isEnabled());
         dto.setApikey(maternityNurse.getApikey());
         dto.setEmail(maternityNurse.getEmail());
-        dto.setAuthorities(maternityNurse.getAuthorities());
         dto.setName(maternityNurse.getName());
         dto.setSurname(maternityNurse.getSurname());
         dto.setDob(maternityNurse.getDob());
@@ -56,7 +52,6 @@ public class MaternityNurseDto extends UserDto {
         dto.setPostalcode(maternityNurse.getPostalcode());
         dto.setPlace(maternityNurse.getPlace());
         dto.setPhoneNr(maternityNurse.getPhoneNr());
-        dto.setRole(maternityNurse.getRole());
 
         return dto;
     }

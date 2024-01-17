@@ -1,18 +1,33 @@
 package com.project.kraamzicht.dtos;
 
 import com.project.kraamzicht.models.Admin;
-import com.project.kraamzicht.models.Client;
-import com.project.kraamzicht.models.MaternityNurse;
-import com.project.kraamzicht.models.Midwife;
+import com.project.kraamzicht.dtos.UserDto;
 
 import java.util.List;
 
 public class AdminDto extends UserDto {
+
+    private String username;
     private long personnelNumber;
+    private boolean enabled;
     private List<MaternityNurseDto> createdMaternityNurses;
     private List<ClientDto> createdClients;
     private List<ClientFileDto> createdClientFiles;
     private List<MidwifeDto> createdMidwives;
+
+    public AdminDto() {
+        // Default constructor
+    }
+
+    public AdminDto(String username, long personnelNumber, boolean enabled, List<MaternityNurseDto> createdMaternityNurses, List<ClientDto> createdClients, List<ClientFileDto> createdClientFiles, List<MidwifeDto> createdMidwives) {
+        this.username = username;
+        this.personnelNumber = personnelNumber;
+        this.enabled = enabled;
+        this.createdMaternityNurses = createdMaternityNurses;
+        this.createdClients = createdClients;
+        this.createdClientFiles = createdClientFiles;
+        this.createdMidwives = createdMidwives;
+    }
 
     public long getPersonnelNumber() {
         return personnelNumber;
@@ -20,6 +35,23 @@ public class AdminDto extends UserDto {
 
     public void setPersonnelNumber(long personnelNumber) {
         this.personnelNumber = personnelNumber;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public List<MaternityNurseDto> getCreatedMaternityNurses() {
@@ -56,16 +88,13 @@ public class AdminDto extends UserDto {
 
     public static AdminDto fromAdmin(Admin admin) {
         AdminDto dto = new AdminDto();
-        // Mapping from Admin to AdminDto
-        dto.setPersonnelNumber(admin.getPersonnelNumber());
-        // Map other properties as needed
-        // Set common properties from User class
         dto.setUsername(admin.getUsername());
-        dto.setPassword(admin.getPassword());
+//        dto.setPassword(admin.getPassword());
+        dto.setPersonnelNumber(admin.getPersonnelNumber());
         dto.setEnabled(admin.isEnabled());
         dto.setApikey(admin.getApikey());
         dto.setEmail(admin.getEmail());
-        dto.setAuthorities(admin.getAuthorities());
+//        dto.setRole(admin.getRole());
         dto.setName(admin.getName());
         dto.setSurname(admin.getSurname());
         dto.setDob(admin.getDob());
@@ -73,8 +102,54 @@ public class AdminDto extends UserDto {
         dto.setPostalcode(admin.getPostalcode());
         dto.setPlace(admin.getPlace());
         dto.setPhoneNr(admin.getPhoneNr());
-        dto.setRole(admin.getRole());
+
 
         return dto;
     }
+
+    public Admin toAdmin() {
+        Admin admin = new Admin();
+        admin.setUsername(this.getUsername());
+//        admin.setPassword(this.getPassword());
+        admin.setPersonnelNumber(this.getPersonnelNumber());
+        admin.setEnabled(this.isEnabled());
+        admin.setApikey(this.getApikey());
+        admin.setEmail(this.getEmail());
+//        admin.setRole(this.getRole());
+      //  admin.setAuthorities(this.getAuthorities());
+        admin.setName(this.getName());
+        admin.setSurname(this.getSurname());
+        admin.setDob(this.getDob());
+        admin.setAddress(this.getAddress());
+        admin.setPostalcode(this.getPostalcode());
+        admin.setPlace(this.getPlace());
+        admin.setPhoneNr(this.getPhoneNr());
+        return admin;
+    }
+    public static Admin toAdmin(AdminDto adminDto) {
+        Admin admin = new Admin();
+        admin.setUsername(adminDto.getUsername());
+        admin.setPersonnelNumber(adminDto.getPersonnelNumber());
+        admin.setEnabled(adminDto.isEnabled());
+        admin.setApikey(adminDto.getApikey());
+        admin.setEmail(adminDto.getEmail());
+//        admin.setRole(adminDto.getRole());
+        admin.setName(adminDto.getName());
+        admin.setSurname(adminDto.getSurname());
+        admin.setDob(adminDto.getDob());
+        admin.setAddress(adminDto.getAddress());
+        admin.setPostalcode(adminDto.getPostalcode());
+        admin.setPlace(adminDto.getPlace());
+        admin.setPhoneNr(adminDto.getPhoneNr());
+        return admin;
+    }
+
+
+//    public String getPassword() {
+//        return password;
+//    }
+//
+//    public void setPassword(String password) {
+//        this.password = password;
+//    }
 }
