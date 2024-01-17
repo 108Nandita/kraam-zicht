@@ -32,9 +32,8 @@ public class MyUserDetailsService implements UserDetailsService {
         Set<Authority> authorities = userEntityDto.getAuthorities();
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
         for (Authority authority: authorities) {
-            for (String s: authority.getAuthorities()){
-                grantedAuthorities.add(new SimpleGrantedAuthority(s));
-            }
+
+                grantedAuthorities.add(new SimpleGrantedAuthority(authority.getAuthority()));
 
         }
 

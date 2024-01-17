@@ -10,23 +10,19 @@ import java.util.Set;
 public class Authority implements Serializable {
 
     @Id
+    private long id;
     @Column(nullable = false)
     private String username;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "authorities", joinColumns = @JoinColumn(name = "username"))
-    @Column(name = "authority")
-    private Set<String> authorities;
+    private String authority;
 
     public Authority() {}
 
-    public Authority(String username, Set<String> authorities) {
+    public Authority(String username, String authority) {
         this.username = username;
-        this.authorities = authorities;
+        this.authority = authority;
     }
 
-    public Authority(String username, String authority) {
-    }
 
     public String getUsername() {
         return username;
@@ -36,11 +32,19 @@ public class Authority implements Serializable {
         this.username = username;
     }
 
-    public Set<String> getAuthorities() {
-        return authorities;
+    public String getAuthority() {
+        return authority;
     }
 
-    public void setAuthorities(Set<String> authorities) {
-        this.authorities = authorities;
+    public void setAuthority(String authority) {
+        this.authority = authority;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }

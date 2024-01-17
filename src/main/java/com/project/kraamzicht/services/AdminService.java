@@ -191,7 +191,7 @@ public class AdminService {
         if (userEntity == null) {
             throw new RecordNotFoundException("UserEntity not found with username: " + username);
         }
-        Authority authorityUser = new Authority(username, Set.of(authority));
+        Authority authorityUser = new Authority(username,(authority));
         userEntity.addAuthority(authorityUser);
         userEntityRepository.save(userEntity);
 
