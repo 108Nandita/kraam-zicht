@@ -111,15 +111,6 @@ public class AdminService {
         return AdminDto.fromAdmin(admin);
     }
 
-//    public void createAdmin(UserDto adminDto) {
-//        Admin admin = adminDto.toAdmin();
-//    }
-
-//    public UserEntityDto getUser(String username) {
-//        // Implementatie voor het ophalen van een specifieke gebruiker
-//        return null;
-//    }
-
     public UserDto getUserByUsername(String username) {
         Admin admin = adminRepository.findAdminByUsername(username);
         if (admin != null) {
@@ -144,21 +135,6 @@ public class AdminService {
         throw new RecordNotFoundException("User not found with username: " + username);
     }
 
-
-     //    Endpoint om een nieuwe gebruiker aan te maken
-
-//    public String createAdmin(@NotNull AdminDto adminDto) {
-//        String randomString = RandomStringGenerator.generateAlphaNumeric(20);
-//        adminDto.setApikey(randomString);
-//
-//        // Hier roep je de toAdmin-methode aan op de AdminDto
-//        Admin newAdmin = adminDto.toAdmin();
-//
-//        Admin savedAdmin = adminRepository.save(newAdmin);
-//        return savedAdmin.getUsername();
-//    }
-
-
     public static String createAdmin(AdminDto adminDto) {
         String randomString = RandomStringGenerator.generateAlphaNumeric(20);
         adminDto.setApikey(randomString);
@@ -178,18 +154,6 @@ public class AdminService {
 
 
 
-//    public void addAuthority(String username, String authority) {
-//        if (!userEntityRepository.existsById(username)) {
-//            throw new UsernameNotFoundException(username);
-//        }
-//        UserEntity userEntity = userEntityRepository.findById(username)
-//                .orElseThrow(() -> new RecordNotFoundException("UserEntity not found with username: " + username));
-//
-//        Admin admin = new Admin();
-//        admin.setUserEntity(userEntity);
-//        admin.addAuthority(new Authority(username, authority));
-//        adminRepository.save(admin);
-//    }
 
     public void addAuthority(String username, String authority) {
         UserEntity userEntity = userEntityRepository.findByUsername(username);
@@ -200,23 +164,7 @@ public class AdminService {
         userEntity.addAuthority(authorityUser);
         userEntityRepository.save(userEntity);
 
-
-//        Admin admin = new Admin();
-//        admin.setUserEntity(userEntity);
-//        admin.addAuthority(new Authority(username, authority));
-//        adminRepository.save(admin);
     }
-
-
-//    public void removeAuthority(String username, String authority) {
-//        if (!adminRepository.existsById(Long.valueOf(username))) throw new UsernameNotFoundException(username);
-//        Admin admin = adminRepository.findById(Long.valueOf(username)).orElseThrow(() -> new RecordNotFoundException("Admin not found"));
-//        UserEntityDto authorityToRemove = admin.getAuthorities().stream()
-//                .filter(a -> a.getAuthority().equalsIgnoreCase(authority))
-//                .findAny().orElseThrow(() -> new RecordNotFoundException("Authority not found"));
-//        admin.removeAuthority(authorityToRemove);
-//        adminRepository.save(admin);
-//    }
 
 
     public void updateUserDetails(String username, UserDetailsDto userDetailsDto) {
@@ -227,9 +175,8 @@ public class AdminService {
         adminRepository.updateContactDetails(username, contactDetailsDto);
     }
 
-//    public void updateAdmin(String username, UserDetailsDto userDetailsDto, ContactDetailsDto contactDetailsDto) {
-//        adminRepository.updateUserDetails(username, userDetailsDto);
-//        adminRepository.updateContactDetails(username, contactDetailsDto);
-//    }
+    public void deleteAdmin(String username) {
+        adminRepository.deleteAdminByUsername(username);
+    }
 
 }

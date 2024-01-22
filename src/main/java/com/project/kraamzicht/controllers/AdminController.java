@@ -27,7 +27,6 @@ public class AdminController {
         this.adminRepository = adminRepository;
     }
 
-    // Endpoint om alle gebruikers op te halen
     @GetMapping("/users")
     public ResponseEntity<List<UserDto>> getAllUsers() {
         List<UserDto> users = adminService.getAllUsers();
@@ -72,6 +71,12 @@ public class AdminController {
     public ResponseEntity<String> updateContactDetails(@PathVariable String username, @RequestBody ContactDetailsDto contactDetailsDto) {
         adminService.updateContactDetails(username, contactDetailsDto);
         return ResponseEntity.ok("Contact details updated successfully.");
+    }
+
+    @DeleteMapping("/deleteAdmin/{username}")
+    public ResponseEntity<String> deleteAdmin(@PathVariable String username) {
+        adminService.deleteAdmin(username);
+        return ResponseEntity.ok("Admin deleted successfully.");
     }
 
 }

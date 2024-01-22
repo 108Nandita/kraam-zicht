@@ -23,4 +23,8 @@ public interface AdminRepository extends JpaRepository<Admin, String> {
     @Modifying
     void updateContactDetails(@Param("username") String username, @Param("contactDetailsDto") ContactDetailsDto contactDetailsDto);
 
+    @Modifying
+    @Query("DELETE FROM Admin a WHERE a.username = :username")
+    void deleteAdminByUsername(@Param("username") String username);
+
 }
