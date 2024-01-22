@@ -4,6 +4,8 @@ package com.project.kraamzicht.services;
 import com.project.kraamzicht.dtos.*;
 import com.project.kraamzicht.dtos.AdminDto;
 import com.project.kraamzicht.dtos.UserEntityDto;
+import com.project.kraamzicht.dtos.UserDetailsDto;
+import com.project.kraamzicht.dtos.ContactDetailsDto;
 import com.project.kraamzicht.exceptions.RecordNotFoundException;
 import com.project.kraamzicht.models.*;
 import com.project.kraamzicht.models.UserEntity;
@@ -14,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -28,7 +31,9 @@ import static com.project.kraamzicht.dtos.MaternityNurseDto.fromMaternityNurse;
 import static com.project.kraamzicht.dtos.MidwifeDto.fromMidwife;
 
 
+
 @Service
+@Transactional
 public class AdminService {
 
 
@@ -213,5 +218,18 @@ public class AdminService {
 //        adminRepository.save(admin);
 //    }
 
+
+    public void updateUserDetails(String username, UserDetailsDto userDetailsDto) {
+        adminRepository.updateUserDetails(username, userDetailsDto);
+    }
+
+    public void updateContactDetails(String username, ContactDetailsDto contactDetailsDto) {
+        adminRepository.updateContactDetails(username, contactDetailsDto);
+    }
+
+//    public void updateAdmin(String username, UserDetailsDto userDetailsDto, ContactDetailsDto contactDetailsDto) {
+//        adminRepository.updateUserDetails(username, userDetailsDto);
+//        adminRepository.updateContactDetails(username, contactDetailsDto);
+//    }
 
 }
