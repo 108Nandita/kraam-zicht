@@ -107,25 +107,6 @@ public class AdminDto extends UserDto {
         return dto;
     }
 
-    public Admin toAdmin() {
-        Admin admin = new Admin();
-        admin.setUsername(this.getUsername());
-//        admin.setPassword(this.getPassword());
-        admin.setPersonnelNumber(this.getPersonnelNumber());
-        admin.setEnabled(this.isEnabled());
-        admin.setApikey(this.getApikey());
-        admin.setEmail(this.getEmail());
-//        admin.setRole(this.getRole());
-      //  admin.setAuthorities(this.getAuthorities());
-        admin.setName(this.getName());
-        admin.setSurname(this.getSurname());
-        admin.setDob(this.getDob());
-        admin.setAddress(this.getAddress());
-        admin.setPostalcode(this.getPostalcode());
-        admin.setPlace(this.getPlace());
-        admin.setPhoneNr(this.getPhoneNr());
-        return admin;
-    }
     public static Admin toAdmin(AdminDto adminDto) {
         Admin admin = new Admin();
         admin.setUsername(adminDto.getUsername());

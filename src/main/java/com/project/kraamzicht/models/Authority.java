@@ -10,6 +10,7 @@ import java.util.Set;
 public class Authority implements Serializable {
 
     @Id
+    @GeneratedValue
     private long id;
     @Column(nullable = false)
     private String username;

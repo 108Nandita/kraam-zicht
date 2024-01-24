@@ -67,6 +67,7 @@ public class SpringSecurityConfig {
                                         .requestMatchers("/authenticated").authenticated()
                                         .requestMatchers("/admin/**").hasRole("ADMIN")
                                         .requestMatchers("/users/**").hasRole("ADMIN")
+                                        .requestMatchers("/maternityNurse/**").hasRole("ADMIN")
 //                                        .requestMatchers(HttpMethod.GET, "/clientFiles").hasAnyRole("MATERNITYNURSE", "MIDWIFE")
 //                                        .requestMatchers(HttpMethod.PUT, "/clientFiles/**").hasAnyRole("MATERNITYNURSE", "CLIENT")
 //                                        .requestMatchers(HttpMethod.GET, "/clientFiles/{clientId}")

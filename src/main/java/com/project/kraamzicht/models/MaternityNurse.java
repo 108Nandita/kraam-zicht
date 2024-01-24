@@ -8,9 +8,13 @@ import java.util.List;
 @DiscriminatorValue("MaternityNurse")
 public class MaternityNurse extends User {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @Column(name = "kckz_number", nullable = false, unique = true)
-    private String kckzNumber;
+    private long kckzNumber;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "username")
+    private UserEntity userEntity;
 
     @ManyToOne
     @JoinColumn(name = "admin_username", referencedColumnName = "username")
@@ -25,23 +29,15 @@ public class MaternityNurse extends User {
     public MaternityNurse() {
     }
 
-    public Admin getCreatedByAdmin() {
-        return createdByAdmin;
-    }
-
-    public void setCreatedByAdmin(Admin createdByAdmin) {
-        this.createdByAdmin = createdByAdmin;
-    }
-
     public MaternityNurse(List<Indication> indications) {
         this.indications = indications;
     }
 
-    public String getKckzNumber() {
+    public long getKckzNumber() {
         return kckzNumber;
     }
 
-    public void setKckzNumber(String kckzNumber) {
+    public void setKckzNumber(long kckzNumber) {
         this.kckzNumber = kckzNumber;
     }
 
@@ -59,5 +55,13 @@ public class MaternityNurse extends User {
 
     public void setClientFiles(List<ClientFile> clientFiles) {
         this.clientFiles = clientFiles;
+    }
+
+    public UserEntity getUserEntity() {
+        return userEntity;
+    }
+
+    public void setUserEntity(UserEntity userEntity) {
+        this.userEntity = userEntity;
     }
 }
