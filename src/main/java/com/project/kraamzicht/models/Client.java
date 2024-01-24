@@ -16,6 +16,10 @@ public class Client extends User {
     @Column
     private String clientId;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "username")
+    private UserEntity userEntity;
+
     @ManyToOne
     @JoinColumns({
             @JoinColumn(name = "admin_username", referencedColumnName = "username"),
@@ -48,5 +52,13 @@ public class Client extends User {
 
     public void setClientFiles(List<ClientFile> clientFiles) {
         this.clientFiles = clientFiles;
+    }
+
+    public UserEntity getUserEntity() {
+        return userEntity;
+    }
+
+    public void setUserEntity(UserEntity userEntity) {
+        this.userEntity = userEntity;
     }
 }
