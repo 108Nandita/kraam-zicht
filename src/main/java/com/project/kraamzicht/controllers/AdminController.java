@@ -1,7 +1,6 @@
 package com.project.kraamzicht.controllers;
 
-import com.project.kraamzicht.dtos.UserDto;
-import com.project.kraamzicht.dtos.AdminDto;
+import com.project.kraamzicht.dtos.*;
 import com.project.kraamzicht.exceptions.RecordNotFoundException;
 import com.project.kraamzicht.models.Admin;
 import com.project.kraamzicht.repositories.AdminRepository;
@@ -28,7 +27,6 @@ public class AdminController {
         this.adminRepository = adminRepository;
     }
 
-    // Endpoint om alle gebruikers op te halen
     @GetMapping("/users")
     public ResponseEntity<List<UserDto>> getAllUsers() {
         List<UserDto> users = adminService.getAllUsers();
@@ -40,25 +38,6 @@ public class AdminController {
         List<UserDto> admins = adminService.getAllAdmins();
         return ResponseEntity.ok(admins);
     }
-
-//    @GetMapping("/admin/{username}")
-//    public ResponseEntity<AdminDto> getAdmin(@PathVariable String username) {
-//        try {
-//            AdminDto admin = adminService.getAdmin(username);
-//            return ResponseEntity.ok(admin);
-//        } catch (RecordNotFoundException e) {
-//            return ResponseEntity.notFound().build();
-//        }
-//    }
-
-
-
-    // Endpoint om alle gegevens van een specifieke gebruiker op te halen
-//    @GetMapping("/user/{username}")
-//    public ResponseEntity<UserEntityDto> getUser(@PathVariable String username) {
-//        UserEntityDto user = adminService.getUser(username);
-//        return ResponseEntity.ok(user);
-//    }
 
     @GetMapping("/user/{username}")
     public ResponseEntity<UserDto> getUser(@PathVariable String username) {
@@ -82,12 +61,22 @@ public class AdminController {
         return ResponseEntity.created(location).build();
     }
 
+    @PutMapping("/updateUserDetails/{username}")
+    public ResponseEntity<String> updateUserDetails(@PathVariable String username, @RequestBody UserDetailsDto userDetailsDto) {
+        adminService.updateUserDetails(username, userDetailsDto);
+        return ResponseEntity.ok("User details updated successfully.");
+    }
 
+    @PutMapping("/updateContactDetails/{username}")
+    public ResponseEntity<String> updateContactDetails(@PathVariable String username, @RequestBody ContactDetailsDto contactDetailsDto) {
+        adminService.updateContactDetails(username, contactDetailsDto);
+        return ResponseEntity.ok("Contact details updated successfully.");
+    }
 
-
-
-
-
-
+    @DeleteMapping("/deleteAdmin/{username}")
+    public ResponseEntity<String> deleteAdmin(@PathVariable String username) {
+        adminService.deleteAdmin(username);
+        return ResponseEntity.ok("Admin deleted successfully.");
+    }
 
 }

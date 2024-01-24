@@ -4,6 +4,8 @@ package com.project.kraamzicht.services;
 import com.project.kraamzicht.dtos.*;
 import com.project.kraamzicht.dtos.AdminDto;
 import com.project.kraamzicht.dtos.UserEntityDto;
+import com.project.kraamzicht.dtos.UserDetailsDto;
+import com.project.kraamzicht.dtos.ContactDetailsDto;
 import com.project.kraamzicht.exceptions.RecordNotFoundException;
 import com.project.kraamzicht.models.*;
 import com.project.kraamzicht.models.UserEntity;
@@ -14,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -28,7 +31,9 @@ import static com.project.kraamzicht.dtos.MaternityNurseDto.fromMaternityNurse;
 import static com.project.kraamzicht.dtos.MidwifeDto.fromMidwife;
 
 
+
 @Service
+@Transactional
 public class AdminService {
 
 
@@ -106,15 +111,6 @@ public class AdminService {
         return AdminDto.fromAdmin(admin);
     }
 
-//    public void createAdmin(UserDto adminDto) {
-//        Admin admin = adminDto.toAdmin();
-//    }
-
-//    public UserEntityDto getUser(String username) {
-//        // Implementatie voor het ophalen van een specifieke gebruiker
-//        return null;
-//    }
-
     public UserDto getUserByUsername(String username) {
         Admin admin = adminRepository.findAdminByUsername(username);
         if (admin != null) {
@@ -139,21 +135,6 @@ public class AdminService {
         throw new RecordNotFoundException("User not found with username: " + username);
     }
 
-
-     //    Endpoint om een nieuwe gebruiker aan te maken
-
-//    public String createAdmin(@NotNull AdminDto adminDto) {
-//        String randomString = RandomStringGenerator.generateAlphaNumeric(20);
-//        adminDto.setApikey(randomString);
-//
-//        // Hier roep je de toAdmin-methode aan op de AdminDto
-//        Admin newAdmin = adminDto.toAdmin();
-//
-//        Admin savedAdmin = adminRepository.save(newAdmin);
-//        return savedAdmin.getUsername();
-//    }
-
-
     public static String createAdmin(AdminDto adminDto) {
         String randomString = RandomStringGenerator.generateAlphaNumeric(20);
         adminDto.setApikey(randomString);
@@ -173,18 +154,6 @@ public class AdminService {
 
 
 
-//    public void addAuthority(String username, String authority) {
-//        if (!userEntityRepository.existsById(username)) {
-//            throw new UsernameNotFoundException(username);
-//        }
-//        UserEntity userEntity = userEntityRepository.findById(username)
-//                .orElseThrow(() -> new RecordNotFoundException("UserEntity not found with username: " + username));
-//
-//        Admin admin = new Admin();
-//        admin.setUserEntity(userEntity);
-//        admin.addAuthority(new Authority(username, authority));
-//        adminRepository.save(admin);
-//    }
 
     public void addAuthority(String username, String authority) {
         UserEntity userEntity = userEntityRepository.findByUsername(username);
@@ -195,23 +164,19 @@ public class AdminService {
         userEntity.addAuthority(authorityUser);
         userEntityRepository.save(userEntity);
 
-
-//        Admin admin = new Admin();
-//        admin.setUserEntity(userEntity);
-//        admin.addAuthority(new Authority(username, authority));
-//        adminRepository.save(admin);
     }
 
 
-//    public void removeAuthority(String username, String authority) {
-//        if (!adminRepository.existsById(Long.valueOf(username))) throw new UsernameNotFoundException(username);
-//        Admin admin = adminRepository.findById(Long.valueOf(username)).orElseThrow(() -> new RecordNotFoundException("Admin not found"));
-//        UserEntityDto authorityToRemove = admin.getAuthorities().stream()
-//                .filter(a -> a.getAuthority().equalsIgnoreCase(authority))
-//                .findAny().orElseThrow(() -> new RecordNotFoundException("Authority not found"));
-//        admin.removeAuthority(authorityToRemove);
-//        adminRepository.save(admin);
-//    }
+    public void updateUserDetails(String username, UserDetailsDto userDetailsDto) {
+        adminRepository.updateUserDetails(username, userDetailsDto);
+    }
 
+    public void updateContactDetails(String username, ContactDetailsDto contactDetailsDto) {
+        adminRepository.updateContactDetails(username, contactDetailsDto);
+    }
+
+    public void deleteAdmin(String username) {
+        adminRepository.deleteAdminByUsername(username);
+    }
 
 }
