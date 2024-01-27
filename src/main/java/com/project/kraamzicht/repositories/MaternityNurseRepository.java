@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface MaternityNurseRepository extends JpaRepository<MaternityNurse, String> {
+
+    MaternityNurse findByKckzNumber(long kckzNumber);
     @Query("SELECT a FROM MaternityNurse a WHERE a.username = :username")
     MaternityNurse findMaternityNurseByUsername(@Param("username") String username);
 

@@ -5,6 +5,7 @@ import com.project.kraamzicht.repositories.UserEntityRepository;
 import com.project.kraamzicht.services.MyUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -68,7 +69,11 @@ public class SpringSecurityConfig {
                                         .requestMatchers("/admin/**").hasRole("ADMIN")
                                         .requestMatchers("/users/**").hasRole("ADMIN")
                                         .requestMatchers("/maternityNurse/**").hasRole("ADMIN")
-                                        .requestMatchers("/client/**").hasRole("ADMIN")
+                                        .requestMatchers("/client/**").hasAnyRole("ADMIN", "MATERNITY_NURSE")
+                                        .requestMatchers(HttpMethod.DELETE, "/client/**").hasRole("ADMIN")
+                                        .requestMatchers("/client-files/**").hasAnyRole("ADMIN", "MATERNITY_NURSE")
+                                        .requestMatchers("/client-files-report/**").hasAnyRole("ADMIN", "MATERNITY_NURSE")
+
 //                                        .requestMatchers(HttpMethod.GET, "/clientFiles").hasAnyRole("MATERNITYNURSE", "MIDWIFE")
 //                                        .requestMatchers(HttpMethod.PUT, "/clientFiles/**").hasAnyRole("MATERNITYNURSE", "CLIENT")
 //                                        .requestMatchers(HttpMethod.GET, "/clientFiles/{clientId}")

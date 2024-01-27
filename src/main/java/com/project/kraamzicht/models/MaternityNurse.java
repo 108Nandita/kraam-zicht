@@ -16,9 +16,6 @@ public class MaternityNurse extends User {
     @JoinColumn(name = "username")
     private UserEntity userEntity;
 
-    @ManyToOne
-    @JoinColumn(name = "admin_username", referencedColumnName = "username")
-    private Admin createdByAdmin;
 
     @OneToMany(mappedBy = "maternityNurse", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ClientFile> clientFiles;

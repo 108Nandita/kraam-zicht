@@ -1,37 +1,39 @@
 package com.project.kraamzicht.dtos;
 
-
-import com.project.kraamzicht.models.*;
+import com.project.kraamzicht.models.Client;
+import com.project.kraamzicht.models.ClientFile;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class ClientFileDto {
+
     private long clientFileId;
     private LocalDate dueDate;
     private LocalDate deliveryDate;
     private String deliveryPlace;
-    private String report;
-    private AdminDto admin;
-    private ClientDto client;
-    private List<UserEntityDto> midwives;
+    private List<ClientFileReportDto> reports;
+    private String clientId;
+    private List<MidwifeDto> midwives;
     private MaternityNurseDto maternityNurse;
     private List<IndicationDto> indications;
 
+    // Lege constructor
     public ClientFileDto() {
     }
 
+    // Constructor met alle velden
     public ClientFileDto(long clientFileId, LocalDate dueDate, LocalDate deliveryDate, String deliveryPlace,
-                         String report, AdminDto admin, ClientDto client, List<UserEntityDto> midwives,
+                         List<ClientFileReportDto> reports, String clientId, List<MidwifeDto> midwives,
                          MaternityNurseDto maternityNurse, List<IndicationDto> indications) {
         this.clientFileId = clientFileId;
         this.dueDate = dueDate;
         this.deliveryDate = deliveryDate;
         this.deliveryPlace = deliveryPlace;
-        this.report = report;
-        this.admin = admin;
-        this.client = client;
+        this.reports = reports;
+        this.clientId = clientId;
         this.midwives = midwives;
         this.maternityNurse = maternityNurse;
         this.indications = indications;
@@ -69,40 +71,32 @@ public class ClientFileDto {
         this.deliveryPlace = deliveryPlace;
     }
 
-    public String getReport() {
-        return report;
+    public List<ClientFileReportDto> getReports() {
+        return reports == null ? new ArrayList<>() : reports;
     }
 
-    public void setReport(String report) {
-        this.report = report;
+    public void setReports(List<ClientFileReportDto> reports) {
+        this.reports = reports;
     }
 
-    public AdminDto getAdmin() {
-        return admin;
+    public String getClientId() {
+        return clientId;
     }
 
-    public void setAdmin(AdminDto admin) {
-        this.admin = admin;
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
     }
 
-    public ClientDto getClient() {
-        return client;
+    public List<MidwifeDto> getMidwives() {
+        return midwives == null ? new ArrayList<>() : midwives;
     }
 
-    public void setClient(ClientDto client) {
-        this.client = client;
-    }
-
-    public List<UserEntityDto> getMidwives() {
-        return midwives;
-    }
-
-    public void setMidwives(List<UserEntityDto> midwives) {
+    public void setMidwives(List<MidwifeDto> midwives) {
         this.midwives = midwives;
     }
 
-    public UserDto getMaternityNurse() {
-        return maternityNurse;
+    public MaternityNurseDto getMaternityNurse() {
+        return maternityNurse == null ? new MaternityNurseDto() : maternityNurse;
     }
 
     public void setMaternityNurse(MaternityNurseDto maternityNurse) {
@@ -110,37 +104,42 @@ public class ClientFileDto {
     }
 
     public List<IndicationDto> getIndications() {
-        return indications;
+        return indications == null ? new ArrayList<>() : indications;
     }
 
     public void setIndications(List<IndicationDto> indications) {
         this.indications = indications;
     }
 
-    public static ClientFileDto fromClientFiles(ClientFile clientFile) {
+    public static ClientFileDto fromClientFile(ClientFile clientFile) {
         ClientFileDto dto = new ClientFileDto();
         dto.setClientFileId(clientFile.getClientFileId());
         dto.setDueDate(clientFile.getDueDate());
         dto.setDeliveryDate(clientFile.getDeliveryDate());
         dto.setDeliveryPlace(clientFile.getDeliveryPlace());
-        dto.setReport(clientFile.getReport());
-
-//        // Mapping van Admin, Client en MaternityNurse naar UserDto
-//        dto.setAdmin(UserDto.fromAdmin(clientFile.getAdmin()));
-//        dto.setClient(UserDto.fromClient(clientFile.getClient()));
-//        dto.setMidwives(clientFile.getMidwives().stream().map(UserDto::fromMidwife).collect(Collectors.toList()));
-//        dto.setMaternityNurse(UserDto.fromMaternityNurse(clientFile.getMaternityNurse()));
-
-        // Mapping van Indication naar IndicationDto
+        dto.setReports(clientFile.getReports().stream().map(ClientFileReportDto::fromClientFileReport).collect(Collectors.toList()));
+        dto.setClientId(clientFile.getClient().getClientId());
+        dto.setMaternityNurse(MaternityNurseDto.fromMaternityNurse(clientFile.getMaternityNurse()));
+        dto.setMidwives(clientFile.getMidwives().stream().map(MidwifeDto::fromMidwife).collect(Collectors.toList()));
         dto.setIndications(clientFile.getIndications().stream().map(IndicationDto::fromIndication).collect(Collectors.toList()));
 
         return dto;
     }
 
-    public static List<ClientFileDto> convertListFromClientFiles(List<ClientFile> clientFiles) {
-        return clientFiles.stream()
-                .map(ClientFileDto::fromClientFiles)
-                .collect(Collectors.toList());
+    public static ClientFile toClientFile(ClientFileDto clientFileDto) {
+        ClientFile clientFile = new ClientFile();
+        clientFile.setClientFileId(clientFileDto.getClientFileId());
+        clientFile.setDueDate(clientFileDto.getDueDate());
+        clientFile.setDeliveryDate(clientFileDto.getDeliveryDate());
+        clientFile.setDeliveryPlace(clientFileDto.getDeliveryPlace());
+        clientFile.setReports(clientFileDto.getReports().stream().map(ClientFileReportDto::toClientFileReport).collect(Collectors.toList()));
+        Client client = new Client();
+        client.setClientId(clientFileDto.getClientId());
+        clientFile.setClient(client);
+        clientFile.setMaternityNurse(MaternityNurseDto.toMaternityNurse((MaternityNurseDto) clientFileDto.getMaternityNurse()));
+        clientFile.setMidwives(clientFileDto.getMidwives().stream().map(MidwifeDto::toMidwife).collect(Collectors.toList()));
+        clientFile.setIndications(clientFileDto.getIndications().stream().map(IndicationDto::toIndication).collect(Collectors.toList()));
+
+        return clientFile;
     }
 }
-

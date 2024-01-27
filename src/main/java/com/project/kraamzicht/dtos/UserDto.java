@@ -1,5 +1,7 @@
 package com.project.kraamzicht.dtos;
 
+import com.project.kraamzicht.models.User;
+
 import java.time.LocalDate;
 import java.util.Set;
 
@@ -136,5 +138,40 @@ public class UserDto {
 
     public void setAuthorities(Set<UserEntityDto> authorities) {
         this.authorities = authorities;
+    }
+
+    public static UserDto fromUser(User user) {
+        UserDto dto = new UserDto();
+        dto.setName(user.getName());
+        dto.setSurname(user.getSurname());
+        dto.setDob(user.getDob());
+        dto.setAddress(user.getAddress());
+        dto.setPostalcode(user.getPostalcode());
+        dto.setPlace(user.getPlace());
+        dto.setPhoneNr(user.getPhoneNr());
+        dto.setEmail(user.getEmail());
+        dto.setRole(user.getRole());
+        dto.setEnabled(user.isEnabled());
+        dto.setApikey(user.getApikey());
+
+        return dto;
+    }
+
+    public static User toUser(UserDto userDto) {
+        User user = new User();
+        user.setName(userDto.getName());
+        user.setSurname(userDto.getSurname());
+        user.setDob(userDto.getDob());
+        user.setAddress(userDto.getAddress());
+        user.setPostalcode(userDto.getPostalcode());
+        user.setPlace(userDto.getPlace());
+        user.setPhoneNr(userDto.getPhoneNr());
+        user.setEmail(userDto.getEmail());
+        user.setRole(userDto.getRole());
+        user.setEnabled(userDto.isEnabled());
+        user.setApikey(userDto.getApikey());
+
+
+        return user;
     }
 }

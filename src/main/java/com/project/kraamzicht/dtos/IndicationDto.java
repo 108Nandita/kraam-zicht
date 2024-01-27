@@ -31,11 +31,14 @@ public class IndicationDto {
     }
 
     public IndicationDto() {
-    }
-
-    public Long getIndicationId() {
+    }    public Long getIndicationId() {
         return indicationId;
     }
+
+    public void setIndicationId(Long indicationId) {
+        this.indicationId = indicationId;
+    }
+
 
     public String getIndicationDescription() {
         return indicationDescription;
@@ -112,15 +115,28 @@ public class IndicationDto {
         dto.setIndicationDate(indication.getIndicationDate());
         dto.setApprovalDate(indication.getApprovalDate());
 
-//        // Mapping van ClientFile, MaternityNurse en Midwife naar hun respectievelijke DTO's
-//        dto.setClientFile(ClientFileDto.fromClientFiles(indication.getClientFile()));
-//        dto.setMaternityNurse(UserDto.fromMaternityNurse(indication.getMaternityNurse()));
-//        dto.setMidwife(UserDto.fromMidwife(indication.getMidwife()));
+        dto.setClientFile(ClientFileDto.fromClientFile(indication.getClientFile()));
+        dto.setMaternityNurse(MaternityNurseDto.fromMaternityNurse(indication.getMaternityNurse()));
+        dto.setMidwife(MidwifeDto.fromMidwife(indication.getMidwife()));
 
         return dto;
     }
 
-    public void setIndicationId(Long indicationId) {
-        this.indicationId = indicationId;
+    public static Indication toIndication(IndicationDto indicationDto) {
+        Indication indication = new Indication();
+        indication.setIndicationId(indicationDto.getIndicationId());
+        indication.setIndicationDescription(indicationDto.getIndicationDescription());
+        indication.setHoursNeeded(indicationDto.getHoursNeeded());
+        indication.setApproved(indicationDto.isApproved());
+        indication.setIndicationDate(indicationDto.getIndicationDate());
+        indication.setApprovalDate(indicationDto.getApprovalDate());
+
+        indication.setClientFile(ClientFileDto.toClientFile(indicationDto.getClientFile()));
+        indication.setMaternityNurse(MaternityNurseDto.toMaternityNurse(indicationDto.getMaternityNurse()));
+        indication.setMidwife(MidwifeDto.toMidwife(indicationDto.getMidwife()));
+
+        return indication;
     }
+
+
 }

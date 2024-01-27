@@ -30,6 +30,9 @@ public class MaternityNurseService {
         this.userService = userService;
     }
 
+    public MaternityNurse findMaternityNurseByKckzNumber(long kckzNumber) {
+        return maternityNurseRepository.findByKckzNumber(kckzNumber);
+    }
 
     public List<UserDto> getAllMaternityNurses() {
         List<UserDto> collection = new ArrayList<>();

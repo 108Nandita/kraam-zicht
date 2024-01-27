@@ -1,7 +1,6 @@
 package com.project.kraamzicht.services;
 
-import com.project.kraamzicht.dtos.ClientDto;
-import com.project.kraamzicht.dtos.UserEntityDto;
+import com.project.kraamzicht.dtos.*;
 import com.project.kraamzicht.exceptions.RecordNotFoundException;
 import com.project.kraamzicht.models.Authority;
 import com.project.kraamzicht.models.Client;
@@ -11,6 +10,9 @@ import com.project.kraamzicht.repositories.UserEntityRepository;
 import com.project.kraamzicht.utils.RandomStringGenerator;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.project.kraamzicht.dtos.ClientDto.fromClient;
 import static com.project.kraamzicht.dtos.ClientDto.toClient;
@@ -30,6 +32,27 @@ public class ClientService {
         this.clientRepository = clientRepository;
         this.userEntityRepository = userEntityRepository;
         this.userService = userService;
+    }
+
+    public List<UserDto> getAllClients() {
+        List<UserDto> collection = new ArrayList<>();
+        List<Client> clientList = clientRepository.findAll();
+
+        for (Client client : clientList) {
+            collection.add(fromClient(client));
+        }
+
+        return collection;
+    }
+
+    public ClientDto getClientByUsername(String username) {
+        Client client = clientRepository.findClientByUsername(username);
+
+        if (client == null) {
+            throw new RecordNotFoundException("Client not found with username: " + username);
+        }
+
+        return ClientDto.fromClient(client);
     }
 
 
@@ -58,5 +81,16 @@ public class ClientService {
         userEntityRepository.save(userEntity);
     }
 
+    public void updateUserDetails(String username, UserDetailsDto userDetailsDto) {
+        clientRepository.updateUserDetails(username, userDetailsDto);
+    }
+
+    public void updateContactDetails(String username, ContactDetailsDto contactDetailsDto) {
+        clientRepository.updateContactDetails(username, contactDetailsDto);
+    }
+
+    public void deleteClient(String username) {
+        clientRepository.deleteClientByUsername(username);
+    }
 
 }

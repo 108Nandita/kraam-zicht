@@ -3,6 +3,7 @@ package com.project.kraamzicht.models;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -11,18 +12,25 @@ public class ClientFile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "client_file_id", nullable = false, unique = true)
-
     private long clientFileId;
 
     @Column
     private LocalDate dueDate;
+
     @Column
     private LocalDate deliveryDate;
+
     @Column
     private String deliveryPlace;
+
+    @Column
+    private LocalDate reportDate;
+
     @Column
     private String report;
 
+    @OneToMany(mappedBy = "clientFile", cascade = CascadeType.ALL)
+    private List<ClientFileReport> reports = new ArrayList<>();
 
     @ManyToOne
     @JoinColumns({
@@ -33,7 +41,6 @@ public class ClientFile {
 
     @ManyToOne
     @JoinColumns({
-
             @JoinColumn(name = "client_id", referencedColumnName = "clientId")
     })
     private Client client;
@@ -46,7 +53,8 @@ public class ClientFile {
                     @JoinColumn(name = "client_id", referencedColumnName = "client_id")
             },
             inverseJoinColumns = {
-                    @JoinColumn(name = "midwife_agb", referencedColumnName = "midwife_agb")}
+                    @JoinColumn(name = "midwife_agb", referencedColumnName = "midwife_agb")
+            }
     )
     private List<Midwife> midwives;
 
@@ -57,17 +65,19 @@ public class ClientFile {
     })
     private MaternityNurse maternityNurse;
 
-    @OneToMany
+    @OneToMany(mappedBy = "clientFile")
     private List<Indication> indications;
 
-    public ClientFile() {}
+    public ClientFile() {
+    }
 
-    public ClientFile(LocalDate dueDate, LocalDate deliveryDate, String deliveryPlace, String report,
+    public ClientFile(LocalDate dueDate, LocalDate deliveryDate, String deliveryPlace, LocalDate reportDate, String report,
                       Admin admin, Client client, List<Midwife> midwives, MaternityNurse maternityNurse,
                       List<Indication> indications) {
         this.dueDate = dueDate;
         this.deliveryDate = deliveryDate;
         this.deliveryPlace = deliveryPlace;
+        this.reportDate = reportDate;
         this.report = report;
         this.admin = admin;
         this.client = client;
@@ -112,6 +122,14 @@ public class ClientFile {
         this.deliveryPlace = deliveryPlace;
     }
 
+    public LocalDate getReportDate() {
+        return reportDate;
+    }
+
+    public void setReportDate(LocalDate reportDate) {
+        this.reportDate = reportDate;
+    }
+
     public String getReport() {
         return report;
     }
@@ -151,5 +169,20 @@ public class ClientFile {
     public void setIndications(List<Indication> indications) {
         this.indications = indications;
     }
-}
 
+    public List<ClientFileReport> getReports() {
+        return reports;
+    }
+
+    public void setReports(List<ClientFileReport> reports) {
+        this.reports = reports;
+    }
+
+    public void addReport(ClientFileReport report) {
+        if (this.reports == null) {
+            this.reports = new ArrayList<>();
+        }
+        this.reports.add(report);
+        report.setClientFile(this);
+    }
+}
