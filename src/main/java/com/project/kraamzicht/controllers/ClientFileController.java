@@ -53,7 +53,7 @@ public class ClientFileController {
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{clientFileId}")
                 .buildAndExpand(newClientFileId).toUri();
-        
+
         return ResponseEntity.created(location).body(newClientFileId);
     }
 
@@ -78,3 +78,4 @@ public class ClientFileController {
 
 
 }
+

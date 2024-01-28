@@ -8,10 +8,10 @@ import java.time.LocalDate;
 public class ClientFileReport {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long reportId;
 
-    @ManyToOne
-    @JoinColumn(name = "client_file_id")
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "report-client_file_id")
     private ClientFile clientFile;
 
     private LocalDate reportDate;
@@ -20,18 +20,19 @@ public class ClientFileReport {
     public ClientFileReport() {
     }
 
-    public ClientFileReport(LocalDate reportDate, String report, ClientFile clientFile) {
+    public ClientFileReport(Long reportId, LocalDate reportDate, String report, ClientFile clientFile) {
+        this.reportId = reportId;
         this.reportDate = reportDate;
         this.report = report;
         this.clientFile = clientFile;
     }
 
-    public Long getId() {
-        return id;
+    public Long getReportId() {
+        return reportId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId(Long reportIdReportId) {
+        this.reportId = reportId;
     }
 
     public ClientFile getClientFile() {

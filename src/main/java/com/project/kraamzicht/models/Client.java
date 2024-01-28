@@ -13,7 +13,7 @@ public class Client extends User {
 
 
     @Id
-    @Column
+    @Column(unique = true, nullable = false)
     private String clientId;
 
     @OneToOne(cascade = CascadeType.ALL)

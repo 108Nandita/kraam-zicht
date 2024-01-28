@@ -23,12 +23,6 @@ public class ClientFile {
     @Column
     private String deliveryPlace;
 
-    @Column
-    private LocalDate reportDate;
-
-    @Column
-    private String report;
-
     @OneToMany(mappedBy = "clientFile", cascade = CascadeType.ALL)
     private List<ClientFileReport> reports = new ArrayList<>();
 
@@ -71,14 +65,13 @@ public class ClientFile {
     public ClientFile() {
     }
 
-    public ClientFile(LocalDate dueDate, LocalDate deliveryDate, String deliveryPlace, LocalDate reportDate, String report,
+    public ClientFile(LocalDate dueDate, LocalDate deliveryDate, String deliveryPlace, List<ClientFileReport> reports,
                       Admin admin, Client client, List<Midwife> midwives, MaternityNurse maternityNurse,
                       List<Indication> indications) {
         this.dueDate = dueDate;
         this.deliveryDate = deliveryDate;
         this.deliveryPlace = deliveryPlace;
-        this.reportDate = reportDate;
-        this.report = report;
+        this.reports = reports;
         this.admin = admin;
         this.client = client;
         this.midwives = midwives;
@@ -122,20 +115,12 @@ public class ClientFile {
         this.deliveryPlace = deliveryPlace;
     }
 
-    public LocalDate getReportDate() {
-        return reportDate;
+    public List<ClientFileReport> getReports() {
+        return reports;
     }
 
-    public void setReportDate(LocalDate reportDate) {
-        this.reportDate = reportDate;
-    }
-
-    public String getReport() {
-        return report;
-    }
-
-    public void setReport(String report) {
-        this.report = report;
+    public void setReports(List<ClientFileReport> reports) {
+        this.reports = reports;
     }
 
     public Client getClient() {
@@ -170,14 +155,6 @@ public class ClientFile {
         this.indications = indications;
     }
 
-    public List<ClientFileReport> getReports() {
-        return reports;
-    }
-
-    public void setReports(List<ClientFileReport> reports) {
-        this.reports = reports;
-    }
-
     public void addReport(ClientFileReport report) {
         if (this.reports == null) {
             this.reports = new ArrayList<>();
@@ -186,3 +163,5 @@ public class ClientFile {
         report.setClientFile(this);
     }
 }
+
+

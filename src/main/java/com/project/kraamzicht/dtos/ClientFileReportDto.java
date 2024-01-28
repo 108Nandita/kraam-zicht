@@ -1,5 +1,6 @@
 package com.project.kraamzicht.dtos;
 
+import com.project.kraamzicht.models.Admin;
 import com.project.kraamzicht.models.ClientFileReport;
 
 import java.time.LocalDate;
@@ -33,11 +34,19 @@ public class ClientFileReportDto {
         this.report = report;
     }
 
-    public static ClientFileReportDto fromClientFileReport(ClientFileReport report) {
-        return new ClientFileReportDto(report.getReportDate(), report.getReport());
+    public static ClientFileReportDto fromClientFileReport(ClientFileReport clientFileReport) {
+
+        ClientFileReportDto dto = new ClientFileReportDto();
+        dto.setReportDate(clientFileReport.getReportDate());
+        dto.setReport(clientFileReport.getReport());
+
+        return dto;
     }
 
-    public static ClientFileReport toClientFileReport(ClientFileReportDto reportDto) {
-        return new ClientFileReport(reportDto.getReportDate(), reportDto.getReport(), null);
+        public static ClientFileReport toClientFileReport(ClientFileReportDto clientFileReportDto) {
+            ClientFileReport clientFileReport = new ClientFileReport();
+            clientFileReport.setReportDate(clientFileReportDto.getReportDate());
+            clientFileReport.setReport(clientFileReportDto.getReport());
+            return clientFileReport;
     }
 }
