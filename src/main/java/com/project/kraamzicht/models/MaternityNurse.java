@@ -2,6 +2,7 @@ package com.project.kraamzicht.models;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,10 +18,10 @@ public class MaternityNurse extends User {
     private UserEntity userEntity;
 
 
-    @OneToMany(mappedBy = "maternityNurse", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ClientFile> clientFiles;
+    @OneToMany(mappedBy = "maternityNurse", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+    private List<ClientFile> clientFiles = new ArrayList<>();
 
-    @OneToMany(mappedBy = "maternityNurse", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "maternityNurse", cascade = CascadeType.ALL, orphanRemoval = false)
     private List<Indication> indications;
 
     public MaternityNurse() {

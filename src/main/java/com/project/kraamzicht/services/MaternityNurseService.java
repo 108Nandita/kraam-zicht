@@ -95,5 +95,8 @@ public class MaternityNurseService {
         maternityNurseRepository.deleteMaternityNurseByUsername(username);
     }
 
+    public void updateMaternityNurseKckzNumber(MaternityNurse existingMaternityNurse) {
+        maternityNurseRepository.save(existingMaternityNurse);
+    }
 
 }

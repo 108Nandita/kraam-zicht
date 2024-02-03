@@ -41,14 +41,6 @@ public class ClientFileController {
     @PostMapping("/createClientFile")
     public ResponseEntity<Long> createClientFile(@RequestBody ClientFileDto dto) {
 
-        MaternityNurseDto maternityNurseDto = (MaternityNurseDto) dto.getMaternityNurse();
-        if (maternityNurseDto != null && maternityNurseDto.getKckzNumber() != 0) {
-            long kckzNumber = maternityNurseDto.getKckzNumber();
-            MaternityNurse maternityNurse = maternityNurseService.findMaternityNurseByKckzNumber(kckzNumber);
-
-            dto.setMaternityNurse(MaternityNurseDto.fromMaternityNurse(maternityNurse));
-        }
-
         Long newClientFileId = clientFileService.createClientFile(dto);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{clientFileId}")
@@ -59,23 +51,31 @@ public class ClientFileController {
 
     @PostMapping("/{clientFileId}/addReport")
     public ResponseEntity<Void> addReportToClientFile(@PathVariable Long clientFileId, @RequestBody ClientFileReportDto reportDto) {
-        // Haal het bestaande zwangerschapsdossier op
         ClientFile existingClientFile = clientFileService.getClientFileById(clientFileId);
 
         if (existingClientFile == null) {
             return ResponseEntity.notFound().build();
         }
 
-        // Voeg het rapport toe aan het zwangerschapsdossier
         ClientFileReport report = ClientFileReportDto.toClientFileReport(reportDto);
         existingClientFile.addReport(report);
 
-        // Sla het zwangerschapsdossier op om de wijzigingen door te voeren
         clientFileService.updateClientFile(existingClientFile);
 
         return ResponseEntity.ok().build();
     }
 
+    @PutMapping("/{clientFileId}/updateData")
+    public ResponseEntity<Void> updateClientFileData(@PathVariable Long clientFileId, @RequestBody ClientFileDto updatedData) {
+        clientFileService.updateClientFileData(clientFileId, updatedData);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/{clientFileId}/updateMaternityNurse")
+    public ResponseEntity<Void> updateMaternityNurse(@PathVariable Long clientFileId, @RequestBody MaternityNurseDto updatedMaternityNurseData) {
+        clientFileService.updateMaternityNurse(clientFileId, updatedMaternityNurseData);
+        return ResponseEntity.ok().build();
+    }
 
 }
 

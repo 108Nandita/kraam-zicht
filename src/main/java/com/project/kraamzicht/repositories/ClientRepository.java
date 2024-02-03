@@ -10,6 +10,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface ClientRepository extends JpaRepository<Client, String> {
+
+
+    Client findByClientId(@Param("clientId") String clienId);
     @Query("SELECT a FROM Client a WHERE a.username = :username")
     Client findClientByUsername(@Param("username") String username);
 
