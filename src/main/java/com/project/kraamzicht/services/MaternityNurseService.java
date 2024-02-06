@@ -3,6 +3,7 @@ package com.project.kraamzicht.services;
 import com.project.kraamzicht.dtos.*;
 import com.project.kraamzicht.exceptions.RecordNotFoundException;
 import com.project.kraamzicht.models.Authority;
+import com.project.kraamzicht.models.ClientFile;
 import com.project.kraamzicht.models.MaternityNurse;
 import com.project.kraamzicht.models.UserEntity;
 import com.project.kraamzicht.repositories.*;
@@ -12,22 +13,27 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.project.kraamzicht.dtos.MaternityNurseDto.fromMaternityNurse;
 import static com.project.kraamzicht.dtos.MaternityNurseDto.toMaternityNurse;
+import static com.project.kraamzicht.dtos.ClientFileDto.fromClientFile;
 
 @Service
 @Transactional
 public class MaternityNurseService {
 
     private final MaternityNurseRepository maternityNurseRepository;
+
+    private final ClientFileRepository clientFileRepository;
     private final UserEntityRepository userEntityRepository;
     private final UserService userService;
 
-    public MaternityNurseService(MaternityNurseRepository maternityNurseRepository, UserEntityRepository userEntityRepository, UserService userService, UserEntityRepository userEntityRepository1) {
+    public MaternityNurseService(MaternityNurseRepository maternityNurseRepository, UserEntityRepository userEntityRepository, UserService userService, UserEntityRepository userEntityRepository1, ClientFileRepository clientFileRepository) {
         this.maternityNurseRepository = maternityNurseRepository;
         this.userEntityRepository = userEntityRepository;
         this.userService = userService;
+        this.clientFileRepository = clientFileRepository;
     }
 
     public MaternityNurse findMaternityNurseByKckzNumber(long kckzNumber) {
@@ -54,6 +60,19 @@ public class MaternityNurseService {
         }
 
         throw new RecordNotFoundException("Maternity Nurse not found with username: " + username);
+    }
+
+    public List<ClientFileDto> getClientFilesByMaternityNurseKckzNumber(long kckzNumber) {
+        MaternityNurse maternityNurse = maternityNurseRepository.findByKckzNumber(kckzNumber);
+
+        if (maternityNurse != null) {
+            List<ClientFile> clientFiles = clientFileRepository.findByMaternityNurse(maternityNurse);
+            return clientFiles.stream()
+                    .map(ClientFileDto::fromClientFile)
+                    .collect(Collectors.toList());
+        }
+
+        throw new RecordNotFoundException("Maternity Nurse not found with kckzNumber: " + kckzNumber);
     }
 
 
