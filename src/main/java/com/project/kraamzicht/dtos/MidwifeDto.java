@@ -55,4 +55,28 @@ public class MidwifeDto extends UserDto {
 
         return dto;
     }
+
+    public static Midwife toMidwife(MidwifeDto midwifeDto) {
+        Midwife midwife = new Midwife();
+
+        // Mapping from MidwifeDto to Midwife
+        midwife.setAgbCode(midwifeDto.getAgbCode());
+        midwife.setCertification(midwifeDto.getCertification());
+        midwife.setApprovedIndications(midwifeDto.getApprovedIndications());
+
+        // Set common properties from UserDto class
+        midwife.setEnabled(midwifeDto.isEnabled());
+        midwife.setApikey(midwifeDto.getApikey());
+        midwife.setEmail(midwifeDto.getEmail());
+        midwife.setName(midwifeDto.getName());
+        midwife.setSurname(midwifeDto.getSurname());
+        midwife.setDob(midwifeDto.getDob());
+        midwife.setAddress(midwifeDto.getAddress());
+        midwife.setPostalcode(midwifeDto.getPostalcode());
+        midwife.setPlace(midwifeDto.getPlace());
+        midwife.setPhoneNr(midwifeDto.getPhoneNr());
+
+        return midwife;
+    }
+
 }

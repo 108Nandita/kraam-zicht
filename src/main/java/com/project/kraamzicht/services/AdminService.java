@@ -153,8 +153,6 @@ public class AdminService {
     }
 
 
-
-
     public void addAuthority(String username, String authority) {
         UserEntity userEntity = userEntityRepository.findByUsername(username);
         if (userEntity == null) {

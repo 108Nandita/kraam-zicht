@@ -7,15 +7,17 @@ import com.project.kraamzicht.models.MaternityNurse;
 import java.util.List;
 
 public class MaternityNurseDto extends UserDto {
-    private String kckzNumber;
+
+    private String username;
+    private long kckzNumber;
     private List<ClientFile> clientFiles;
     private List<Indication> indications;
 
-    public String getKckzNumber() {
+    public long getKckzNumber() {
         return kckzNumber;
     }
 
-    public void setKckzNumber(String kckzNumber) {
+    public void setKckzNumber(long kckzNumber) {
         this.kckzNumber = kckzNumber;
     }
 
@@ -39,6 +41,7 @@ public class MaternityNurseDto extends UserDto {
     public static MaternityNurseDto fromMaternityNurse(MaternityNurse maternityNurse) {
         MaternityNurseDto dto = new MaternityNurseDto();
         // Mapping from MaternityNurse to MaternityNurseDto
+        dto.setUsername(maternityNurse.getUsername());
         dto.setKckzNumber(maternityNurse.getKckzNumber());
         dto.setClientFiles(maternityNurse.getClientFiles());
         dto.setIndications(maternityNurse.getIndications());
@@ -54,5 +57,34 @@ public class MaternityNurseDto extends UserDto {
         dto.setPhoneNr(maternityNurse.getPhoneNr());
 
         return dto;
+    }
+
+    public static MaternityNurse toMaternityNurse(MaternityNurseDto dto) {
+        MaternityNurse maternityNurse = new MaternityNurse();
+        // Mapping from MaternityNurseDto to MaternityNurse
+        maternityNurse.setUsername(dto.getUsername());
+        maternityNurse.setKckzNumber(dto.getKckzNumber());
+        maternityNurse.setClientFiles(dto.getClientFiles());
+        maternityNurse.setIndications(dto.getIndications());
+        maternityNurse.setEnabled(dto.isEnabled());
+        maternityNurse.setApikey(dto.getApikey());
+        maternityNurse.setEmail(dto.getEmail());
+        maternityNurse.setName(dto.getName());
+        maternityNurse.setSurname(dto.getSurname());
+        maternityNurse.setDob(dto.getDob());
+        maternityNurse.setAddress(dto.getAddress());
+        maternityNurse.setPostalcode(dto.getPostalcode());
+        maternityNurse.setPlace(dto.getPlace());
+        maternityNurse.setPhoneNr(dto.getPhoneNr());
+
+        return maternityNurse;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

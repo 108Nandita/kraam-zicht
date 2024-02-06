@@ -2,46 +2,40 @@ package com.project.kraamzicht.models;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @DiscriminatorValue("MaternityNurse")
 public class MaternityNurse extends User {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @Column(name = "kckz_number", nullable = false, unique = true)
-    private String kckzNumber;
+    private long kckzNumber;
 
-    @ManyToOne
-    @JoinColumn(name = "admin_username", referencedColumnName = "username")
-    private Admin createdByAdmin;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "username")
+    private UserEntity userEntity;
 
-    @OneToMany(mappedBy = "maternityNurse", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ClientFile> clientFiles;
 
-    @OneToMany(mappedBy = "maternityNurse", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "maternityNurse", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+    private List<ClientFile> clientFiles = new ArrayList<>();
+
+    @OneToMany(mappedBy = "maternityNurse", cascade = CascadeType.ALL, orphanRemoval = false)
     private List<Indication> indications;
 
     public MaternityNurse() {
-    }
-
-    public Admin getCreatedByAdmin() {
-        return createdByAdmin;
-    }
-
-    public void setCreatedByAdmin(Admin createdByAdmin) {
-        this.createdByAdmin = createdByAdmin;
     }
 
     public MaternityNurse(List<Indication> indications) {
         this.indications = indications;
     }
 
-    public String getKckzNumber() {
+    public long getKckzNumber() {
         return kckzNumber;
     }
 
-    public void setKckzNumber(String kckzNumber) {
+    public void setKckzNumber(long kckzNumber) {
         this.kckzNumber = kckzNumber;
     }
 
@@ -59,5 +53,13 @@ public class MaternityNurse extends User {
 
     public void setClientFiles(List<ClientFile> clientFiles) {
         this.clientFiles = clientFiles;
+    }
+
+    public UserEntity getUserEntity() {
+        return userEntity;
+    }
+
+    public void setUserEntity(UserEntity userEntity) {
+        this.userEntity = userEntity;
     }
 }

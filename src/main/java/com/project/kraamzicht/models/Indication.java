@@ -113,6 +113,8 @@ public class Indication {
     }
 
 
+    public void setIndicationId(Long indicationId) {
 
+    }
 }
 
