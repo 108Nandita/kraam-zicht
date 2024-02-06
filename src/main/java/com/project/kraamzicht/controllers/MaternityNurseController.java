@@ -1,9 +1,6 @@
 package com.project.kraamzicht.controllers;
 
-import com.project.kraamzicht.dtos.ContactDetailsDto;
-import com.project.kraamzicht.dtos.MaternityNurseDto;
-import com.project.kraamzicht.dtos.UserDetailsDto;
-import com.project.kraamzicht.dtos.UserDto;
+import com.project.kraamzicht.dtos.*;
 import com.project.kraamzicht.exceptions.RecordNotFoundException;
 import com.project.kraamzicht.repositories.MaternityNurseRepository;
 import com.project.kraamzicht.services.MaternityNurseService;
@@ -42,6 +39,11 @@ public class MaternityNurseController {
         }
     }
 
+    @GetMapping("/getClientFilesByMaternityNurse/{kckzNumber}")
+    public ResponseEntity<List<ClientFileDto>> getClientFilesByMaternityNurseKckzNumber(@PathVariable long kckzNumber) {
+        List<ClientFileDto> clientFiles = maternityNurseService.getClientFilesByMaternityNurseKckzNumber(kckzNumber);
+        return ResponseEntity.ok(clientFiles);
+    }
 
 
     @PostMapping("/createMaternityNurse")
