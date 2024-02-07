@@ -6,9 +6,8 @@ import java.time.LocalDate;
 
 @Entity
 public class Indication {
-
     @Id
-    @Column(name = "indication_id",nullable = false, unique = true)
+    @Column(name = "indication_id", nullable = false, unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long indicationId;
 
@@ -25,8 +24,7 @@ public class Indication {
 
     @ManyToOne
     @JoinColumns({
-            @JoinColumn(name = "maternity_nurse_kckz", referencedColumnName = "kckz_number"),
-            @JoinColumn(name = "maternity_nurse_username", referencedColumnName = "username")
+            @JoinColumn(name = "maternity_nurse_kckz", referencedColumnName = "kckz_number")
     })
     private MaternityNurse maternityNurse;
 
@@ -70,17 +68,14 @@ public class Indication {
     }
 
     public void setIndicationDate(LocalDate indicationDate) {
-
         this.indicationDate = indicationDate;
     }
 
     public LocalDate getApprovalDate() {
-
         return approvalDate;
     }
 
     public void setApprovalDate(LocalDate approvalDate) {
-
         this.approvalDate = approvalDate;
     }
 
@@ -112,9 +107,7 @@ public class Indication {
         return approved;
     }
 
-
     public void setIndicationId(Long indicationId) {
-
+        this.indicationId = indicationId;
     }
 }
-

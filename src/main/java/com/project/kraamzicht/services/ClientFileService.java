@@ -2,15 +2,10 @@ package com.project.kraamzicht.services;
 
 import com.project.kraamzicht.dtos.ClientFileDto;
 import com.project.kraamzicht.dtos.ClientFileReportDto;
+import com.project.kraamzicht.dtos.IndicationDto;
 import com.project.kraamzicht.dtos.MaternityNurseDto;
-import com.project.kraamzicht.models.Client;
-import com.project.kraamzicht.models.ClientFile;
-import com.project.kraamzicht.models.ClientFileReport;
-import com.project.kraamzicht.models.MaternityNurse;
-import com.project.kraamzicht.repositories.ClientFileReportRepository;
-import com.project.kraamzicht.repositories.ClientFileRepository;
-import com.project.kraamzicht.repositories.ClientRepository;
-import com.project.kraamzicht.repositories.MaternityNurseRepository;
+import com.project.kraamzicht.models.*;
+import com.project.kraamzicht.repositories.*;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.project.kraamzicht.dtos.ClientFileDto.toClientFile;
+
 
 @Service
 @Transactional
@@ -30,13 +26,16 @@ public class ClientFileService {
     private final ClientRepository clientRepository;
     private final ClientFileReportRepository clientFileReportRepository;
 
+    private final IndicationRepository indicationRepository;
 
-    public ClientFileService(ClientFileRepository clientFileRepository, MaternityNurseService maternityNurseService, MaternityNurseRepository maternityNurseRepository, ClientRepository clientRepository, ClientFileReportRepository clientFileReportRepository) {
+
+    public ClientFileService(ClientFileRepository clientFileRepository, MaternityNurseService maternityNurseService, MaternityNurseRepository maternityNurseRepository, ClientRepository clientRepository, ClientFileReportRepository clientFileReportRepository, IndicationRepository indicationRepository) {
         this.clientFileRepository = clientFileRepository;
         this.maternityNurseService = maternityNurseService;
         this.maternityNurseRepository = maternityNurseRepository;
         this.clientRepository = clientRepository;
         this.clientFileReportRepository = clientFileReportRepository;
+        this.indicationRepository = indicationRepository;
     }
 
     public List<ClientFileDto> getAllClientFiles() {

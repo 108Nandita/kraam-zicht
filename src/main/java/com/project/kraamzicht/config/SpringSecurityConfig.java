@@ -73,6 +73,7 @@ public class SpringSecurityConfig {
                                         .requestMatchers(HttpMethod.DELETE, "/client/**").hasRole("ADMIN")
                                         .requestMatchers("/client-files/**").hasAnyRole("ADMIN", "MATERNITY_NURSE")
                                         .requestMatchers("/client-files-report/**").hasAnyRole("ADMIN", "MATERNITY_NURSE")
+                                        .requestMatchers("/indications/**").hasAnyRole("ADMIN", "MATERNITY_NURSE")
 
 //                                        .requestMatchers(HttpMethod.GET, "/clientFiles").hasAnyRole("MATERNITYNURSE", "MIDWIFE")
 //                                        .requestMatchers(HttpMethod.PUT, "/clientFiles/**").hasAnyRole("MATERNITYNURSE", "CLIENT")
