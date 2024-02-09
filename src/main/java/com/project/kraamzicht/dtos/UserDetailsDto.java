@@ -10,7 +10,7 @@ public class UserDetailsDto {
     private String postalcode;
     private String place;
 
-    public UserDetailsDto(String name, String surname, LocalDate dob, String address, String postalcode, String place) {
+    public UserDetailsDto() {
         this.name = name;
         this.surname = surname;
         this.dob = dob;

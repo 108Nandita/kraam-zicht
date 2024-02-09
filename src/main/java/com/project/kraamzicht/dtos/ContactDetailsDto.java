@@ -4,7 +4,7 @@ public class ContactDetailsDto {
     private String phoneNr;
     private String email;
 
-    public ContactDetailsDto(String phoneNr, String email) {
+    public ContactDetailsDto() {
         this.phoneNr = phoneNr;
         this.email = email;
     }
