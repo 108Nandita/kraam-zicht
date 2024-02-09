@@ -139,7 +139,13 @@ public class AdminService {
         String randomString = RandomStringGenerator.generateAlphaNumeric(20);
         adminDto.setApikey(randomString);
 
-        UserEntityDto userEntityDto = userService.getUser(adminDto.getUsername());
+        UserEntityDto userEntityDto;
+        try {
+            userEntityDto = userService.getUser(adminDto.getUsername());
+        } catch (UsernameNotFoundException e) {
+            throw new RecordNotFoundException("User not found with username: " + adminDto.getUsername());
+        }
+
         UserEntity userEntity = UserEntityDto.toUserEntity(userEntityDto);
         Admin newAdmin = toAdmin(adminDto);
         newAdmin.setUserEntity(userEntity);

@@ -65,38 +65,14 @@ public class UserService {
         userEntityRepository.save(user);
     }
 
-    public String getAuthorities(String username) {
-        if (!userEntityRepository.existsById(username)) throw new UsernameNotFoundException(username);
-        UserEntity user = userEntityRepository.findById(username).get();
-        UserEntityDto userEntityDto = fromUserEntity(user);
-
-        String authoritiesAsString = userEntityDto.getAuthorities().toString();
-
-        return authoritiesAsString;
-    }
-
-//    public void addAuthority(String username, String authority) {
+//    public String getAuthorities(String username) {
 //        if (!userEntityRepository.existsById(username)) throw new UsernameNotFoundException(username);
 //        UserEntity user = userEntityRepository.findById(username).get();
-//        user.addAuthority(new Authority(username, authority));
-//        userEntityRepository.save(user);
-//    }
+//        UserEntityDto userEntityDto = fromUserEntity(user);
 //
-//    public void removeAuthority(String username, String authority) {
-//        if (!userEntityRepository.existsById(username)) throw new UsernameNotFoundException(username);
-//        UserEntity user = userEntityRepository.findById(username).get();
-//        Authority authorityToRemove = user.getAuthorities().stream()
-//                .filter(a -> a.getAuthority().equalsIgnoreCase(authority))
-//                .findAny().orElseThrow(() -> new RecordNotFoundException("Authority not found"));
-//        user.removeAuthority(authorityToRemove);
-//        userEntityRepository.save(user);
-//    }
-
-//    public void addAuthority(String username, String authority) {
-//        if (!userEntityRepository.existsById(String.valueOf(Long.valueOf(username)))) throw new UsernameNotFoundException(username);
-//        UserEntity user = userEntityRepository.findById(String.valueOf(Long.valueOf(username))).orElseThrow(() -> new RecordNotFoundException("Admin not found"));
-//        user.addAuthority(new Authority(username, authority));
-//        userEntityRepository.save(user);
+//        String authoritiesAsString = userEntityDto.getAuthorities().toString();
+//
+//        return authoritiesAsString;
 //    }
 
 
