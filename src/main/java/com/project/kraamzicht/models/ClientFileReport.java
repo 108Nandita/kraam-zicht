@@ -20,7 +20,7 @@ public class ClientFileReport {
     public ClientFileReport() {
     }
 
-    public ClientFileReport(Long reportId, LocalDate reportDate, String report, ClientFile clientFile) {
+    public ClientFileReport(LocalDate reportDate, String report, ClientFile clientFile) {
         this.reportId = reportId;
         this.reportDate = reportDate;
         this.report = report;
