@@ -22,9 +22,7 @@ import static com.project.kraamzicht.dtos.ClientFileDto.fromClientFile;
 @Service
 @Transactional
 public class MaternityNurseService {
-
     private final MaternityNurseRepository maternityNurseRepository;
-
     private final ClientFileRepository clientFileRepository;
     private final UserEntityRepository userEntityRepository;
     private final UserService userService;
@@ -88,7 +86,6 @@ public class MaternityNurseService {
 
         return newMaternityNurse.getUsername();
     }
-
 
     public void addAuthority(String username, String authority) {
         UserEntity userEntity = userEntityRepository.findByUsername(username);

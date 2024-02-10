@@ -14,10 +14,7 @@ import java.util.Set;
 
 @Service
 public class MyUserDetailsService implements UserDetailsService {
-
     private final UserService userService;
-
-
     public MyUserDetailsService(UserService userService) {
         this.userService = userService;
     }

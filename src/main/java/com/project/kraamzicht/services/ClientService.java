@@ -21,7 +21,6 @@ import static com.project.kraamzicht.dtos.ClientDto.toClient;
 @Service
 @Transactional
 public class ClientService {
-
     private final ClientRepository clientRepository;
     private final UserEntityRepository userEntityRepository;
     private final UserService userService;
@@ -54,7 +53,6 @@ public class ClientService {
 
         return ClientDto.fromClient(client);
     }
-
 
     public String createClient(ClientDto clientDto) {
         String randomString = RandomStringGenerator.generateAlphaNumeric(20);

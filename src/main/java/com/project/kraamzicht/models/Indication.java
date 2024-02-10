@@ -10,11 +10,9 @@ public class Indication {
     @Column(name = "indication_id", nullable = false, unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long indicationId;
-
     private String indicationDescription;
     private int hoursNeeded;
     private boolean approved;
-
     private LocalDate indicationDate;
     private LocalDate approvalDate;
 

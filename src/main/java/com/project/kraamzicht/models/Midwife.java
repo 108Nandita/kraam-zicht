@@ -7,17 +7,13 @@ import java.util.List;
 @DiscriminatorValue("Midwife")
 public class Midwife extends User {
 
-
     @Column(name = "midwife_agb")
     private long agbCode;
     @Column
     private String certification;
-
-
     @ManyToOne
     @JoinColumn(name = "admin_username", referencedColumnName = "username")
     private Admin createdByAdmin;
-
     @OneToMany
     private List<Indication> approvedIndications;
 

@@ -8,7 +8,6 @@ public class ContactDetailsDto {
         this.phoneNr = phoneNr;
         this.email = email;
     }
-
     public String getPhoneNr() {
         return phoneNr;
     }

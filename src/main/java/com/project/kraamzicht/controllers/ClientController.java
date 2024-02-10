@@ -42,7 +42,6 @@ public class ClientController {
         }
     }
 
-
     @PostMapping("/createClient")
     public ResponseEntity<ClientDto> createClient(@RequestBody ClientDto dto) {
 

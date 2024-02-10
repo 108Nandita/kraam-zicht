@@ -18,16 +18,12 @@ import static com.project.kraamzicht.dtos.ClientFileDto.toClientFile;
 @Service
 @Transactional
 public class ClientFileService {
-
-
     private final ClientFileRepository clientFileRepository;
     private final MaternityNurseService maternityNurseService;
     private final MaternityNurseRepository maternityNurseRepository;
     private final ClientRepository clientRepository;
     private final ClientFileReportRepository clientFileReportRepository;
-
     private final IndicationRepository indicationRepository;
-
 
     public ClientFileService(ClientFileRepository clientFileRepository, MaternityNurseService maternityNurseService, MaternityNurseRepository maternityNurseRepository, ClientRepository clientRepository, ClientFileReportRepository clientFileReportRepository, IndicationRepository indicationRepository) {
         this.clientFileRepository = clientFileRepository;
@@ -49,10 +45,7 @@ public class ClientFileService {
         return collection;
     }
 
-
-
     public Long createClientFile(ClientFileDto clientFileDto) {
-
 
         if (clientFileDto != null && clientFileDto.getKckzNumber() != 0) {
             long kckzNumber = clientFileDto.getKckzNumber();
@@ -121,7 +114,8 @@ public class ClientFileService {
                 clientFileRepository.save(existingClientFile);
             }
         }
-    }}
+    }
+}
 
 
 

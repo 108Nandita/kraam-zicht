@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static jdk.internal.org.objectweb.asm.util.CheckClassAdapter.verify;
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -30,7 +29,7 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-class ClientFileServiceTest {
+class ClientFileTestService {
 
     @Mock
     private ClientFileRepository clientFileRepository;
@@ -54,13 +53,10 @@ class ClientFileServiceTest {
         ClientFileDto clientFileDto = new ClientFileDto();
         clientFileDto.setKckzNumber(123);
 
-        // Mock behavior of maternityNurseService
         when(maternityNurseService.findMaternityNurseByKckzNumber(123)).thenReturn(new MaternityNurse());
 
-        // Mock behavior of clientRepository
         when(clientRepository.findByClientId(String.valueOf(anyLong()))).thenReturn(new Client());
 
-        // Mock behavior of clientFileRepository
         when(clientFileRepository.save(any(ClientFile.class))).thenReturn(new ClientFile());
 
         // Act

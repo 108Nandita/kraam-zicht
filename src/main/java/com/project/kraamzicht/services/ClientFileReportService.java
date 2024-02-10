@@ -18,7 +18,6 @@ public class ClientFileReportService {
         this.clientFileReportRepository = clientFileReportRepository;
     }
 
-
     public List<ClientFileReportDto> getClientFileReports(Long clientFileId) {
         return clientFileReportRepository.findByClientFileId(clientFileId);
     }

@@ -16,10 +16,8 @@ public class ClientFile {
 
     @Column
     private LocalDate dueDate;
-
     @Column
     private LocalDate deliveryDate;
-
     @Column
     private String deliveryPlace;
 

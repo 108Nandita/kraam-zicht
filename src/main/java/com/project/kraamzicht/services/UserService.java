@@ -1,4 +1,5 @@
 package com.project.kraamzicht.services;
+
 import com.project.kraamzicht.dtos.UserEntityDto;
 import com.project.kraamzicht.exceptions.RecordNotFoundException;
 import com.project.kraamzicht.models.Authority;
@@ -64,16 +65,4 @@ public class UserService {
         user.setPassword(newUser.getPassword());
         userEntityRepository.save(user);
     }
-
-//    public String getAuthorities(String username) {
-//        if (!userEntityRepository.existsById(username)) throw new UsernameNotFoundException(username);
-//        UserEntity user = userEntityRepository.findById(username).get();
-//        UserEntityDto userEntityDto = fromUserEntity(user);
-//
-//        String authoritiesAsString = userEntityDto.getAuthorities().toString();
-//
-//        return authoritiesAsString;
-//    }
-
-
 }

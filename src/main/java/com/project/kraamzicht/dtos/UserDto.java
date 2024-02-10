@@ -14,9 +14,7 @@ public class UserDto {
     private String place;
     private String phoneNr;
     private String email;
-
     private String role;
-
     private boolean enabled = true;
     private String apikey;
     private Set<UserEntityDto> authorities;

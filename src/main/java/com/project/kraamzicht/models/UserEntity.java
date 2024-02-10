@@ -14,12 +14,9 @@ public class UserEntity {
     @Id
     @Column(nullable = false, unique = true)
     private String username;
-
     @Column(nullable = false, length = 255)
     private String password;
-
     private Boolean enabled;
-
     @OneToMany(
             targetEntity = Authority.class,
             mappedBy = "username",
@@ -27,7 +24,6 @@ public class UserEntity {
             orphanRemoval = true,
             fetch = FetchType.EAGER)
     private Set<Authority> authorities = new HashSet<>();
-
     @OneToOne(mappedBy = "userEntity", cascade = CascadeType.ALL)
     private Admin admin;
 
@@ -40,7 +36,6 @@ public class UserEntity {
 
     public UserEntity() {
     }
-
 
     public String getUsername() {
         return username;
@@ -89,6 +84,5 @@ public class UserEntity {
     public void setAdmin(Admin admin) {
         this.admin = admin;
     }
-
 
 }
