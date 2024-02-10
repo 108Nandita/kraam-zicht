@@ -35,8 +35,6 @@ import static com.project.kraamzicht.dtos.MidwifeDto.fromMidwife;
 @Service
 @Transactional
 public class AdminService {
-
-
     private static AdminRepository adminRepository;
     private static UserEntity userEntityDto;
     private final MaternityNurseRepository maternityNurseRepository;
@@ -154,10 +152,8 @@ public class AdminService {
     }
 
     public List<UserEntityDto> getAllUserData() {
-        // Implementatie voor het ophalen van alle gebruikersgegevens
         return null;
     }
-
 
     public void addAuthority(String username, String authority) {
         UserEntity userEntity = userEntityRepository.findByUsername(username);

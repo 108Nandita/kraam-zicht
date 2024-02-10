@@ -12,7 +12,7 @@ public class IndicationDto {
     private boolean approved;
     private LocalDate indicationDate;
     private LocalDate approvalDate;
-    private Long maternityNurseKckzNumber; // KCKZ number instead of MaternityNurseDto
+    private Long maternityNurseKckzNumber;
 
     public IndicationDto() {
     }
@@ -27,42 +27,6 @@ public class IndicationDto {
         this.indicationDate = indicationDate;
         this.approvalDate = approvalDate;
         this.maternityNurseKckzNumber = maternityNurseKckzNumber;
-    }
-
-    // Getters and setters...
-
-    public static IndicationDto fromIndication(Indication indication) {
-        IndicationDto dto = new IndicationDto();
-        dto.setIndicationId(indication.getIndicationId());
-        dto.setIndicationDescription(indication.getIndicationDescription());
-        dto.setHoursNeeded(indication.getHoursNeeded());
-        dto.setApproved(indication.isApproved());
-        dto.setIndicationDate(indication.getIndicationDate());
-        dto.setApprovalDate(indication.getApprovalDate());
-
-        // Set maternity nurse KCKZ number instead of MaternityNurseDto
-        if (indication.getMaternityNurse() != null) {
-            dto.setMaternityNurseKckzNumber(indication.getMaternityNurse().getKckzNumber());
-        }
-
-        return dto;
-    }
-
-    public static Indication toIndication(IndicationDto indicationDto) {
-        Indication indication = new Indication();
-        indication.setIndicationId(indicationDto.getIndicationId());
-        indication.setIndicationDescription(indicationDto.getIndicationDescription());
-        indication.setHoursNeeded(indicationDto.getHoursNeeded());
-        indication.setApproved(indicationDto.isApproved());
-        indication.setIndicationDate(indicationDto.getIndicationDate());
-        indication.setApprovalDate(indicationDto.getApprovalDate());
-
-        // Create a new MaternityNurse and set its KCKZ number
-        MaternityNurse maternityNurse = new MaternityNurse();
-        maternityNurse.setKckzNumber(indicationDto.getMaternityNurseKckzNumber());
-        indication.setMaternityNurse(maternityNurse);
-
-        return indication;
     }
 
     public String getIndicationDescription() {
@@ -119,5 +83,37 @@ public class IndicationDto {
 
     public void setMaternityNurseKckzNumber(Long maternityNurseKckzNumber) {
         this.maternityNurseKckzNumber = maternityNurseKckzNumber;
+    }
+
+    public static IndicationDto fromIndication(Indication indication) {
+        IndicationDto dto = new IndicationDto();
+        dto.setIndicationId(indication.getIndicationId());
+        dto.setIndicationDescription(indication.getIndicationDescription());
+        dto.setHoursNeeded(indication.getHoursNeeded());
+        dto.setApproved(indication.isApproved());
+        dto.setIndicationDate(indication.getIndicationDate());
+        dto.setApprovalDate(indication.getApprovalDate());
+
+        if (indication.getMaternityNurse() != null) {
+            dto.setMaternityNurseKckzNumber(indication.getMaternityNurse().getKckzNumber());
+        }
+
+        return dto;
+    }
+
+    public static Indication toIndication(IndicationDto indicationDto) {
+        Indication indication = new Indication();
+        indication.setIndicationId(indicationDto.getIndicationId());
+        indication.setIndicationDescription(indicationDto.getIndicationDescription());
+        indication.setHoursNeeded(indicationDto.getHoursNeeded());
+        indication.setApproved(indicationDto.isApproved());
+        indication.setIndicationDate(indicationDto.getIndicationDate());
+        indication.setApprovalDate(indicationDto.getApprovalDate());
+
+        MaternityNurse maternityNurse = new MaternityNurse();
+        maternityNurse.setKckzNumber(indicationDto.getMaternityNurseKckzNumber());
+        indication.setMaternityNurse(maternityNurse);
+
+        return indication;
     }
 }

@@ -37,11 +37,9 @@ public class MidwifeDto extends UserDto {
 
     public static MidwifeDto fromMidwife(Midwife midwife) {
         MidwifeDto dto = new MidwifeDto();
-        // Mapping from Midwife to MidwifeDto
         dto.setAgbCode(midwife.getAgbCode());
         dto.setCertification(midwife.getCertification());
         dto.setApprovedIndications(midwife.getApprovedIndications());
-        // Set common properties from User class
         dto.setEnabled(midwife.isEnabled());
         dto.setApikey(midwife.getApikey());
         dto.setEmail(midwife.getEmail());
@@ -59,12 +57,9 @@ public class MidwifeDto extends UserDto {
     public static Midwife toMidwife(MidwifeDto midwifeDto) {
         Midwife midwife = new Midwife();
 
-        // Mapping from MidwifeDto to Midwife
         midwife.setAgbCode(midwifeDto.getAgbCode());
         midwife.setCertification(midwifeDto.getCertification());
         midwife.setApprovedIndications(midwifeDto.getApprovedIndications());
-
-        // Set common properties from UserDto class
         midwife.setEnabled(midwifeDto.isEnabled());
         midwife.setApikey(midwifeDto.getApikey());
         midwife.setEmail(midwifeDto.getEmail());
@@ -78,5 +73,4 @@ public class MidwifeDto extends UserDto {
 
         return midwife;
     }
-
 }

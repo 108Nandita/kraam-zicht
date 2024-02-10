@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 @Service
 @Transactional
 public class IndicationService {
-
     private final IndicationRepository indicationRepository;
     private final ClientFileService clientFileService;
     private final MaternityNurseService maternityNurseService;

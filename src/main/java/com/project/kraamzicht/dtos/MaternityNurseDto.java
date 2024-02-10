@@ -21,7 +21,6 @@ public class MaternityNurseDto extends UserDto {
         this.kckzNumber = kckzNumber;
     }
 
-
     public List<ClientFile> getClientFiles() {
         return clientFiles;
     }

@@ -82,7 +82,7 @@ public class ClientFileDto {
         this.kckzNumber = kckzNumber;
     }
 
-    public List<Long> getReportId() {
+    public List<Long> getReports() {
         return reportId;
     }
 
@@ -120,8 +120,6 @@ public class ClientFileDto {
         clientFile.setDeliveryPlace(clientFileDto.getDeliveryPlace());
         clientFile.setMaternityNurse(maternityNurse);
         clientFile.setClient(client);
-//        clientFile.setMidwives(clientFileDto.getMidwives().stream().map(MidwifeDto::toMidwife).collect(Collectors.toList()));
-//        clientFile.setIndications(clientFileDto.getIndications().stream().map(IndicationDto::toIndication).collect(Collectors.toList()));
 
         return clientFile;
     }

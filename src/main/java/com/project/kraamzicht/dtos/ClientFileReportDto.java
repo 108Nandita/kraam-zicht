@@ -42,7 +42,6 @@ public class ClientFileReportDto {
 
         return dto;
     }
-
         public static ClientFileReport toClientFileReport(ClientFileReportDto clientFileReportDto) {
             ClientFileReport clientFileReport = new ClientFileReport();
             clientFileReport.setReportDate(clientFileReportDto.getReportDate());

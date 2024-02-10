@@ -5,6 +5,7 @@ import com.project.kraamzicht.models.ClientFile;
 import com.project.kraamzicht.repositories.ClientFileRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -17,31 +18,30 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @ActiveProfiles("test")
 @Transactional
 @AutoConfigureMockMvc(addFilters = false)
-public class ClientFileReportServiceIntegrationTest {
+public class ClientFileIntegrationTest {
 
     @Autowired
     private ClientFileRepository clientFileRepository;
 
-
-
     @Test
     public void testSaveClientFile() {
+
 
         // Arrange
         ClientFile clientFile = new ClientFile();
 
         Client client = new Client();
-
         client.setClientId("12345");
 
-        // act
+        // Act
         clientFileRepository.save(clientFile);
 
-        assertNotNull(clientFile.getClientFileId(), "ClientFile ID mag niet null zijn na opslaan");
-
         // Assert
+        assertNotNull(clientFile.getClientFileId(), "ClientFile ID should not be null after saving");
+
         ClientFile retrievedClientFile = clientFileRepository.findById(clientFile.getClientFileId()).orElse(null);
-        assertNotNull(retrievedClientFile, "Opgeslagen ClientFile kon niet worden opgehaald");
-        assertEquals(clientFile.getClientFileId(), retrievedClientFile.getClientFileId(), "ClientId komt niet overeen");
+        assertNotNull(retrievedClientFile, "Saved ClientFile could not be retrieved");
+        assertEquals(clientFile.getClientFileId(), retrievedClientFile.getClientFileId(), "ClientFile IDs do not match");
+
     }
 }

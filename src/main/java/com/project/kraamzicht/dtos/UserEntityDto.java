@@ -13,7 +13,6 @@ public class UserEntityDto extends UserEntity {
     private Set<Authority> authorities;
 
     public UserEntityDto() {
-        // Default constructor
     }
 
     public UserEntityDto(String username, String password, Boolean enabled, Set<Authority> authorities) {
@@ -55,16 +54,6 @@ public class UserEntityDto extends UserEntity {
     public void setAuthorities(Set<Authority> authorities) {
         this.authorities = authorities;
     }
-
-//    public static UserEntityDto fromUserEntity(UserEntity userEntity) {
-//        UserEntityDto dto = new UserEntityDto();
-//        dto.setUsername(userEntity.getUsername());
-//        dto.setPassword(userEntity.getPassword());
-//        dto.setEnabled(userEntity.getEnabled());
-//        dto.setAuthorities(userEntity.getAuthorities());
-//
-//        return dto;
-//    }
 
     public static UserEntityDto fromUserEntity(UserEntity userEntity) {
         UserEntityDto dto = new UserEntityDto();

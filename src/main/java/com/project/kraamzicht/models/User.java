@@ -10,17 +10,11 @@ import java.util.Set;
 
 @MappedSuperclass
 @DiscriminatorColumn(name = "user_type", discriminatorType = DiscriminatorType.STRING)
-//@IdClass(AuthorityKey.class)
 public class User implements Serializable {
 
     @Id
     @Column(nullable = true, unique = true)
     private String username;
-
-//    @Column(nullable = true, length = 255)
-//    private String password;
-
-
     @Column(nullable = false)
     private String name;
 
@@ -63,14 +57,6 @@ public class User implements Serializable {
     public void setUsername(String username) {
         this.username = username;
     }
-
-//    public String getPassword() {
-//        return password;
-//    }
-//
-//    public void setPassword(String password) {
-//        this.password = password;
-//    }
 
     public String getName() {
         return name;
@@ -159,13 +145,13 @@ public class User implements Serializable {
     public void setApikey(String apikey) {
         this.apikey = apikey;
     }
-    public Set<Authority> getAuthorities() { return authorities; }
+    public Set<Authority> getAuthorities() {
+        return authorities; }
     public void addAuthority(Authority authority) {
         this.authorities.add(authority);
     }
     public void removeAuthority(UserEntityDto authority) {
         this.authorities.remove(authority);
     }
-
 
 }

@@ -9,7 +9,6 @@ public class ClientFileReport {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reportId;
-
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "report-client_file_id")
     private ClientFile clientFile;
@@ -19,7 +18,6 @@ public class ClientFileReport {
 
     public ClientFileReport() {
     }
-
     public ClientFileReport(LocalDate reportDate, String report, ClientFile clientFile) {
         this.reportId = reportId;
         this.reportDate = reportDate;

@@ -15,7 +15,6 @@ import java.time.LocalDate;
 public interface AdminRepository extends JpaRepository<Admin, String> {
     @Query("SELECT a FROM Admin a WHERE a.username = :username")
     Admin findAdminByUsername(@Param("username") String username);
-
     @Query("UPDATE Admin a SET a.name = :#{#userDetailsDto.name}, a.surname = :#{#userDetailsDto.surname}, a.dob = :#{#userDetailsDto.dob}, a.address = :#{#userDetailsDto.address}, a.postalcode = :#{#userDetailsDto.postalcode}, a.place = :#{#userDetailsDto.place} WHERE a.username = :username")
     @Modifying
     void updateUserDetails(@Param("username") String username, @Param("userDetailsDto") UserDetailsDto userDetailsDto);

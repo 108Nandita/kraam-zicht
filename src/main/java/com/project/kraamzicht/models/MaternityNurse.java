@@ -17,7 +17,6 @@ public class MaternityNurse extends User {
     @JoinColumn(name = "username")
     private UserEntity userEntity;
 
-
     @OneToMany(mappedBy = "maternityNurse", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     private List<ClientFile> clientFiles = new ArrayList<>();
 

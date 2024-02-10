@@ -34,15 +34,11 @@ public class SpringSecurityConfig {
         this.userEntityRepository = userEntityRepository;
     }
 
-    // PasswordEncoderBean. Deze kun je overal in je applicatie injecteren waar nodig.
-    // Je kunt dit ook in een aparte configuratie klasse zetten.
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-
-    // Authenticatie met customUserDetailsService en passwordEncoder
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http, PasswordEncoder passwordEncoder) throws Exception {
         var auth = new DaoAuthenticationProvider();
@@ -51,8 +47,6 @@ public class SpringSecurityConfig {
         return new ProviderManager(auth);
     }
 
-
-    // Authorizatie met jwt
     @Bean
     protected SecurityFilterChain filter (HttpSecurity http) throws Exception {
 
@@ -62,8 +56,6 @@ public class SpringSecurityConfig {
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth ->
                                 auth
-                                        // Wanneer je deze uncomments, staat je hele security open. Je hebt dan alleen nog een jwt nodig.
-//                .requestMatchers("/**").permitAll()
                                         .requestMatchers("/authenticate").permitAll()
                                         .requestMatchers("/authenticated").authenticated()
                                         .requestMatchers("/admin/**").hasRole("ADMIN")
@@ -74,14 +66,6 @@ public class SpringSecurityConfig {
                                         .requestMatchers("/client-files/**").hasAnyRole("ADMIN", "MATERNITY_NURSE")
                                         .requestMatchers("/client-files-report/**").hasAnyRole("ADMIN", "MATERNITY_NURSE")
                                         .requestMatchers("/indications/**").hasAnyRole("ADMIN", "MATERNITY_NURSE")
-
-//                                        .requestMatchers(HttpMethod.GET, "/clientFiles").hasAnyRole("MATERNITYNURSE", "MIDWIFE")
-//                                        .requestMatchers(HttpMethod.PUT, "/clientFiles/**").hasAnyRole("MATERNITYNURSE", "CLIENT")
-//                                        .requestMatchers(HttpMethod.GET, "/clientFiles/{clientId}")
-//                                        .requestMatchers("hasRole('CLIENT') and @Service.isClientOwner(authentication, #clientId)")
-//                                        .requestMatchers(HttpMethod.PUT, "/clientFiles/{clientId}/indication").hasRole("MATERNITYNURSE")
-//                                        .requestMatchers(HttpMethod.GET, "/clientFiles/{clientId}/indication").hasRole("MIDWIFE")
-//                                        .requestMatchers(HttpMethod.POST, "/clientFiles/{clientId}/indication/approve").hasRole("MIDWIFE")
                                         .anyRequest().denyAll()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
